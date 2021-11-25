@@ -56,7 +56,7 @@ function Document({
         <Meta />
         <Links />
       </head>
-      <body>
+      <body className="min-h-screen min-w-max bg-baseDark-50 dark:bg-baseDark-900">
         {children}
         <RouteChangeAnnouncement />
         <ScrollRestoration />
