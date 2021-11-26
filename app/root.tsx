@@ -22,7 +22,21 @@ import globalStylesUrl from '~/styles/global.css'
  * https://remix.run/api/app#links
  */
 export let links: LinksFunction = () => {
-  return [{ rel: 'stylesheet', href: globalStylesUrl }]
+  return [
+    { rel: 'stylesheet', href: globalStylesUrl },
+    { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
+    {
+      rel: 'preconnect',
+      href: 'https://fonts.gstatic.com',
+      crossOrigin: 'anonymous',
+    },
+    {
+      rel: 'stylesheet',
+      href:
+        'https://fonts.googleapis.com/css2?family=Manrope:wght@400;600&display=swap',
+      crossOrigin: 'anonymous',
+    },
+  ]
 }
 
 /**
@@ -56,7 +70,7 @@ function Document({
         <Meta />
         <Links />
       </head>
-      <body className="min-h-screen min-w-max bg-baseDark-50 dark:bg-baseDark-900">
+      <body className="min-h-screen min-w-max bg-base text-base-900 dark:bg-base-900  dark:text-base">
         {children}
         <RouteChangeAnnouncement />
         <ScrollRestoration />

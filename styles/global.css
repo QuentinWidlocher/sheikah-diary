@@ -1,3 +1,32 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+body {
+  font-family: 'Manrope', sans-serif;
+}
+
+:root {
+  --base-0: white;
+  --base-50: #f9fafb;
+  --base-100: #f3f4f6;
+  --base-200: #e5e7eb;
+  --base-300: #d1d5db;
+  --base-400: #9ca3af;
+  --base-500: #6b7280;
+  --base-600: #4b5563;
+  --base-700: #374151;
+  --base-800: #1f2937;
+  --base-900: #111827;
+
+  --primary-50: #bbeef9ff;
+  --primary-100: #85e8fcff;
+  --primary-200: #61d3f6ff;
+  --primary-300: #4fc9f3ff;
+  --primary-400: #3dbef0ff;
+  --primary-500: #35a0caff;
+  --primary-600: #2d81a4ff;
+  --primary-700: #1c4358ff;
+  --primary-800: #102633ff;
+  --primary-900: #04090eff;
+}
