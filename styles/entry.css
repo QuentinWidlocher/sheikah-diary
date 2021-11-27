@@ -1,0 +1,37 @@
+body article {
+  @apply flex flex-wrap;
+  @apply mt-5 mx-5 w-full md:mx-auto md:w-3/4 lg:w-1/2 space-x-0 md:space-x-5 space-y-5 md:space-y-0;
+  @apply text-primary-400;
+  text-shadow: 0px 0px 7px var(--primary-500);
+
+  section {
+    @apply flex-grow-0 md:flex-1;
+  }
+
+  fieldset {
+    @apply flex flex-col;
+
+    legend {
+      @apply w-full flex font-bold;
+
+      &:before,
+      &:after {
+        flex: 1;
+        background: linear-gradient(to right, currentColor, currentColor);
+        background-size: 100% 1px;
+        background-position: 0% 50%;
+        background-repeat: repeat-x;
+        content: '';
+        filter: drop-shadow(0px 0px 7px var(--primary-500));
+      }
+
+      &:before {
+        @apply mr-2;
+      }
+
+      &:after {
+        @apply ml-2;
+      }
+    }
+  }
+}

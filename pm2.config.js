@@ -19,7 +19,7 @@ module.exports = {
         {
             name: 'rsync',
             script: 'rsync -v --checksum -a .tmp/postcss.ignored/ app/styles',
-            watch: ['.cache/postcss.ignored'],
+            watch: ['.tmp/postcss.ignored/'],
             autorestart: false,
             env: {
                 FORCE_COLOR: '1',

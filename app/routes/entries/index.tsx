@@ -2,6 +2,7 @@ import { Entry } from '@prisma/client'
 import {
   ErrorBoundaryComponent,
   Link,
+  LinksFunction,
   LoaderFunction,
   useLoaderData,
 } from 'remix'
@@ -9,6 +10,11 @@ import { deserialize, serialize } from 'superjson'
 import EntryCard from '~/features/entries/components/entry-card.browser'
 import { EntryInList } from '~/features/entries/types/entries'
 import { db } from '~/utils/db'
+import entryCardStylesheet from '~/styles/entry-card.css'
+
+export let links: LinksFunction = () => [
+  { rel: 'stylesheet', href: entryCardStylesheet },
+]
 
 export let loader: LoaderFunction = async () => {
   let data = await db.entry.findMany({
@@ -41,7 +47,7 @@ export default function EntriesIndexPage() {
     <div className="m-5 md:m-10 lg:m-20">
       <ul className="mx-5 md:mx-10 lg:mx-20 flex flex-wrap space-y-10 md:space-y-0 md:space-x-10">
         {entries.map((entry) => (
-          <li className="w-full md:w-1/3 lg:w-1/5" key={entry.link}>
+          <li className="w-full md:w-1/3 lg:w-1/4 xl:w-1/5" key={entry.link}>
             <Link to={entry.link} className="outline-none">
               <EntryCard entry={entry} />
             </Link>

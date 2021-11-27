@@ -6,7 +6,7 @@
       @apply w-full h-full relative p-4 bg-base-900 opacity-70;
 
       .picture {
-        @apply h-full w-full border-2 md:border-4 border-primary-100;
+        @apply h-full w-full border-4 md:border-2 border-primary-100;
         aspect-ratio: 1 / 1;
         object-fit: cover;
         box-shadow: inset 0px 0px 15px var(--primary-500);
@@ -15,10 +15,12 @@
 
     svg.selector {
       position: absolute;
-      top: -5%;
-      left: -5%;
-      width: 108%;
-      height: 108%;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+
+      transform: scale(110%);
 
       max-width: unset;
 

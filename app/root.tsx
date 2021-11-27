@@ -70,7 +70,7 @@ function Document({
         <Meta />
         <Links />
       </head>
-      <body className="min-h-screen w-screen bg-base-800">
+      <body className="min-h-screen w-screen text-base bg-base-800">
         {children}
         <RouteChangeAnnouncement />
         <ScrollRestoration />
@@ -82,7 +82,7 @@ function Document({
 }
 
 function Layout({ children }: React.PropsWithChildren<{}>) {
-  return <div className="remix-app">{children}</div>
+  return <div className="remix-app flex flex-col">{children}</div>
 }
 
 export function CatchBoundary() {
