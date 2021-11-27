@@ -11,21 +11,20 @@ datasource db {
 }
 
 model Entry {
-  id            String    @id @default(uuid())
-  slug          String    @unique
-  title         String
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
-  content       String
-  pictures      String
-  Pictures      Picture[]
+  id        String    @id @default(uuid())
+  slug      String    @unique
+  title     String
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  content   String
+  pictures  Picture[]
 }
 
 model Picture {
-  id            String    @id @default(uuid())
-  file          String    @unique
-  preview       String    @unique
-  thumbnail     String    @unique
-  entry         String
-  Entry         Entry     @relation(fields: [entry], references: [id])
+  id        String @id @default(uuid())
+  file      String @unique
+  preview   String @unique
+  thumbnail String @unique
+  entryId   String
+  entry     Entry  @relation(fields: [entryId], references: [id])
 }

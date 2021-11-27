@@ -17,18 +17,9 @@ module.exports = {
         // double rebuild. So we use rsync with --checksum so it only updates the
         // files when their contents have changed.
         {
-            name: 'rsync',
-            script: 'rsync -v --checksum -a .tmp/postcss.ignored/ app/styles',
-            watch: ['.tmp/postcss.ignored/'],
-            autorestart: false,
-            env: {
-                FORCE_COLOR: '1',
-            },
-        },
-        {
             name: 'Postcss',
             script:
-                'postcss styles/**/*.css --base styles --dir .tmp/postcss.ignored',
+                'postcss styles/**/*.css --base styles --dir .tmp/postcss.ignored && rsync -v --checksum -a .tmp/postcss.ignored/ app/styles',
             autorestart: false,
             watch: [
                 './tailwind.config.js',

@@ -1,72 +1,54 @@
-.entry-card section.picture {
-    position: relative;
+.entries-layout {
+  height: 100vh;
+  width: 100vw;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto 1fr auto;
+}
+  .entries-layout > header, .entries-layout > footer {
+    background-color: var(--secondary-600);
+    padding: 0.5rem;
   }
-    .entry-card section.picture .pic-wrapper {
-      position: relative;
-      height: 100%;
-      width: 100%;
-      background-color: var(--base-900);
-      padding: 1rem;
-      opacity: 0.7;
-    }
-    .entry-card section.picture .pic-wrapper .picture {
-        height: 100%;
-        width: 100%;
-        border-width: 4px;
-        border-color: var(--primary-100);
-      }
-    @media (min-width: 768px) {
-        .entry-card section.picture .pic-wrapper .picture {
-          border-width: 2px;
-        }
-      }
-    .entry-card section.picture .pic-wrapper .picture {
-        aspect-ratio: 1 / 1;
-        -o-object-fit: cover;
-           object-fit: cover;
-        box-shadow: inset 0px 0px 15px var(--primary-500);
-      }
-    .entry-card section.picture svg.selector {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      transform: scale(110%);
-      max-width: unset;
-      color: var(--primary-200);
-      filter: drop-shadow(0px 0px 7px var(--primary-500));
-      opacity: 0;
-    }
-    .entry-card section.picture svg.frame {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      max-width: unset;
-      color: var(--primary-200);
-      filter: drop-shadow(0px 0px 7px var(--primary-500));
-    }
-  .entry-card section.title {
-    padding: 0.25rem;
-    text-align: center;
-    color: var(--primary-600);
+  .entries-layout > main {
+    overflow-y: auto;
+    overflow-x: hidden;
   }
 
-a:focus .entry-card section.picture .pic-wrapper, .entry-card:hover section.picture .pic-wrapper {
-  opacity: 1;
+a.button, button {
+  border-radius: 0.25rem;
+  border-width: 1px;
+  border-color: transparent;
 }
 
-a:focus .entry-card section.picture svg.selector {
-  opacity: 1;
+a.button:hover, button:hover {
+  border-color: var(--primary-500);
 }
 
-a:focus .entry-card section.title, .entry-card:hover section.title {
-  color: var(--primary-200);
+a.button, button {
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+  font-weight: 700;
+  color: var(--primary-500);
 }
 
-a:focus .entry-card section.title,
-.entry-card:hover section.title {
-  text-shadow: 0px 0px 7px var(--primary-500);
+a.button,
+button {
+  text-shadow: var(--primary-shadow);
+}
+
+a.button:hover, button:hover {
+    box-shadow: var(--primary-shadow-full);
+  }
+
+hr {
+  margin-top: 2.5rem;
+  margin-bottom: 2.5rem;
+  border-color: var(--primary-500);
+}
+
+[role='separator'] {
+  margin-top: 2.5rem;
+  margin-bottom: 2.5rem;
 }

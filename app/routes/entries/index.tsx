@@ -44,10 +44,13 @@ export default function EntriesIndexPage() {
   }))
 
   return (
-    <div className="m-5 md:m-10 lg:m-20">
-      <ul className="mx-5 md:mx-10 lg:mx-20 flex flex-wrap space-y-10 md:space-y-0 md:space-x-10">
+    <div className="md:p-10 lg:p-20">
+      <ul className="md:px-10 lg:px-20 flex flex-wrap ">
         {entries.map((entry) => (
-          <li className="w-full md:w-1/3 lg:w-1/4 xl:w-1/5" key={entry.link}>
+          <li
+            className="w-full md:w-1/3 lg:w-1/4 xl:w-1/5 p-5"
+            key={entry.link}
+          >
             <Link to={entry.link} className="outline-none">
               <EntryCard entry={entry} />
             </Link>

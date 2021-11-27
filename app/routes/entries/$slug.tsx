@@ -1,10 +1,9 @@
 import { Entry } from '@prisma/client'
-import { LinksFunction, LoaderFunction, useLoaderData } from 'remix'
+import { LinksFunction, LoaderFunction, redirect, useLoaderData } from 'remix'
 import { z } from 'zod'
 import { db } from '~/utils/db'
 import { deserialize, serialize } from 'superjson'
 import { displayDateTime } from '~/utils/date.utils'
-import EntryCard from '~/features/entries/components/entry-card.browser'
 import SheikahLogo from '~/components/sheika-logo'
 import entryCardStylesheet from '~/styles/entry.css'
 
@@ -12,7 +11,7 @@ export let links: LinksFunction = () => [
   { rel: 'stylesheet', href: entryCardStylesheet },
 ]
 
-type SimpleEntry = Pick<Entry, 'title' | 'content' | 'createdAt' | 'pictures'>
+type SimpleEntry = Pick<Entry, 'title' | 'content' | 'createdAt'>
 
 export let loader: LoaderFunction = async ({ params }) => {
   let slug = z.string().parse(params?.slug)
@@ -22,20 +21,23 @@ export let loader: LoaderFunction = async ({ params }) => {
       title: true,
       content: true,
       createdAt: true,
-      pictures: true,
     },
     where: {
       slug,
     },
   })
 
+  console.log(entry)
+
+  if (entry == null) {
+    return redirect('/entries')
+  }
+
   return serialize(entry)
 }
 
 export default function EntriesByIdPage() {
-  let { title, content, createdAt, pictures }: SimpleEntry = deserialize(
-    useLoaderData(),
-  )
+  let { title, content, createdAt }: SimpleEntry = deserialize(useLoaderData())
 
   return (
     <article>

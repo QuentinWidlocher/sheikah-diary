@@ -29,4 +29,19 @@ body {
   --primary-700: #1c4358ff;
   --primary-800: #102633ff;
   --primary-900: #04090eff;
+
+  --secondary-50: #957d62ff;
+  --secondary-100: #8a7052ff;
+  --secondary-200: #7f684eff;
+  --secondary-300: #735f49ff;
+  --secondary-400: #5b4e3fff;
+  --secondary-500: #50463bff;
+  --secondary-600: #443d36ff;
+  --secondary-700: #3e3934ff;
+  --secondary-800: #383531ff;
+  --secondary-900: #2c2c2cff;
+
+  --primary-shadow: 0px 0px 7px var(--primary-500);
+  --primary-shadow-inset: inset 0px 0px 7px var(--primary-500);
+  --primary-shadow-full: var(--primary-shadow), var(--primary-shadow-inset);
 }

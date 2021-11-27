@@ -1,0 +1,33 @@
+.entries-layout {
+  @apply h-screen w-screen;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto 1fr auto;
+
+  > header,
+  > footer {
+    @apply bg-secondary-600 p-2;
+  }
+
+  > main {
+    @apply overflow-x-hidden overflow-y-auto;
+  }
+}
+
+a.button,
+button {
+  @apply text-primary-500 font-bold px-5 py-3 border border-transparent rounded hover:border-primary-500;
+
+  text-shadow: var(--primary-shadow);
+  &:hover {
+    box-shadow: var(--primary-shadow-full);
+  }
+}
+
+hr {
+  @apply border-primary-500 my-10;
+}
+
+[role='separator'] {
+  @apply my-10;
+}
