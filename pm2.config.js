@@ -18,7 +18,7 @@ module.exports = {
         // files when their contents have changed.
         {
             name: 'rsync',
-            script: 'rsync -v --checksum -r .cache/postcss.ignored/ app/styles',
+            script: 'rsync -v --checksum -a .tmp/postcss.ignored/ app/styles',
             watch: ['.cache/postcss.ignored'],
             autorestart: false,
             env: {
@@ -28,7 +28,7 @@ module.exports = {
         {
             name: 'Postcss',
             script:
-                'postcss styles/**/*.css --base styles --dir .cache/postcss.ignored',
+                'postcss styles/**/*.css --base styles --dir .tmp/postcss.ignored',
             autorestart: false,
             watch: [
                 './tailwind.config.js',
