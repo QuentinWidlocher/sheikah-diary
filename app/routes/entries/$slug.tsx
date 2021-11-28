@@ -61,13 +61,13 @@ export default function EntriesByIdPage() {
       <section className="flex flex-col">
         <h1 className="font-bold text-center">{title}</h1>
         {pictures?.[0] ? (
-          <Link to={pictures[0].file} target="_blank">
+          <a href={pictures[0].file} target="_blank">
             <img
               src={pictures[0].preview}
               alt=""
               className="mx-auto w-full h-full border border-primary-500 text-primary-500"
             />
-          </Link>
+          </a>
         ) : (
           <SheikahLogo className="mx-auto w-full h-full border border-primary-500 text-primary-500" />
         )}
