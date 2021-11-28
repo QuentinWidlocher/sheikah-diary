@@ -18,6 +18,7 @@
     "@remix-run/react": "1.0.6",
     "@remix-run/serve": "1.0.6",
     "@remix-run/vercel": "1.0.6",
+    "@supabase/supabase-js": "^1.28.2",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-icons": "^4.3.1",
@@ -31,16 +32,16 @@
     "@remix-run/dev": "^1.0.4",
     "@types/react": "^17.0.24",
     "@types/react-dom": "^17.0.9",
+    "@types/sharp": "^0.29.4",
     "autoprefixer": "^10.4.0",
     "esbuild-register": "^3.2.0",
+    "pm2": "^5.1.2",
     "postcss": "^8.3.11",
     "postcss-cli": "^9.0.2",
     "postcss-import": "^14.0.2",
     "prisma": "^3.5.0",
     "tailwindcss": "^2.2.19",
-    "typescript": "^4.1.2",
-    "@types/sharp": "^0.29.4",
-    "pm2": "^5.1.2"
+    "typescript": "^4.1.2"
   },
   "engines": {
     "node": ">=14"

@@ -51,7 +51,7 @@ export let loader: LoaderFunction = async ({ request }) => {
     ...entry,
     link: `/entries/${entry.slug}`,
     thumbnailUrl: entry.pictures?.[0]?.thumbnail
-      ? `/pictures/${entry.pictures?.[0]?.thumbnail}`
+      ? entry.pictures?.[0]?.thumbnail
       : undefined,
   }))
 
