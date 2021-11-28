@@ -3,6 +3,7 @@ import {
   Link,
   LinksFunction,
   LoaderFunction,
+  MetaFunction,
   redirect,
   useLoaderData,
 } from 'remix'
@@ -16,6 +17,13 @@ import SheikahLogo from '~/components/sheika-logo'
 export let links: LinksFunction = () => [
   { rel: 'stylesheet', href: entryCardStylesheet },
 ]
+
+export let meta: MetaFunction = ({ data }) => {
+  let { title } = deserialize<SimpleEntry>(data)
+  return {
+    title: `${title} | Sheikah Diary`,
+  }
+}
 
 type SimpleEntry = Pick<Entry, 'title' | 'content' | 'createdAt'> & {
   pictures: Picture[]

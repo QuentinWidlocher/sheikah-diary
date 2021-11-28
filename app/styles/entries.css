@@ -43,6 +43,10 @@ a.button:hover, button:hover {
     box-shadow: var(--primary-shadow-full);
   }
 
+a.button > svg, button > svg {
+    filter: drop-shadow(var(--primary-shadow));
+  }
+
 hr {
   margin-top: 2.5rem;
   margin-bottom: 2.5rem;

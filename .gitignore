@@ -4,6 +4,7 @@ node_modules
 /.tmp
 /build
 /public/build
+/public/pictures/*
 
 /prisma/dev.db
 .env

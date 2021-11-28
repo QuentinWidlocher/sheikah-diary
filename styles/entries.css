@@ -22,6 +22,10 @@ button {
   &:hover {
     box-shadow: var(--primary-shadow-full);
   }
+
+  > svg {
+    filter: drop-shadow(var(--primary-shadow));
+  }
 }
 
 hr {
