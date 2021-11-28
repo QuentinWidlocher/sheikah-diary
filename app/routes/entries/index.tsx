@@ -30,8 +30,6 @@ export let loader: LoaderFunction = async ({ request }) => {
   let page = url.searchParams.get('p')
   let pageNumber = page && Number(page) > 0 ? Number(page) - 1 : 0
 
-  console.log()
-
   let total = await db.entry.count()
 
   let data = await db.entry.findMany({
@@ -101,8 +99,4 @@ export default function EntriesIndexPage() {
       </nav>
     </div>
   )
-}
-
-export let ErrorBoundary: ErrorBoundaryComponent = () => {
-  return <span>erreur</span>
 }
