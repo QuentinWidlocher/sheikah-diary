@@ -22,26 +22,26 @@ export let loader: LoaderFunction = async () => {
       title: true,
       slug: true,
       createdAt: true,
+      pictures: true,
     },
-    take: 10,
     orderBy: {
-      createdAt: 'asc',
+      createdAt: 'desc',
     },
   })
 
-  let entries = data.map((entry) => ({
+  let entries: EntryInList[] = data.map((entry) => ({
     ...entry,
     link: `/entries/${entry.slug}`,
+    thumbnailUrl: entry.pictures?.[0]?.thumbnail
+      ? `/pictures/${entry.pictures?.[0]?.thumbnail}`
+      : undefined,
   }))
 
   return serialize(entries)
 }
 
 export default function EntriesIndexPage() {
-  let entries = deserialize<EntryInList[]>(useLoaderData()).map((entry, i) => ({
-    ...entry,
-    previewUrl: i % 2 == 0 ? 'https://picsum.photos/1280/720' : undefined,
-  }))
+  let entries = deserialize<EntryInList[]>(useLoaderData())
 
   return (
     <div className="md:p-10 lg:p-20">

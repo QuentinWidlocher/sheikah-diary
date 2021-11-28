@@ -1,5 +1,5 @@
-import { Link } from 'react-router-dom'
-import { LinksFunction, Outlet } from 'remix'
+import { Link, LinksFunction, Outlet } from 'remix'
+import { FiArrowLeft, FiPlus } from 'react-icons/fi'
 import entriesStylesheet from '~/styles/entries.css'
 
 export let links: LinksFunction = () => [
@@ -10,12 +10,18 @@ export let links: LinksFunction = () => [
 export default function EntriesMainPage() {
   return (
     <div className="entries-layout">
-      <header></header>
+      <header>
+        <Link to="/entries" className="button flex mr-auto">
+          <FiArrowLeft size="1.5rem" className="mr-3" />
+          Back to the entries
+        </Link>
+      </header>
       <main>
         <Outlet />
       </main>
       <footer>
-        <Link to="/entries/new" className="button float-right">
+        <Link to="/entries/new" className="button flex ml-auto">
+          <FiPlus size="1.5rem" className="mr-3" />
           Add an entry
         </Link>
       </footer>

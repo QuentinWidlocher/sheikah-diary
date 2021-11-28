@@ -6,7 +6,7 @@
 
   > header,
   > footer {
-    @apply bg-secondary-600 p-2;
+    @apply flex bg-secondary-600 p-3;
   }
 
   > main {

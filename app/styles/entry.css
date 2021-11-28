@@ -36,12 +36,6 @@ body article {
   }
 }
 
-@media (min-width: 1024px) {
-  body article {
-    width: 50%
-  }
-}
-
 body article {
   color: var(--primary-400);
   text-shadow: var(--primary-shadow);

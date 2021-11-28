@@ -1,17 +1,25 @@
-import { Entry } from '@prisma/client'
-import { LinksFunction, LoaderFunction, redirect, useLoaderData } from 'remix'
+import { Entry, Picture } from '@prisma/client'
+import {
+  Link,
+  LinksFunction,
+  LoaderFunction,
+  redirect,
+  useLoaderData,
+} from 'remix'
 import { z } from 'zod'
 import { db } from '~/utils/db'
 import { deserialize, serialize } from 'superjson'
 import { displayDateTime } from '~/utils/date.utils'
-import SheikahLogo from '~/components/sheika-logo'
 import entryCardStylesheet from '~/styles/entry.css'
+import SheikahLogo from '~/components/sheika-logo'
 
 export let links: LinksFunction = () => [
   { rel: 'stylesheet', href: entryCardStylesheet },
 ]
 
-type SimpleEntry = Pick<Entry, 'title' | 'content' | 'createdAt'>
+type SimpleEntry = Pick<Entry, 'title' | 'content' | 'createdAt'> & {
+  pictures: Picture[]
+}
 
 export let loader: LoaderFunction = async ({ params }) => {
   let slug = z.string().parse(params?.slug)
@@ -21,13 +29,12 @@ export let loader: LoaderFunction = async ({ params }) => {
       title: true,
       content: true,
       createdAt: true,
+      pictures: true,
     },
     where: {
       slug,
     },
   })
-
-  console.log(entry)
 
   if (entry == null) {
     return redirect('/entries')
@@ -37,13 +44,25 @@ export let loader: LoaderFunction = async ({ params }) => {
 }
 
 export default function EntriesByIdPage() {
-  let { title, content, createdAt }: SimpleEntry = deserialize(useLoaderData())
+  let { title, content, createdAt, pictures }: SimpleEntry = deserialize(
+    useLoaderData(),
+  )
 
   return (
     <article>
       <section className="flex flex-col">
         <h1 className="font-bold text-center">{title}</h1>
-        <SheikahLogo className="mx-auto w-full h-full border border-primary-500 text-primary-500" />
+        {pictures?.[0] ? (
+          <Link to={'/pictures/' + pictures[0].file} target="_blank">
+            <img
+              src={'/pictures/' + pictures[0].preview}
+              alt=""
+              className="mx-auto w-full h-full border border-primary-500 text-primary-500"
+            />
+          </Link>
+        ) : (
+          <SheikahLogo className="mx-auto w-full h-full border border-primary-500 text-primary-500" />
+        )}
         <small className="text-center opacity-70">
           {displayDateTime(createdAt)}
         </small>

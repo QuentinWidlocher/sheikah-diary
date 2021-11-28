@@ -14,8 +14,13 @@ const EntryCard = ({ entry }: EntryCardProps) => {
     <div className="entry-card">
       <section className="picture">
         <div className="pic-wrapper">
-          {entry.previewUrl ? (
-            <img className="picture" src={entry.previewUrl} alt={entry.title} />
+          {entry.thumbnailUrl ? (
+            <img
+              loading="lazy"
+              className="picture"
+              src={entry.thumbnailUrl}
+              alt={entry.title}
+            />
           ) : (
             <SheikahLogo className="picture text-primary-700" />
           )}
