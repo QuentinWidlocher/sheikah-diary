@@ -6,12 +6,40 @@
 
   > header,
   > footer {
-    @apply flex bg-secondary-600 p-3;
+    @apply bg-gradient-to-tr from-secondary-900 to-secondary-500 p-3 relative;
+
+    nav {
+      z-index: 1;
+    }
+
+    .bg-picture {
+      background-image: url(/assets/concrete-2.png);
+      background-size: 15rem;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0.3;
+      mix-blend-mode: hard-light
+    }    
   }
 
   > main {
-    @apply overflow-x-hidden overflow-y-auto -mx-5;
+    @apply overflow-x-hidden overflow-y-auto -mx-5 relative;
     box-shadow: inset 0px 0px 20px var(--primary-500);
+
+    .bg-picture {
+      background-image: url(/assets/scanlines.png);
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0.4;
+      mix-blend-mode: soft-light;
+      z-index: -1;
+    }
   }
 }
 

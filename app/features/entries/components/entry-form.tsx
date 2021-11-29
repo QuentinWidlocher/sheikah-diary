@@ -77,7 +77,7 @@ export default function EntryForm({
             <textarea
               name="content"
               defaultValue={defaultValues?.content}
-              rows={10}
+              rows={8}
             ></textarea>
           </FormField>
         </div>

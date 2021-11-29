@@ -12,19 +12,26 @@ export default function EntriesMainPage() {
   return (
     <div className="entries-layout">
       <header>
-        <Link to="/entries" className="button flex mr-auto">
-          <FiArrowLeft size="1.5rem" className="mr-3" />
-          Back to the entries
-        </Link>
+        <div className="bg-picture"></div>
+        <nav className="flex">
+          <Link to="/entries" className="button flex mr-auto">
+            <FiArrowLeft size="1.5rem" className="mr-3" />
+            Back to the entries
+          </Link>
+        </nav>
       </header>
       <main>
         <Outlet />
+        <div className="bg-picture"></div>
       </main>
       <footer>
-        <Link to="/entries/new" className="button flex ml-auto">
-          <FiPlus size="1.5rem" className="mr-3" />
-          Add an entry
-        </Link>
+        <div className="bg-picture"></div>
+        <nav className="flex">
+          <Link to="/entries/new" className="button flex ml-auto">
+            <FiPlus size="1.5rem" className="mr-3" />
+            Add an entry
+          </Link>
+        </nav>
       </footer>
     </div>
   )

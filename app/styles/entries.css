@@ -6,17 +6,46 @@
   grid-template-rows: auto 1fr auto;
 }
   .entries-layout > header, .entries-layout > footer {
-    display: flex;
-    background-color: var(--secondary-600);
+    position: relative;
+    background-image: linear-gradient(to top right, var(--tw-gradient-stops));
+    --tw-gradient-from: var(--secondary-900);
+    --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgba(255, 255, 255, 0));
+    --tw-gradient-to: var(--secondary-500);
     padding: 0.75rem;
   }
+  .entries-layout > header nav, .entries-layout > footer nav {
+      z-index: 1;
+    }
+  .entries-layout > header .bg-picture, .entries-layout > footer .bg-picture {
+      background-image: url(/assets/concrete-2.png);
+      background-size: 15rem;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0.3;
+      mix-blend-mode: hard-light
+    }
   .entries-layout > main {
+    position: relative;
     margin-left: -1.25rem;
     margin-right: -1.25rem;
     overflow-y: auto;
     overflow-x: hidden;
     box-shadow: inset 0px 0px 20px var(--primary-500);
   }
+  .entries-layout > main .bg-picture {
+      background-image: url(/assets/scanlines.png);
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0.4;
+      mix-blend-mode: soft-light;
+      z-index: -1;
+    }
 
 a.button, button {
   border-radius: 0.25rem;
