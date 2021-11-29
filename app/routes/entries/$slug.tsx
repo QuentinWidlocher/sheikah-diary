@@ -1,4 +1,3 @@
-import { Entry, Picture } from '@prisma/client'
 import {
   Link,
   LinksFunction,
@@ -99,11 +98,13 @@ export default function EntriesByIdPage() {
         </small>
       </section>
       <section className="flex flex-col flex-1 pb-5">
-        <fieldset>
-          <legend>Description</legend>
-          <p>{content}</p>
-        </fieldset>
-        <fieldset className="mt-auto">
+        {content ? (
+          <fieldset className="mb-auto">
+            <legend>Description</legend>
+            <p>{content}</p>
+          </fieldset>
+        ) : null}
+        <fieldset className="mt-3">
           <legend>Actions</legend>
           <nav className="mt-3 flex justify-center space-x-5">
             <Link className="button flex" to={'/entries/update/' + slug}>

@@ -1,0 +1,22 @@
+{
+  "name": "Sheika Diary",
+  "short_name": "Sheika Diary",
+  "description": "Share your favorite pictures of Breath of the Wild !",
+  "lang": "en-US",
+  "start_url": "/",
+  "display": "standalone",
+  "theme_color": "#35a0ca",
+  "icons": [
+    {
+      "src": "favicon.png",
+      "sizes": "256x256",
+      "type": "image/png"
+    },
+    {
+      "src": "favicon.svg",
+      "sizes": "256x256",
+      "type": "image/svg"
+    }
+  ],
+  "background_color": "#102633"
+}

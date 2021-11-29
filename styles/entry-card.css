@@ -3,7 +3,7 @@
     position: relative;
 
     .pic-wrapper {
-      @apply w-full h-full relative p-4 bg-base-900 opacity-70;
+      @apply w-full h-full relative p-4 bg-base-900 md:opacity-70;
 
       .picture {
         @apply h-full w-full border-4 md:border-2 border-primary-100;

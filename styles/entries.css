@@ -9,6 +9,7 @@
     @apply bg-gradient-to-tr from-secondary-900 to-secondary-500 p-3 relative;
 
     nav {
+      position: relative;
       z-index: 1;
     }
 
@@ -26,7 +27,7 @@
   }
 
   > main {
-    @apply overflow-x-hidden overflow-y-auto -mx-5 relative;
+    @apply overflow-x-hidden overflow-y-auto -mx-5 px-5 relative;
     box-shadow: inset 0px 0px 20px var(--primary-500);
 
     .bg-picture {
@@ -45,7 +46,7 @@
 
 a.button,
 button {
-  @apply text-primary-500 font-bold px-5 py-3 border border-transparent rounded hover:border-primary-500;
+  @apply text-primary-500 font-bold px-5 py-3 border border-transparent rounded-lg hover:border-primary-500;
 
   text-shadow: var(--primary-shadow);
   &:hover {
@@ -57,7 +58,7 @@ button {
   }
 
   &.danger {
-    @apply text-danger-500 font-bold px-5 py-3 border border-transparent rounded hover:border-danger-500;
+    @apply text-danger-500 hover:border-danger-500;
 
     text-shadow: var(--danger-shadow);
     &:hover {

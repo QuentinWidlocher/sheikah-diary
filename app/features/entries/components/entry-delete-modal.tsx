@@ -34,10 +34,10 @@ export default function EntryDeleteModal({
   return (
     <div
       onClick={() => onCancel?.()}
-      className={`backdrop absolute top-0 left-0 w-full h-full transition-opacity ${display} ${opacity}`}
+      className={`backdrop absolute bg-black bg-opacity-30 top-0 left-0 w-full h-full transition-opacity ${display} ${opacity}`}
     >
       <div className="mt-auto mb-20 mx-5 md:mx-auto w-full flex flex-wrap-reverse justify-center">
-        <div className="w-full md:w-1/2 h-36 bg-black bg-opacity-40 text-white rounded-full px-12 flex justify-center items-center font-bold text-xl">
+        <div className="w-full md:w-1/2 h-36 bg-black bg-opacity-60 text-white rounded-full px-12 flex justify-center items-center font-bold text-xl">
           <span>
             Are you sure you want to delete this entry ? <br />
             This is <em> permanent !</em>
@@ -52,7 +52,7 @@ export default function EntryDeleteModal({
                 e.stopPropagation()
                 onDelete?.()
               }}
-              className="w-full h-16 bg-black bg-opacity-40 text-white rounded-full flex justify-center items-center font-bold text-xl"
+              className="w-full h-16 bg-black bg-opacity-60 text-white rounded-full flex justify-center items-center font-bold text-xl"
             >
               {transition.submission ? (
                 <ReactLoading
@@ -72,7 +72,7 @@ export default function EntryDeleteModal({
               e.stopPropagation()
               onCancel?.()
             }}
-            className="w-full h-16 bg-black bg-opacity-40 text-white rounded-full flex justify-center items-center font-bold text-xl"
+            className="w-full h-16 bg-black bg-opacity-60 text-white rounded-full flex justify-center items-center font-bold text-xl"
           >
             Don't delete.
           </button>

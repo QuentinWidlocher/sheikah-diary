@@ -6,8 +6,12 @@
       height: 100%;
       width: 100%;
       background-color: var(--base-900);
-      padding: 1rem;
-      opacity: 0.7;
+      padding: 1rem
+    }
+    @media (min-width: 768px) {
+      .entry-card section.picture .pic-wrapper {
+        opacity: 0.7
+      }
     }
     .entry-card section.picture .pic-wrapper .picture {
         height: 100%;
@@ -17,14 +21,14 @@
       }
     @media (min-width: 768px) {
         .entry-card section.picture .pic-wrapper .picture {
-          border-width: 2px;
+          border-width: 2px
         }
       }
     .entry-card section.picture .pic-wrapper .picture {
         aspect-ratio: 1 / 1;
         -o-object-fit: cover;
            object-fit: cover;
-        box-shadow: inset 0px 0px 15px var(--primary-500);
+        box-shadow: inset 0px 0px 15px var(--primary-500)
       }
     .entry-card section.picture svg.selector {
       position: absolute;
@@ -55,7 +59,7 @@
   }
 
 a:focus .entry-card section.picture .pic-wrapper, .entry-card:hover section.picture .pic-wrapper {
-  opacity: 1;
+  opacity: 1
 }
 
 a:focus .entry-card section.picture svg.selector {
@@ -63,10 +67,10 @@ a:focus .entry-card section.picture svg.selector {
 }
 
 a:focus .entry-card section.title, .entry-card:hover section.title {
-  color: var(--primary-200);
+  color: var(--primary-200)
 }
 
 a:focus .entry-card section.title,
 .entry-card:hover section.title {
-  text-shadow: 0px 0px 7px var(--primary-500);
+  text-shadow: 0px 0px 7px var(--primary-500)
 }

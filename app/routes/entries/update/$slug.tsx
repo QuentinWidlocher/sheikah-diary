@@ -18,7 +18,6 @@ import {
 import { db } from '~/utils/db'
 import formStylesheet from '~/styles/forms.css'
 import { updateAction } from '~/features/entries/api/update'
-import { deleteAction } from '~/features/entries/api/delete'
 
 export let links: LinksFunction = () => [
   { rel: 'stylesheet', href: formStylesheet },

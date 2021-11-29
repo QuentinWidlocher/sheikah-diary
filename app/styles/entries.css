@@ -14,6 +14,7 @@
     padding: 0.75rem;
   }
   .entries-layout > header nav, .entries-layout > footer nav {
+      position: relative;
       z-index: 1;
     }
   .entries-layout > header .bg-picture, .entries-layout > footer .bg-picture {
@@ -33,6 +34,8 @@
     margin-right: -1.25rem;
     overflow-y: auto;
     overflow-x: hidden;
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
     box-shadow: inset 0px 0px 20px var(--primary-500);
   }
   .entries-layout > main .bg-picture {
@@ -48,7 +51,7 @@
     }
 
 a.button, button {
-  border-radius: 0.25rem;
+  border-radius: 0.5rem;
   border-width: 1px;
   border-color: transparent;
 }
@@ -79,22 +82,11 @@ a.button > svg, button > svg {
     filter: drop-shadow(var(--primary-shadow));
   }
 
-a.button.danger, button.danger {
-    border-radius: 0.25rem;
-    border-width: 1px;
-    border-color: transparent
-  }
-
 a.button.danger:hover, button.danger:hover {
     border-color: var(--danger-500);
   }
 
 a.button.danger, button.danger {
-    padding-left: 1.25rem;
-    padding-right: 1.25rem;
-    padding-top: 0.75rem;
-    padding-bottom: 0.75rem;
-    font-weight: 700;
     color: var(--danger-500);
     text-shadow: var(--danger-shadow);
   }

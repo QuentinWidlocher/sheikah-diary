@@ -12,7 +12,6 @@ import EntryCard from '~/features/entries/components/entry-card.browser'
 import { EntryInList } from '~/features/entries/types/entries'
 import { db } from '~/utils/db'
 import entryCardStylesheet from '~/styles/entry-card.css'
-import { deleteAction } from '~/features/entries/api/delete'
 import { pictures } from '~/utils/storage'
 import SheikahLogo from '~/components/sheika-logo'
 import { FiPlus } from 'react-icons/fi'
@@ -57,7 +56,7 @@ export let loader: LoaderFunction = async ({ request }) => {
       link: `/entries/${entry.slug}`,
       thumbnailUrl: entry.pictures?.[0]?.thumbnail
         ? (await pictures.getPublicUrl(entry.pictures?.[0]?.thumbnail)
-            .publicURL) ?? undefined
+          .publicURL) ?? undefined
         : undefined,
     })),
   )
@@ -75,13 +74,13 @@ export default function EntriesIndexPage() {
   if (total > 0) {
     return (
       <div className="md:p-10 lg:p-20">
-        <ul className="md:px-10 lg:px-20 flex flex-wrap ">
+        <ul className="md:px-10 lg:px-20 flex flex-wrap">
           {entries.map((entry) => (
             <li
               className="w-full md:w-1/3 lg:w-1/4 xl:w-1/5 p-5"
               key={entry.link}
             >
-              <Link to={entry.link} className="outline-none">
+              <Link prefetch="intent" to={entry.link} className="outline-none">
                 <EntryCard entry={entry} />
               </Link>
             </li>
@@ -90,20 +89,22 @@ export default function EntriesIndexPage() {
         <nav>
           <div className="w-full flex justify-center space-x-5">
             {page - 1 > 0 ? (
-              <Link className="button" to={'?p=' + (page - 1)}>
+              <Link prefetch="intent" className="button" to={'?p=' + (page - 1)}>
                 Previous page
               </Link>
             ) : null}
             {page + 1 <= total / itemsPerPage ? (
-              <Link className="button" to={'?p=' + (page + 1)}>
+              <Link prefetch="intent" className="button" to={'?p=' + (page + 1)}>
                 Next page
               </Link>
             ) : null}
           </div>
 
-          <small className="block w-full text-center text-primary-500">
-            Page {page} / {Math.ceil(total / itemsPerPage)}
-          </small>
+          {total > itemsPerPage ? (
+            <small className="block w-full text-center text-primary-500">
+              Page {page} / {Math.ceil(total / itemsPerPage)}
+            </small>
+          ) : null}
         </nav>
       </div>
     )

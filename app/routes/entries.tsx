@@ -1,4 +1,4 @@
-import { Link, LinksFunction, Outlet } from 'remix'
+import { Link, LinksFunction, NavLink, Outlet } from 'remix'
 import { FiArrowLeft, FiPlus } from 'react-icons/fi'
 import entriesStylesheet from '~/styles/entries.css'
 import { deleteAction } from '~/features/entries/api/delete'
