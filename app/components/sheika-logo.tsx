@@ -1,4 +1,8 @@
-export default function SheikahLogo({ className = '' }: { className: string }) {
+export default function SheikahLogo({
+  className = 'w-full h-full',
+}: {
+  className?: string
+}) {
   return (
     <svg
       className={className}

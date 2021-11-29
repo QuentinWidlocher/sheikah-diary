@@ -14,6 +14,8 @@ import { db } from '~/utils/db'
 import entryCardStylesheet from '~/styles/entry-card.css'
 import { deleteAction } from '~/features/entries/api/delete'
 import { pictures } from '~/utils/storage'
+import SheikahLogo from '~/components/sheika-logo'
+import { FiPlus } from 'react-icons/fi'
 
 const itemsPerPage = 10
 
@@ -70,38 +72,55 @@ export default function EntriesIndexPage() {
     entries: EntryInList[]
   }>(useLoaderData())
 
-  return (
-    <div className="md:p-10 lg:p-20">
-      <ul className="md:px-10 lg:px-20 flex flex-wrap ">
-        {entries.map((entry) => (
-          <li
-            className="w-full md:w-1/3 lg:w-1/4 xl:w-1/5 p-5"
-            key={entry.link}
-          >
-            <Link to={entry.link} className="outline-none">
-              <EntryCard entry={entry} />
-            </Link>
-          </li>
-        ))}
-      </ul>
-      <nav>
-        <div className="w-full flex justify-center space-x-5">
-          {page - 1 > 0 ? (
-            <Link className="button" to={'?p=' + (page - 1)}>
-              Previous page
-            </Link>
-          ) : null}
-          {page + 1 <= total / itemsPerPage ? (
-            <Link className="button" to={'?p=' + (page + 1)}>
-              Next page
-            </Link>
-          ) : null}
-        </div>
+  if (total > 0) {
+    return (
+      <div className="md:p-10 lg:p-20">
+        <ul className="md:px-10 lg:px-20 flex flex-wrap ">
+          {entries.map((entry) => (
+            <li
+              className="w-full md:w-1/3 lg:w-1/4 xl:w-1/5 p-5"
+              key={entry.link}
+            >
+              <Link to={entry.link} className="outline-none">
+                <EntryCard entry={entry} />
+              </Link>
+            </li>
+          ))}
+        </ul>
+        <nav>
+          <div className="w-full flex justify-center space-x-5">
+            {page - 1 > 0 ? (
+              <Link className="button" to={'?p=' + (page - 1)}>
+                Previous page
+              </Link>
+            ) : null}
+            {page + 1 <= total / itemsPerPage ? (
+              <Link className="button" to={'?p=' + (page + 1)}>
+                Next page
+              </Link>
+            ) : null}
+          </div>
 
-        <small className="block w-full text-center text-primary-500">
-          Page {page} / {Math.ceil(total / itemsPerPage)}
-        </small>
-      </nav>
-    </div>
-  )
+          <small className="block w-full text-center text-primary-500">
+            Page {page} / {Math.ceil(total / itemsPerPage)}
+          </small>
+        </nav>
+      </div>
+    )
+  } else {
+    return (
+      <div className="h-full w-full flex">
+        <div className="m-auto flex flex-col text-primary-500">
+          <SheikahLogo className="w-60 h-60 filter drop-shadow-primary" />
+          <span className="font-bold text-2xl mx-auto text-shadow-primary">
+            No entries yet
+          </span>
+          <Link to="/entries/new" className="button flex mx-auto mt-5">
+            <FiPlus size="1.5rem" className="mr-3" />
+            Add an entry
+          </Link>
+        </div>
+      </div>
+    )
+  }
 }

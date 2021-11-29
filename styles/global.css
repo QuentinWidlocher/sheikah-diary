@@ -60,3 +60,7 @@ body {
   --danger-shadow-inset: inset 0px 0px 7px var(--danger-500);
   --danger-shadow-full: var(--danger-shadow), var(--danger-shadow-inset);
 }
+
+.text-shadow-primary {
+  text-shadow: var(--primary-shadow);
+}

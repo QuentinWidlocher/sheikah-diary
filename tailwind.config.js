@@ -32,6 +32,13 @@ module.exports = {
         primary: shadesFromVariable('primary'),
         secondary: shadesFromVariable('secondary'),
         danger: shadesFromVariable('danger'),
+      },
+      boxShadow: {
+        primary: 'var(--primary-shadow)',
+        'primary-full': 'var(--primary-shadow-full)',
+      },
+      dropShadow: {
+        primary: 'var(--primary-shadow)',
       }
     },
   },
