@@ -1,0 +1,7 @@
+.backdrop {
+  @apply absolute top-0 left-0 w-full h-full flex;
+}
+
+* {
+  '--primary-500':'white','--primary-600': 'white';
+}

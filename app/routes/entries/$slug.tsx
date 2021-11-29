@@ -6,6 +6,7 @@ import {
   MetaFunction,
   redirect,
   useLoaderData,
+  useTransition,
 } from 'remix'
 import { z } from 'zod'
 import { db } from '~/utils/db'
@@ -17,7 +18,11 @@ import {
   prismaSelectSimpleEntry,
   SimpleEntry,
 } from '~/features/entries/types/entries'
-import { FiEdit3 } from 'react-icons/fi'
+import { FiEdit3, FiTrash } from 'react-icons/fi'
+import EntryDeleteModal from '~/features/entries/components/entry-delete-modal'
+import { useState } from 'react'
+import { deleteAction } from '~/features/entries/api/delete'
+import { pictures } from '~/utils/storage'
 
 export let links: LinksFunction = () => [
   { rel: 'stylesheet', href: entryCardStylesheet },
@@ -34,7 +39,7 @@ export let loader: LoaderFunction = async ({ params }) => {
   let slug = z.string().parse(params?.slug)
 
   let entry = await db.entry.findFirst({
-    select: prismaSelectSimpleEntry,
+    select: { ...prismaSelectSimpleEntry, id: true },
     where: {
       slug,
     },
@@ -44,13 +49,35 @@ export let loader: LoaderFunction = async ({ params }) => {
     return redirect('/entries')
   }
 
-  return serialize(entry)
+  let result: SimpleEntry & { id: string } = {
+    ...entry,
+    pictures: await Promise.all(
+      entry.pictures.map(async (p) => ({
+        file: (await pictures.getPublicUrl(p.file).publicURL) ?? '',
+        preview:
+          (await pictures.getPublicUrl(p.preview).publicURL) ?? 'undefined',
+      })),
+    ),
+  }
+
+  return serialize(result)
 }
 
+export let action = deleteAction
+
 export default function EntriesByIdPage() {
-  let { slug, title, content, createdAt, pictures }: SimpleEntry = deserialize(
-    useLoaderData(),
-  )
+  let {
+    id,
+    slug,
+    title,
+    content,
+    createdAt,
+    pictures,
+  }: SimpleEntry & { id: string } = deserialize(useLoaderData())
+
+  const [showDeleteModal, setShowDeleteModal] = useState(false)
+
+  let transition = useTransition()
 
   return (
     <article>
@@ -78,14 +105,27 @@ export default function EntriesByIdPage() {
         </fieldset>
         <fieldset className="mt-auto">
           <legend>Actions</legend>
-          <nav className="mt-3 flex justify-center">
+          <nav className="mt-3 flex justify-center space-x-5">
             <Link className="button flex" to={'/entries/update/' + slug}>
               <FiEdit3 size="1.5rem" className="mr-3" />
               Update
             </Link>
+            <button
+              className="danger flex"
+              onClick={() => setShowDeleteModal(true)}
+            >
+              <FiTrash size="1.5rem" className="mr-3" />
+              Delete
+            </button>
           </nav>
         </fieldset>
       </section>
+      <EntryDeleteModal
+        entryId={id}
+        transition={transition}
+        show={showDeleteModal}
+        onCancel={() => setShowDeleteModal(false)}
+      />
     </article>
   )
 }

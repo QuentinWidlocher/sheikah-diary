@@ -38,6 +38,7 @@ export let baseUpdateAction = async (
 }
 
 export let createAction: ActionFunction = async ({ request }) => {
+  console.log('Request to create entry')
   return baseUpdateAction(request, async (form) => {
     let data: NewEntry = {
       title: form.title,
@@ -56,6 +57,7 @@ export let createAction: ActionFunction = async ({ request }) => {
 }
 
 export let updateAction: ActionFunction = async ({ request }) => {
+  console.log('Request to update entry')
   return baseUpdateAction(request, async (form) => {
     let data: NewEntry = {
       title: form.title,

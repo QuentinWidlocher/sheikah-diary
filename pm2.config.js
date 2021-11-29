@@ -23,8 +23,6 @@ module.exports = {
             autorestart: false,
             watch: [
                 './tailwind.config.js',
-                './app/**/*.ts',
-                './app/**/*.tsx',
                 './styles/**/*.css',
             ],
             env: {

@@ -47,9 +47,9 @@ export async function saveImage(base64: string, entryId: string) {
 
     return db.picture.create({
       data: {
-        file: (await pictures.getPublicUrl(fileName).publicURL) ?? '',
-        preview: (await pictures.getPublicUrl(previewFileName).publicURL) ?? '',
-        thumbnail: (await pictures.getPublicUrl(thumbnailFileName).publicURL) ?? '',
+        file: fileName,
+        preview: previewFileName,
+        thumbnail: thumbnailFileName,
         entryId
       }
     })

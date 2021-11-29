@@ -41,7 +41,22 @@ body {
   --secondary-800: #383531ff;
   --secondary-900: #2c2c2cff;
 
+  --danger-50: #efafbbff;
+  --danger-100: #e994a1ff;
+  --danger-200: #e37987ff;
+  --danger-300: #dd5e6dff;
+  --danger-400: #da5160ff;
+  --danger-500: #d64352ff;
+  --danger-600: #b73844ff;
+  --danger-700: #982d35ff;
+  --danger-800: #792226ff;
+  --danger-900: #591717ff;
+
   --primary-shadow: 0px 0px 7px var(--primary-500);
   --primary-shadow-inset: inset 0px 0px 7px var(--primary-500);
   --primary-shadow-full: var(--primary-shadow), var(--primary-shadow-inset);
+
+  --danger-shadow: 0px 0px 7px var(--danger-500);
+  --danger-shadow-inset: inset 0px 0px 7px var(--danger-500);
+  --danger-shadow-full: var(--danger-shadow), var(--danger-shadow-inset);
 }

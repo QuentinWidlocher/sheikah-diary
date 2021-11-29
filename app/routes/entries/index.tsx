@@ -12,6 +12,8 @@ import EntryCard from '~/features/entries/components/entry-card.browser'
 import { EntryInList } from '~/features/entries/types/entries'
 import { db } from '~/utils/db'
 import entryCardStylesheet from '~/styles/entry-card.css'
+import { deleteAction } from '~/features/entries/api/delete'
+import { pictures } from '~/utils/storage'
 
 const itemsPerPage = 10
 
@@ -47,13 +49,16 @@ export let loader: LoaderFunction = async ({ request }) => {
     },
   })
 
-  let entries: EntryInList[] = data.map((entry) => ({
-    ...entry,
-    link: `/entries/${entry.slug}`,
-    thumbnailUrl: entry.pictures?.[0]?.thumbnail
-      ? entry.pictures?.[0]?.thumbnail
-      : undefined,
-  }))
+  let entries: EntryInList[] = await Promise.all(
+    data.map(async (entry) => ({
+      ...entry,
+      link: `/entries/${entry.slug}`,
+      thumbnailUrl: entry.pictures?.[0]?.thumbnail
+        ? (await pictures.getPublicUrl(entry.pictures?.[0]?.thumbnail)
+            .publicURL) ?? undefined
+        : undefined,
+    })),
+  )
 
   return serialize({ page: pageNumber + 1, total, entries })
 }

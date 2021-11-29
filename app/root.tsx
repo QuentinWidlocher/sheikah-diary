@@ -70,7 +70,7 @@ function Document({
         <Meta />
         <Links />
       </head>
-      <body className="min-h-screen w-screen text-base bg-base-800">
+      <body className="min-h-screen w-screen text-base bg-base-800 overflow-hidden">
         {children}
         <RouteChangeAnnouncement />
         <ScrollRestoration />

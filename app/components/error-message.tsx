@@ -8,6 +8,6 @@ export default function ErrorMessage({
   className = '',
 }: ErrorMessageProps) {
   return error?._errors?.length ? (
-    <small className={'text-red-500 ' + className}>{error._errors[0]}</small>
+    <small className={'text-danger-500 ' + className}>{error._errors[0]}</small>
   ) : null
 }

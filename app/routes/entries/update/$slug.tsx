@@ -1,5 +1,6 @@
 import { Entry } from '@prisma/client'
 import {
+  ActionFunction,
   Link,
   LinksFunction,
   LoaderFunction,
@@ -17,6 +18,7 @@ import {
 import { db } from '~/utils/db'
 import formStylesheet from '~/styles/forms.css'
 import { updateAction } from '~/features/entries/api/update'
+import { deleteAction } from '~/features/entries/api/delete'
 
 export let links: LinksFunction = () => [
   { rel: 'stylesheet', href: formStylesheet },
@@ -26,7 +28,7 @@ export let loader: LoaderFunction = async ({ params }) => {
   let slug = z.string().parse(params?.slug)
 
   let entry = await db.entry.findFirst({
-    select: { ...prismaSelectSimpleEntry, slug: true },
+    select: { ...prismaSelectSimpleEntry },
     where: {
       slug,
     },

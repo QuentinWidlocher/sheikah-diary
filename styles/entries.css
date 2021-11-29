@@ -26,6 +26,19 @@ button {
   > svg {
     filter: drop-shadow(var(--primary-shadow));
   }
+
+  &.danger {
+    @apply text-danger-500 font-bold px-5 py-3 border border-transparent rounded hover:border-danger-500;
+
+    text-shadow: var(--danger-shadow);
+    &:hover {
+      box-shadow: var(--danger-shadow-full);
+    }
+
+    > svg {
+      filter: drop-shadow(var(--danger-shadow));
+    }
+  }
 }
 
 hr {
