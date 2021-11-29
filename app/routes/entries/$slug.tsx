@@ -13,6 +13,11 @@ import { deserialize, serialize } from 'superjson'
 import { displayDateTime } from '~/utils/date.utils'
 import entryCardStylesheet from '~/styles/entry.css'
 import SheikahLogo from '~/components/sheika-logo'
+import {
+  prismaSelectSimpleEntry,
+  SimpleEntry,
+} from '~/features/entries/types/entries'
+import { FiEdit3 } from 'react-icons/fi'
 
 export let links: LinksFunction = () => [
   { rel: 'stylesheet', href: entryCardStylesheet },
@@ -25,20 +30,11 @@ export let meta: MetaFunction = ({ data }) => {
   }
 }
 
-type SimpleEntry = Pick<Entry, 'title' | 'content' | 'createdAt'> & {
-  pictures: Picture[]
-}
-
 export let loader: LoaderFunction = async ({ params }) => {
   let slug = z.string().parse(params?.slug)
 
   let entry = await db.entry.findFirst({
-    select: {
-      title: true,
-      content: true,
-      createdAt: true,
-      pictures: true,
-    },
+    select: prismaSelectSimpleEntry,
     where: {
       slug,
     },
@@ -52,7 +48,7 @@ export let loader: LoaderFunction = async ({ params }) => {
 }
 
 export default function EntriesByIdPage() {
-  let { title, content, createdAt, pictures }: SimpleEntry = deserialize(
+  let { slug, title, content, createdAt, pictures }: SimpleEntry = deserialize(
     useLoaderData(),
   )
 
@@ -75,10 +71,19 @@ export default function EntriesByIdPage() {
           {displayDateTime(createdAt)}
         </small>
       </section>
-      <section>
+      <section className="flex flex-col flex-1 pb-5">
         <fieldset>
           <legend>Description</legend>
           <p>{content}</p>
+        </fieldset>
+        <fieldset className="mt-auto">
+          <legend>Actions</legend>
+          <nav className="mt-3 flex justify-center">
+            <Link className="button flex" to={'/entries/update/' + slug}>
+              <FiEdit3 size="1.5rem" className="mr-3" />
+              Update
+            </Link>
+          </nav>
         </fieldset>
       </section>
     </article>
