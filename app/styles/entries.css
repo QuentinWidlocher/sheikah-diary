@@ -11,8 +11,11 @@
     padding: 0.75rem;
   }
   .entries-layout > main {
+    margin-left: -1.25rem;
+    margin-right: -1.25rem;
     overflow-y: auto;
     overflow-x: hidden;
+    box-shadow: inset 0px 0px 20px var(--primary-500);
   }
 
 a.button, button {
