@@ -8,7 +8,7 @@ import {
   useTransition,
 } from 'remix'
 import { z } from 'zod'
-import { db } from '~/utils/db'
+import { db } from '~/utils/db.server.'
 import { deserialize, serialize } from 'superjson'
 import { displayDateTime } from '~/utils/date.utils'
 import entryCardStylesheet from '~/styles/entry.css'

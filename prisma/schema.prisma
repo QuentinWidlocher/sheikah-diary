@@ -18,6 +18,8 @@ model Entry {
   updatedAt DateTime  @updatedAt
   content   String
   pictures  Picture[]
+  userId    String
+  user      User      @relation(fields: [userId], references: [id])
 }
 
 model Picture {
@@ -27,4 +29,13 @@ model Picture {
   thumbnail String @unique
   entryId   String
   entry     Entry  @relation(fields: [entryId], references: [id])
+}
+
+model User {
+  id           String   @id @default(uuid())
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  username     String   @unique
+  passwordHash String
+  entries      Entry[]
 }

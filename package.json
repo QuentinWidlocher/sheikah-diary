@@ -19,6 +19,7 @@
     "@remix-run/serve": "1.0.6",
     "@remix-run/vercel": "1.0.6",
     "@supabase/supabase-js": "^1.28.2",
+    "bcrypt": "^5.0.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-icons": "^4.3.1",
@@ -30,6 +31,7 @@
   },
   "devDependencies": {
     "@remix-run/dev": "^1.0.4",
+    "@types/bcrypt": "^5.0.0",
     "@types/react": "^17.0.24",
     "@types/react-dom": "^17.0.9",
     "@types/sharp": "^0.29.4",

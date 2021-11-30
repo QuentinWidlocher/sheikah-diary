@@ -1,7 +1,8 @@
 import { ActionFunction, redirect } from 'remix'
 import { z } from 'zod'
-import { db } from '~/utils/db'
+import { db } from '~/utils/db.server.'
 import { base64ImageValidTypeRegex, saveImage } from '~/utils/file.utils.server'
+import { requireUserId } from '~/utils/session.server'
 import { slugify } from '~/utils/string.utils'
 import { NewEntry } from '../types/entries'
 
@@ -19,8 +20,12 @@ export type FormError = z.ZodFormattedError<z.infer<typeof formValidator>>
 
 export let baseUpdateAction = async (
   request: Request,
-  action: (data: z.infer<typeof formValidator>) => Promise<string>,
+  action: (
+    data: z.infer<typeof formValidator> & { userId: string },
+  ) => Promise<string>,
 ) => {
+  let userId = await requireUserId(request)
+
   // Idk why but await request.formData() justs freezes
   let formData = new URLSearchParams(await request.text())
 
@@ -32,7 +37,7 @@ export let baseUpdateAction = async (
     return parsedForm.error.format()
   }
 
-  let slug = await action(parsedForm.data)
+  let slug = await action({ ...parsedForm.data, userId })
 
   return redirect(`/entries/${slug}`)
 }
@@ -44,6 +49,7 @@ export let createAction: ActionFunction = async ({ request }) => {
       title: form.title,
       content: form.content,
       slug: slugify(form.title),
+      userId: form.userId,
     }
 
     let createdEntry = await db.entry.create({ data })
@@ -63,6 +69,7 @@ export let updateAction: ActionFunction = async ({ request }) => {
       title: form.title,
       content: form.content,
       slug: slugify(form.title),
+      userId: form.userId,
     }
 
     let updatedEntry = await db.entry.update({

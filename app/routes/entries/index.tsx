@@ -10,7 +10,7 @@ import {
 import { deserialize, serialize } from 'superjson'
 import EntryCard from '~/features/entries/components/entry-card.browser'
 import { EntryInList } from '~/features/entries/types/entries'
-import { db } from '~/utils/db'
+import { db } from '~/utils/db.server.'
 import entryCardStylesheet from '~/styles/entry-card.css'
 import { pictures } from '~/utils/storage'
 import SheikahLogo from '~/components/sheika-logo'
@@ -56,7 +56,7 @@ export let loader: LoaderFunction = async ({ request }) => {
       link: `/entries/${entry.slug}`,
       thumbnailUrl: entry.pictures?.[0]?.thumbnail
         ? (await pictures.getPublicUrl(entry.pictures?.[0]?.thumbnail)
-          .publicURL) ?? undefined
+            .publicURL) ?? undefined
         : undefined,
     })),
   )
@@ -89,12 +89,20 @@ export default function EntriesIndexPage() {
         <nav>
           <div className="w-full flex justify-center space-x-5">
             {page - 1 > 0 ? (
-              <Link prefetch="intent" className="button" to={'?p=' + (page - 1)}>
+              <Link
+                prefetch="intent"
+                className="button"
+                to={'?p=' + (page - 1)}
+              >
                 Previous page
               </Link>
             ) : null}
             {page + 1 <= total / itemsPerPage ? (
-              <Link prefetch="intent" className="button" to={'?p=' + (page + 1)}>
+              <Link
+                prefetch="intent"
+                className="button"
+                to={'?p=' + (page + 1)}
+              >
                 Next page
               </Link>
             ) : null}
