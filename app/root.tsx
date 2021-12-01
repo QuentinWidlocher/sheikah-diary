@@ -115,7 +115,7 @@ function Document({
 }
 
 function Layout({ children }: React.PropsWithChildren<{}>) {
-  return <div className="fixed w-screen h-screen text-base bg-primary-800 flex flex-col">{children}</div>
+  return <div className="fixed w-full h-full text-base bg-primary-800 flex flex-col">{children}</div>
 }
 
 export function CatchBoundary() {

@@ -1,5 +1,5 @@
 .entries-layout {
-  @apply h-screen w-screen;
+  @apply h-full w-full;
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: auto 1fr auto;
