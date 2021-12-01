@@ -84,7 +84,6 @@ export async function requireUserId(
 }
 
 export async function getUser(request: Request) {
-  console.log('Request to get user')
   let userId = await getUserId(request)
   if (typeof userId !== 'string') {
     console.log('Unable to get user')

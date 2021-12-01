@@ -25,18 +25,24 @@ export default function EntryForm({
   defaultValues,
   ButtonsSlot,
 }: EntryFormProps) {
-  const [mainPictureB64, setMainPictureB64] = useState<
+  const [mainPicture, setMainPicture] = useState<
     { b64: string; name: string } | undefined
   >(undefined)
 
   const imageInputRef = useRef<HTMLInputElement>(null)
 
   async function dataToByteArray(files: FileList | null) {
+    console.log(files)
     if (files != null) {
-      setMainPictureB64({ b64: await toBase64(files[0]), name: files[0].name })
+      console.log(files[0].name)
+      let b64 = await toBase64(files[0])
+      console.log(b64)
+      setMainPicture({ b64, name: files[0].name })
     } else {
-      setMainPictureB64(undefined)
+      setMainPicture(undefined)
     }
+
+    console.log(mainPicture)
   }
 
   return (
@@ -48,7 +54,7 @@ export default function EntryForm({
               type="hidden"
               name="mainPicture"
               readOnly
-              value={mainPictureB64?.b64}
+              value={mainPicture?.b64}
             />
             <input
               ref={imageInputRef}
@@ -63,7 +69,7 @@ export default function EntryForm({
               onClick={() => imageInputRef.current?.click()}
             >
               <FiImage size="1.5rem" className="mr-3" />
-              {mainPictureB64?.name ?? 'Add a picture'}
+              {mainPicture?.name ?? 'Add a picture'}
             </button>
           </FormField>
           <FormField label="Title" error={errors?.title}>
