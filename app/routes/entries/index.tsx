@@ -8,7 +8,7 @@ import {
   useLoaderData,
 } from 'remix'
 import { deserialize, serialize } from 'superjson'
-import EntryCard from '~/features/entries/components/entry-card.browser'
+import EntryCard from '~/features/entries/components/entry-card'
 import { EntryInList } from '~/features/entries/types/entries'
 import { db } from '~/utils/db.server.'
 import entryCardStylesheet from '~/styles/entry-card.css'

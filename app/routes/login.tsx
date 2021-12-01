@@ -1,90 +1,22 @@
-import { ActionFunction, Form, LinksFunction } from 'remix'
-import { useActionData, Link, useSearchParams } from 'remix'
-import { z } from 'zod'
+import {
+  Form,
+  Link,
+  LinksFunction,
+  useActionData,
+  useSearchParams,
+} from 'remix'
 import ErrorMessage from '~/components/error-message'
-import { db } from '~/utils/db.server.'
-import { createUserSession, login, register } from '~/utils/session.server'
+import { loginAction, LoginFormError } from '~/features/login/api'
 import stylesUrl from '../styles/login.css'
 
 export let links: LinksFunction = () => {
   return [{ rel: 'stylesheet', href: stylesUrl }]
 }
 
-let formValidator = z.object({
-  username: z.string().min(1, { message: 'The username is required' }),
-  password: z
-    .string()
-    .min(6, { message: 'The password must be at least 6 characters' }),
-  redirectTo: z.string().optional(),
-  loginType: z.literal('login').or(z.literal('register')),
-})
-
-type FormType = z.infer<typeof formValidator>
-type FormError = z.ZodFormattedError<FormType>
-
-export let action: ActionFunction = async ({
-  request,
-}): Promise<Response | FormError> => {
-  let formData = await request.formData()
-
-  let parsedFormData = formValidator.safeParse(
-    Object.fromEntries(formData.entries()),
-  )
-
-  if (!parsedFormData.success) {
-    return parsedFormData.error.format()
-  }
-
-  let {
-    loginType,
-    password,
-    username,
-    redirectTo = '/entries',
-  } = parsedFormData.data
-
-  switch (loginType) {
-    case 'login': {
-      let user = await login({ username, password })
-      if (!user) {
-        return {
-          _errors: ['Username/Password combination is incorrect'],
-        }
-      }
-      return createUserSession(user.id, redirectTo)
-    }
-
-    case 'register': {
-      let userExists = await db.user.findFirst({
-        select: { id: true },
-        where: { username },
-      })
-
-      if (userExists) {
-        return {
-          username: {
-            _errors: [`User with username ${username} already exists`],
-          },
-          _errors: [],
-        }
-      }
-
-      let user = await register({ username, password })
-
-      if (!user) {
-        return {
-          _errors: ['Something went wrong trying to create a new user.'],
-        }
-      }
-      return createUserSession(user.id, redirectTo)
-    }
-    default: {
-      return { _errors: ['Login type invalid'] }
-    }
-  }
-}
+export let action = loginAction
 
 export default function Login() {
-  let errors = useActionData<FormError | undefined>()
+  let errors = useActionData<LoginFormError | undefined>()
   let [searchParams] = useSearchParams()
   return (
     <div className="wrapper">
