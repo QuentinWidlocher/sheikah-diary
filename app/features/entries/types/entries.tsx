@@ -9,7 +9,7 @@ export type NewEntry = Omit<Entry, 'id' | 'createdAt' | 'updatedAt'>
 
 export type SimpleEntry = Pick<
   Entry,
-  'slug' | 'title' | 'content' | 'createdAt'
+  'slug' | 'title' | 'content' | 'createdAt' | 'userId'
 > & {
   pictures: Pick<Picture, 'file' | 'preview'>[]
 }
@@ -19,6 +19,7 @@ export const prismaSelectSimpleEntry = {
   title: true,
   content: true,
   createdAt: true,
+  userId: true,
   pictures: {
     select: {
       file: true,

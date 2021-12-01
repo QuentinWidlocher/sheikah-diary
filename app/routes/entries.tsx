@@ -6,6 +6,7 @@ import {
   NavLink,
   Outlet,
   useLoaderData,
+  useMatches,
 } from 'remix'
 import { FiArrowLeft, FiPlus } from 'react-icons/fi'
 import entriesStylesheet from '~/styles/entries.css'
@@ -17,18 +18,13 @@ export let links: LinksFunction = () => [
   { rel: 'stylesheet', href: entriesStylesheet },
 ]
 
-export let loader: LoaderFunction = async ({ request }) => {
-  let currentUrl = new URL(request.url).pathname
-  let user = await getUser(request)
-  return { currentUrl, user }
-}
+export let loader: LoaderFunction = async ({ request }) => getUser(request)
 
 // We just display the pages for now, we use this file to link the stylesheet
 export default function EntriesMainPage() {
-  let { currentUrl, user } = useLoaderData<{
-    currentUrl: string
-    user: User | null
-  }>()
+  let user = useLoaderData<User | null>()
+  let matches = useMatches()
+  let currentRoute = matches[matches.length - 1].pathname
 
   return (
     <div className="entries-layout">
@@ -41,10 +37,16 @@ export default function EntriesMainPage() {
           </Link>
           {user ? (
             <Form action="/logout" method="post">
+              <input
+                type="hidden"
+                name="redirectTo"
+                readOnly
+                value={currentRoute}
+              />
               <button type="submit">{user.username} (Logout)</button>
             </Form>
           ) : (
-            <Link className="button" to={`/login?redirectTo=${currentUrl}`}>
+            <Link className="button" to={`/login?redirectTo=${currentRoute}`}>
               Login
             </Link>
           )}

@@ -38,6 +38,7 @@ module.exports = {
       },
       dropShadow: {
         primary: 'var(--primary-shadow)',
+        'base': '0px 0px 10px var(--base)'
       },
       borderWidth: {
         '6': '6px'
@@ -45,7 +46,9 @@ module.exports = {
     },
   },
   variants: {
-    extend: {},
+    extend: {
+      dropShadow: ['hover', 'focus'],
+    },
   },
   plugins: [],
 }

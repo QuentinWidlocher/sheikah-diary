@@ -24,6 +24,11 @@
       width: 50%
     }
   }
+  @media (min-width: 1024px) {
+    .wrapper .content {
+      width: 40%
+    }
+  }
   .wrapper .content h1 {
       width: 100%;
       text-align: center;
@@ -40,6 +45,7 @@
         margin-bottom: 0.75rem;
         display: flex;
         width: 100%;
+        flex-wrap: wrap;
       }
   .wrapper .content form .form-group label:not(.radio) {
           display: flex;
@@ -55,6 +61,9 @@
           padding-top: 0.5rem;
           padding-bottom: 0.5rem;
           font-weight: 700;
+          transition-property: all;
+          transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+          transition-duration: 150ms;
         }
   .wrapper .content form .form-group input {
           width: 50%;
@@ -75,6 +84,9 @@
           font-weight: 700;
           outline: 2px solid transparent;
           outline-offset: 2px;
+          transition-property: all;
+          transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+          transition-duration: 150ms;
         }
   .wrapper .content form .form-group:focus-within label:not(.radio) {
             --tw-bg-opacity: 0.3;
@@ -85,6 +97,7 @@
           }
   .wrapper .content form fieldset .form-group {
         width: 100%;
+        flex-wrap: nowrap;
         border-top-right-radius: 0.125rem;
         border-bottom-right-radius: 0.125rem;
         border-width: 6px;
@@ -126,6 +139,9 @@
             padding-top: 0.5rem;
             padding-bottom: 0.5rem;
             text-align: center;
+            transition-property: all;
+            transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+            transition-duration: 150ms;
           }
   .wrapper .content form fieldset .form-group label.radio:focus-within {
             --tw-border-opacity: 1;
@@ -150,6 +166,9 @@
         font-weight: 700;
         outline: 2px solid transparent;
         outline-offset: 2px;
+        transition-property: all;
+        transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+        transition-duration: 150ms;
       }
   .wrapper .content form button.button:hover, .wrapper .content form button.button:focus, .wrapper .content form button.button:active {
           --tw-border-opacity: 1;

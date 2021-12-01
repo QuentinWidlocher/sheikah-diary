@@ -1,4 +1,4 @@
-import { Entry } from '@prisma/client'
+import { Entry, User } from '@prisma/client'
 import {
   ErrorBoundaryComponent,
   Link,
@@ -15,6 +15,7 @@ import entryCardStylesheet from '~/styles/entry-card.css'
 import { pictures } from '~/utils/storage'
 import SheikahLogo from '~/components/sheika-logo'
 import { FiPlus } from 'react-icons/fi'
+import { getUser } from '~/utils/session.server'
 
 const itemsPerPage = 10
 
@@ -61,14 +62,20 @@ export let loader: LoaderFunction = async ({ request }) => {
     })),
   )
 
-  return serialize({ page: pageNumber + 1, total, entries })
+  return serialize({
+    page: pageNumber + 1,
+    total,
+    entries,
+    user: await getUser(request),
+  })
 }
 
 export default function EntriesIndexPage() {
-  let { page, total, entries } = deserialize<{
+  let { page, total, entries, user } = deserialize<{
     page: number
     total: number
     entries: EntryInList[]
+    user: User | null
   }>(useLoaderData())
 
   if (total > 0) {
@@ -124,10 +131,12 @@ export default function EntriesIndexPage() {
           <span className="font-bold text-2xl mx-auto text-shadow-primary">
             No entries yet
           </span>
-          <Link to="/entries/new" className="button flex mx-auto mt-5">
-            <FiPlus size="1.5rem" className="mr-3" />
-            Add an entry
-          </Link>
+          {!user ? null : (
+            <Link to="/entries/new" className="button flex mx-auto mt-5">
+              <FiPlus size="1.5rem" className="mr-3" />
+              Add an entry
+            </Link>
+          )}
         </div>
       </div>
     )

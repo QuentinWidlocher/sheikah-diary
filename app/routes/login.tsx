@@ -1,5 +1,7 @@
-import type { ActionFunction, LinksFunction } from 'remix'
+import { ActionFunction, Form, LinksFunction } from 'remix'
 import { useActionData, Link, useSearchParams } from 'remix'
+import { z } from 'zod'
+import ErrorMessage from '~/components/error-message'
 import { db } from '~/utils/db.server.'
 import { createUserSession, login, register } from '~/utils/session.server'
 import stylesUrl from '../styles/login.css'
@@ -8,103 +10,89 @@ export let links: LinksFunction = () => {
   return [{ rel: 'stylesheet', href: stylesUrl }]
 }
 
-function validateUsername(username: unknown) {
-  if (typeof username !== 'string' || username.length < 3) {
-    return `Usernames must be at least 3 characters long`
-  }
-}
+let formValidator = z.object({
+  username: z.string().min(1, { message: 'The username is required' }),
+  password: z
+    .string()
+    .min(6, { message: 'The password must be at least 6 characters' }),
+  redirectTo: z.string().optional(),
+  loginType: z.literal('login').or(z.literal('register')),
+})
 
-function validatePassword(password: unknown) {
-  if (typeof password !== 'string' || password.length < 6) {
-    return `Passwords must be at least 6 characters long`
-  }
-}
-
-type ActionData = {
-  formError?: string
-  fieldErrors?: {
-    username: string | undefined
-    password: string | undefined
-  }
-  fields?: {
-    loginType: string
-    username: string
-    password: string
-  }
-}
+type FormType = z.infer<typeof formValidator>
+type FormError = z.ZodFormattedError<FormType>
 
 export let action: ActionFunction = async ({
   request,
-}): Promise<Response | ActionData> => {
-  let form = await request.formData()
-  let loginType = form.get('loginType')
-  let username = form.get('username')
-  let password = form.get('password')
-  let redirectTo = form.get('redirectTo')
-  if (
-    typeof loginType !== 'string' ||
-    typeof username !== 'string' ||
-    typeof password !== 'string' ||
-    typeof redirectTo !== 'string'
-  ) {
-    return { formError: `Form not submitted correctly.` }
+}): Promise<Response | FormError> => {
+  let formData = await request.formData()
+
+  let parsedFormData = formValidator.safeParse(
+    Object.fromEntries(formData.entries()),
+  )
+
+  if (!parsedFormData.success) {
+    return parsedFormData.error.format()
   }
 
-  let fields = { loginType, username, password }
-  let fieldErrors = {
-    username: validateUsername(username),
-    password: validatePassword(password),
-  }
-  if (Object.values(fieldErrors).some(Boolean)) return { fieldErrors, fields }
+  let {
+    loginType,
+    password,
+    username,
+    redirectTo = '/entries',
+  } = parsedFormData.data
 
   switch (loginType) {
     case 'login': {
       let user = await login({ username, password })
       if (!user) {
         return {
-          fields,
-          formError: `Username/Password combination is incorrect`,
+          _errors: ['Username/Password combination is incorrect'],
         }
       }
       return createUserSession(user.id, redirectTo)
     }
+
     case 'register': {
       let userExists = await db.user.findFirst({
+        select: { id: true },
         where: { username },
       })
+
       if (userExists) {
         return {
-          fields,
-          formError: `User with username ${username} already exists`,
+          username: {
+            _errors: [`User with username ${username} already exists`],
+          },
+          _errors: [],
         }
       }
-      const user = await register({ username, password })
+
+      let user = await register({ username, password })
+
       if (!user) {
         return {
-          fields,
-          formError: `Something went wrong trying to create a new user.`,
+          _errors: ['Something went wrong trying to create a new user.'],
         }
       }
       return createUserSession(user.id, redirectTo)
     }
     default: {
-      return { fields, formError: `Login type invalid` }
+      return { _errors: ['Login type invalid'] }
     }
   }
 }
 
 export default function Login() {
-  let actionData = useActionData<ActionData | undefined>()
+  let errors = useActionData<FormError | undefined>()
   let [searchParams] = useSearchParams()
   return (
     <div className="wrapper">
-      <div className="content" data-light="">
+      <div className="content">
         <h1>Login</h1>
-        <form
+        <Form
           method="post"
-          aria-describedby={
-            actionData?.formError ? 'form-error-message' : undefined
-          }
+          aria-describedby={errors?._errors ? 'form-error-message' : undefined}
         >
           <input
             type="hidden"
@@ -119,20 +107,12 @@ export default function Login() {
                   type="radio"
                   name="loginType"
                   value="login"
-                  defaultChecked={
-                    !actionData?.fields?.loginType ||
-                    actionData?.fields?.loginType === 'login'
-                  }
+                  defaultChecked
                 />
                 <div>Login</div>
               </label>
               <label className="radio">
-                <input
-                  type="radio"
-                  name="loginType"
-                  value="register"
-                  defaultChecked={actionData?.fields?.loginType === 'register'}
-                />{' '}
+                <input type="radio" name="loginType" value="register" />
                 <div>Register</div>
               </label>
             </div>
@@ -143,58 +123,40 @@ export default function Login() {
               type="text"
               id="username-input"
               name="username"
-              defaultValue={actionData?.fields?.username}
-              aria-invalid={Boolean(actionData?.fieldErrors?.username)}
-              aria-describedby={
-                actionData?.fieldErrors?.username ? 'username-error' : undefined
-              }
+              aria-invalid={Boolean(errors?.username)}
+              aria-describedby={errors?.username ? 'username-error' : undefined}
             />
-            {actionData?.fieldErrors?.username ? (
-              <p
-                className="form-validation-error"
-                role="alert"
-                id="username-error"
-              >
-                {actionData?.fieldErrors.username}
-              </p>
-            ) : null}
+            <div className="w-full" role="separator"></div>
+            <ErrorMessage className="ml-auto mr-2" error={errors?.username} />
           </div>
           <div className="form-group">
             <label htmlFor="password-input">Password</label>
             <input
               id="password-input"
               name="password"
-              defaultValue={actionData?.fields?.password}
               type="password"
-              aria-invalid={
-                Boolean(actionData?.fieldErrors?.password) || undefined
-              }
-              aria-describedby={
-                actionData?.fieldErrors?.password ? 'password-error' : undefined
-              }
+              aria-invalid={Boolean(errors?.password) || undefined}
+              aria-describedby={errors?.password ? 'password-error' : undefined}
             />
-            {actionData?.fieldErrors?.password ? (
-              <p
-                className="form-validation-error"
-                role="alert"
-                id="password-error"
-              >
-                {actionData?.fieldErrors.password}
-              </p>
-            ) : null}
+            <div className="w-full" role="separator"></div>
+            <ErrorMessage className="ml-auto mr-2" error={errors?.password} />
           </div>
           <div id="form-error-message">
-            {actionData?.formError ? (
-              <p className="form-validation-error" role="alert">
-                {actionData?.formError}
-              </p>
-            ) : null}
+            <ErrorMessage error={errors} onlyFirst={false} />
           </div>
           <button type="submit" className="button">
             Submit
           </button>
-        </form>
+        </Form>
       </div>
+      <nav className="absolute bottom-0 right-0 p-5 font-bold">
+        <Link
+          className="filter hover:drop-shadow-base focus:drop-shadow-base"
+          to="/entries"
+        >
+          See the entries
+        </Link>
+      </nav>
     </div>
   )
 }
