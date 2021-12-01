@@ -1,6 +1,4 @@
-import { Entry } from '@prisma/client'
 import {
-  ErrorBoundaryComponent,
   Link,
   LinksFunction,
   LoaderFunction,
@@ -93,13 +91,12 @@ export default function EntriesIndexPage() {
                 Previous page
               </Link>
             ) : null}
-            {page + 1 <= total / itemsPerPage ? (
+            {page + 1 <= Math.ceil(total / itemsPerPage) ? (
               <Link prefetch="intent" className="button" to={'?p=' + (page + 1)}>
                 Next page
               </Link>
             ) : null}
           </div>
-
           {total > itemsPerPage ? (
             <small className="block w-full text-center text-primary-500">
               Page {page} / {Math.ceil(total / itemsPerPage)}
