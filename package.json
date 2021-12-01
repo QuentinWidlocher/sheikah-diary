@@ -1,8 +1,8 @@
 {
   "private": true,
-  "name": "remix-app-template",
-  "description": "",
-  "license": "",
+  "name": "sheikah-diary",
+  "description": "Open Source app for picture sharing, based on Breath of the Wild UI",
+  "license": "GNU GPLv3",
   "prisma": {
     "seed": "node --require esbuild-register prisma/seed.ts"
   },

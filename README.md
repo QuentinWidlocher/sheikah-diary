@@ -1,22 +1,15 @@
-# Remix Template
+# Sheikah Diary
 
-With :
+> Open Source app for picture sharing, based on Breath of the Wild UI
 
-- [Remix](https://github.com/remix-run/remix) (obviously)
+[Try it here !](https://sheika-diary.vercel.app/entries)
+
+---
+
+Made with With :
+
+- [Remix](https://github.com/remix-run/remix)
 - [Tailwind CSS](https://github.com/tailwindlabs/tailwindcss)
-- [Prisma](https://github.com/prisma/prisma) (SQLite by default)
+- [Prisma](https://github.com/prisma/prisma) 
 - [Zod](https://github.com/colinhacks/zod)
-
-## Notes
-
-To prevent double render, css is compiled from `./styles` in `.cache/postcss.ignored` and then synchronized in `./app/styles`.\
-**Don't** write css inside `./app/styles` or else it will be removed!
-
----
-
-You can seed your Prisma database by updating the `seed()` function in `./prisma/seed.ts`
-
----
-
-You can access the Prisma client by importing `db` from `~/utils/db.ts`.\
-This script allow reloading the Remix server without re-creating a new database connection each time.
+- [Supabase](https://github.com/supabase/supabase)
