@@ -65,8 +65,8 @@ export let meta: MetaFunction = () => {
     'apple-mobile-web-app-capable': 'yes',
     'application-name': 'Sheika Diary',
     'apple-mobile-web-app-title': 'Sheika Diary',
-    'theme-color': '#35a0ca',
-    'msapplication-navbutton-color': '#35a0ca',
+    'theme-color': '#50463b',
+    'msapplication-navbutton-color': '#50463b',
     'apple-mobile-web-app-status-bar-style': 'black-translucent',
     'msapplication-starturl': '/',
     viewport: 'width=device-width, initial-scale=1, shrink-to-fit=no',
@@ -103,7 +103,7 @@ function Document({
         <Meta />
         <Links />
       </head>
-      <body>
+      <body style={{ backgroundColor: '#50463b' }}>
         {children}
         <RouteChangeAnnouncement />
         <ScrollRestoration />

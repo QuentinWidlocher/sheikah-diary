@@ -8,6 +8,7 @@
   > header,
   > footer {
     @apply bg-gradient-to-tr from-secondary-900 to-secondary-500 p-1 md:p-3 relative;
+    z-index: 1;
 
     nav {
       position: relative;
@@ -27,9 +28,16 @@
     }    
   }
 
+  > header {
+    box-shadow: 0px 5px 20px var(--primary-500);
+  }
+
+  > footer {
+    box-shadow: 0px -5px 20px var(--primary-500);
+  }
+
   > main {
-    @apply overflow-x-hidden overflow-y-auto -mx-5 px-5 relative;
-    box-shadow: inset 0px 0px 20px var(--primary-500);
+    @apply overflow-x-hidden overflow-y-auto relative;
 
     .bg-picture {
       background-image: url(/assets/scanlines.png);

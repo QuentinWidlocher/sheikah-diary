@@ -31,12 +31,12 @@ export default function EntriesMainPage() {
       <header>
         <div className="bg-picture"></div>
         <nav className="flex">
-          <Link to="/entries" className="button flex mr-auto">
+          {currentRoute != '/entries/' ? <Link to="/entries" className="button flex mr-auto">
             <FiArrowLeft size="1.5rem" className="mr-3" />
             Back to the entries
-          </Link>
+          </Link> : null}
           {user ? (
-            <Form action="/logout" method="post">
+            <Form className="ml-auto" action="/logout" method="post">
               <input
                 type="hidden"
                 name="redirectTo"
@@ -46,7 +46,7 @@ export default function EntriesMainPage() {
               <button type="submit">{user.username} (Logout)</button>
             </Form>
           ) : (
-            <Link className="button" to={`/login?redirectTo=${currentRoute}`}>
+            <Link className="button ml-auto" to={`/login?redirectTo=${currentRoute}`}>
               Login
             </Link>
           )}
