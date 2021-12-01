@@ -31,8 +31,8 @@ export let links: LinksFunction = () => [
 
 export let meta: MetaFunction = ({ data }) => {
   let {
-    user: { title },
-  } = deserialize<{ user: SimpleEntry }>(data)
+    entry: { title = '' },
+  } = deserialize<{ entry: SimpleEntry }>(data)
   return {
     title: `${title} | Sheikah Diary`,
   }
