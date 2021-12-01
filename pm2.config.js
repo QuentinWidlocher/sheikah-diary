@@ -2,7 +2,7 @@ module.exports = {
     apps: [
         {
             name: 'Remix',
-            script: 'remix dev',
+            script: 'remix dev --host 0.0.0.0',
             ignore_watch: ['.'],
             env: {
                 NODE_ENV: process.env.NODE_ENV ?? 'development',

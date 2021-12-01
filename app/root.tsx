@@ -99,12 +99,11 @@ function Document({
     <html lang="en">
       <head>
         <meta charSet="utf-8" />
-        <meta name="viewport" content="width=device-width,initial-scale=1" />
         {title ? <title>{title}</title> : null}
         <Meta />
         <Links />
       </head>
-      <body className="min-h-screen w-screen text-base bg-primary-800 overflow-hidden">
+      <body>
         {children}
         <RouteChangeAnnouncement />
         <ScrollRestoration />
@@ -116,7 +115,7 @@ function Document({
 }
 
 function Layout({ children }: React.PropsWithChildren<{}>) {
-  return <div className="remix-app flex flex-col">{children}</div>
+  return <div className="fixed w-screen h-screen text-base bg-primary-800 flex flex-col">{children}</div>
 }
 
 export function CatchBoundary() {

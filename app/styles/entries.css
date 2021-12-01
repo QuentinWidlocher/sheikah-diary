@@ -4,6 +4,7 @@
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: auto 1fr auto;
+  z-index: 1;
 }
   .entries-layout > header, .entries-layout > footer {
     position: relative;
@@ -11,7 +12,12 @@
     --tw-gradient-from: var(--secondary-900);
     --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgba(255, 255, 255, 0));
     --tw-gradient-to: var(--secondary-500);
-    padding: 0.75rem;
+    padding: 0.25rem;
+  }
+  @media (min-width: 768px) {
+    .entries-layout > header, .entries-layout > footer {
+      padding: 0.75rem;
+    }
   }
   .entries-layout > header nav, .entries-layout > footer nav {
       position: relative;
@@ -61,12 +67,21 @@ a.button:hover, button:hover {
 }
 
 a.button, button {
-  padding-left: 1.25rem;
-  padding-right: 1.25rem;
-  padding-top: 0.75rem;
-  padding-bottom: 0.75rem;
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
   font-weight: 700;
   color: var(--primary-500);
+}
+
+@media (min-width: 768px) {
+  a.button, button {
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+  }
 }
 
 a.button,
