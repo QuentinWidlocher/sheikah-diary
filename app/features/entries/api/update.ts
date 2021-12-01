@@ -1,12 +1,14 @@
 import { ActionFunction, redirect } from 'remix'
 import { z } from 'zod'
-import { db } from '~/utils/db'
+import { db } from '~/utils/db.server.'
 import { base64ImageValidTypeRegex, saveImage } from '~/utils/file.utils.server'
+import { requireUserId } from '~/utils/session.server'
 import { slugify } from '~/utils/string.utils'
 import { NewEntry } from '../types/entries'
 
 let formValidator = z.object({
   title: z.string().nonempty({ message: 'The title is required' }),
+  originalSlug: z.string().optional(),
   content: z.string().optional().default(''),
   mainPicture: z.literal('').or(
     z.string().regex(base64ImageValidTypeRegex, {
@@ -17,10 +19,37 @@ let formValidator = z.object({
 
 export type FormError = z.ZodFormattedError<z.infer<typeof formValidator>>
 
+async function getUniqueSlug(title: string) {
+  let originalSlug = slugify(title)
+
+  let entriesExistingWithSlug = await db.entry.count({
+    where: {
+      slug: {
+        startsWith: originalSlug,
+      },
+    },
+  })
+
+  let result = originalSlug
+
+  if (entriesExistingWithSlug > 0) {
+    result = `${originalSlug}-${entriesExistingWithSlug + 1}`
+    console.log(
+      `Slug was going to be "${originalSlug}" but is instead "${result}"`,
+    )
+  }
+
+  return result
+}
+
 export let baseUpdateAction = async (
   request: Request,
-  action: (data: z.infer<typeof formValidator>) => Promise<string>,
+  action: (
+    data: z.infer<typeof formValidator> & { userId: string },
+  ) => Promise<string>,
 ) => {
+  let userId = await requireUserId(request)
+
   // Idk why but await request.formData() justs freezes
   let formData = new URLSearchParams(await request.text())
 
@@ -32,9 +61,12 @@ export let baseUpdateAction = async (
     return parsedForm.error.format()
   }
 
-  let slug = await action(parsedForm.data)
-
-  return redirect(`/entries/${slug}`)
+  try {
+    let slug = await action({ ...parsedForm.data, userId })
+    return redirect(`/entries/${slug}`)
+  } catch {
+    return null
+  }
 }
 
 export let createAction: ActionFunction = async ({ request }) => {
@@ -43,7 +75,8 @@ export let createAction: ActionFunction = async ({ request }) => {
     let data: NewEntry = {
       title: form.title,
       content: form.content,
-      slug: slugify(form.title),
+      slug: await getUniqueSlug(form.title),
+      userId: form.userId,
     }
 
     let createdEntry = await db.entry.create({ data })
@@ -59,16 +92,21 @@ export let createAction: ActionFunction = async ({ request }) => {
 export let updateAction: ActionFunction = async ({ request }) => {
   console.log('Request to update entry')
   return baseUpdateAction(request, async (form) => {
+    if (!form.originalSlug) {
+      throw Error('Cannot update entry without its original slug')
+    }
+
     let data: NewEntry = {
       title: form.title,
       content: form.content,
-      slug: slugify(form.title),
+      slug: await getUniqueSlug(form.title),
+      userId: form.userId,
     }
 
     let updatedEntry = await db.entry.update({
       data,
       where: {
-        slug: data.slug,
+        slug: form.originalSlug,
       },
     })
 

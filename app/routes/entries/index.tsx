@@ -6,13 +6,15 @@ import {
   useLoaderData,
 } from 'remix'
 import { deserialize, serialize } from 'superjson'
-import EntryCard from '~/features/entries/components/entry-card.browser'
+import EntryCard from '~/features/entries/components/entry-card'
 import { EntryInList } from '~/features/entries/types/entries'
-import { db } from '~/utils/db'
+import { db } from '~/utils/db.server.'
 import entryCardStylesheet from '~/styles/entry-card.css'
 import { pictures } from '~/utils/storage'
 import SheikahLogo from '~/components/sheika-logo'
 import { FiPlus } from 'react-icons/fi'
+import { getUser } from '~/utils/session.server'
+import { User } from '@prisma/client'
 
 const itemsPerPage = 10
 
@@ -59,14 +61,20 @@ export let loader: LoaderFunction = async ({ request }) => {
     })),
   )
 
-  return serialize({ page: pageNumber + 1, total, entries })
+  return serialize({
+    page: pageNumber + 1,
+    total,
+    entries,
+    user: await getUser(request),
+  })
 }
 
 export default function EntriesIndexPage() {
-  let { page, total, entries } = deserialize<{
+  let { page, total, entries, user } = deserialize<{
     page: number
     total: number
     entries: EntryInList[]
+    user: User | null
   }>(useLoaderData())
 
   if (total > 0) {
@@ -87,7 +95,11 @@ export default function EntriesIndexPage() {
         <nav>
           <div className="w-full flex justify-center space-x-5">
             {page - 1 > 0 ? (
-              <Link prefetch="intent" className="button" to={'?p=' + (page - 1)}>
+              <Link
+                prefetch="intent"
+                className="button"
+                to={'?p=' + (page - 1)}
+              >
                 Previous page
               </Link>
             ) : null}
@@ -113,10 +125,12 @@ export default function EntriesIndexPage() {
           <span className="font-bold text-2xl mx-auto text-shadow-primary">
             No entries yet
           </span>
-          <Link to="/entries/new" className="button flex mx-auto mt-5">
-            <FiPlus size="1.5rem" className="mr-3" />
-            Add an entry
-          </Link>
+          {!user ? null : (
+            <Link to="/entries/new" className="button flex mx-auto mt-5">
+              <FiPlus size="1.5rem" className="mr-3" />
+              Add an entry
+            </Link>
+          )}
         </div>
       </div>
     )

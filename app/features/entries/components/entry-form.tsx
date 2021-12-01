@@ -1,12 +1,11 @@
 import { Transition } from '@remix-run/react/transition'
 import { useRef, useState } from 'react'
-import { FiImage } from 'react-icons/fi'
 import ReactLoading from 'react-loading'
 import { Form } from 'remix'
 import FormField from '~/components/form-field'
-import { toBase64 } from '~/utils/file.utils.browser'
 import { FormError } from '../api/update'
 import { SimpleEntry } from '../types/entries'
+import ImageSelector from './image-selector'
 
 type EntryFormProps = {
   errors?: FormError
@@ -25,19 +24,11 @@ export default function EntryForm({
   defaultValues,
   ButtonsSlot,
 }: EntryFormProps) {
-  const [mainPictureB64, setMainPictureB64] = useState<
+  const [mainPicture, setMainPicture] = useState<
     { b64: string; name: string } | undefined
   >(undefined)
 
-  const imageInputRef = useRef<HTMLInputElement>(null)
-
-  async function dataToByteArray(files: FileList | null) {
-    if (files != null) {
-      setMainPictureB64({ b64: await toBase64(files[0]), name: files[0].name })
-    } else {
-      setMainPictureB64(undefined)
-    }
-  }
+  const [imageIsLoading, setImageIsLoading] = useState(true)
 
   return (
     <div className="mt-16 px-3 md:mx-auto w-full md:w-3/4 lg:w-1/2">
@@ -48,23 +39,13 @@ export default function EntryForm({
               type="hidden"
               name="mainPicture"
               readOnly
-              value={mainPictureB64?.b64}
+              value={mainPicture?.b64}
             />
-            <input
-              ref={imageInputRef}
-              hidden
-              type="file"
-              accept="image/*"
-              onChange={(e) => dataToByteArray(e.target.files)}
+            <ImageSelector
+              loadedImage={mainPicture}
+              onImageLoaded={setMainPicture}
+              onImageLoading={setImageIsLoading}
             />
-            <button
-              type="button"
-              className="flex justify-center mb-5"
-              onClick={() => imageInputRef.current?.click()}
-            >
-              <FiImage size="1.5rem" className="mr-3" />
-              {mainPictureB64?.name ?? 'Add a picture'}
-            </button>
           </FormField>
           <FormField label="Title" error={errors?.title}>
             <input
@@ -84,7 +65,10 @@ export default function EntryForm({
         <div role="separator"></div>
         <div className="flex justify-end">
           {ButtonsSlot ? <ButtonsSlot /> : null}
-          <button type="submit" disabled={!!transition.submission}>
+          <button
+            type="submit"
+            disabled={!!transition.submission || imageIsLoading}
+          >
             {transition.submission ? (
               <div className="flex space-x-3">
                 <ReactLoading

@@ -15,7 +15,7 @@ import {
   prismaSelectSimpleEntry,
   SimpleEntry,
 } from '~/features/entries/types/entries'
-import { db } from '~/utils/db'
+import { db } from '~/utils/db.server.'
 import formStylesheet from '~/styles/forms.css'
 import { updateAction } from '~/features/entries/api/update'
 

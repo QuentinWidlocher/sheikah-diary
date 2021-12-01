@@ -26,8 +26,7 @@ module.exports = {
     extend: {
       colors: {
         base: {
-          'DEFAULT': 'var(--base-0)',
-          ...shadesFromVariable('base')
+          'DEFAULT': '#ffffe8',
         },
         primary: shadesFromVariable('primary'),
         secondary: shadesFromVariable('secondary'),
@@ -39,11 +38,17 @@ module.exports = {
       },
       dropShadow: {
         primary: 'var(--primary-shadow)',
+        'base': '0px 0px 10px var(--base)'
+      },
+      borderWidth: {
+        '6': '6px'
       }
     },
   },
   variants: {
-    extend: {},
+    extend: {
+      dropShadow: ['hover', 'focus'],
+    },
   },
   plugins: [],
 }

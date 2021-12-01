@@ -40,28 +40,38 @@ export let links: LinksFunction = () => {
     { rel: 'icon', href: '/favicon.png' },
     { rel: 'icon', href: '/favicon.ico' },
     { rel: 'icon', href: '/favicon.svg' },
-    { rel: 'icon', href: '/favicon-dark.png', media: 'prefers-color-scheme: dark' },
-    { rel: 'icon', href: '/favicon-dark.ico', media: 'prefers-color-scheme: dark' },
-    { rel: 'icon', href: '/favicon-dark.svg', media: 'prefers-color-scheme: dark' },
+    {
+      rel: 'icon',
+      href: '/favicon-dark.png',
+      media: 'prefers-color-scheme: dark',
+    },
+    {
+      rel: 'icon',
+      href: '/favicon-dark.ico',
+      media: 'prefers-color-scheme: dark',
+    },
+    {
+      rel: 'icon',
+      href: '/favicon-dark.svg',
+      media: 'prefers-color-scheme: dark',
+    },
     { rel: 'manifest', href: 'manifest.json' },
-
   ]
 }
 
 export let meta: MetaFunction = () => {
   return {
-    "mobile-web-app-capable": "yes",
-    "apple-mobile-web-app-capable": "yes",
-    "application-name": "Sheika Diary",
-    "apple-mobile-web-app-title": "Sheika Diary",
-    "theme-color": "#35a0ca",
-    "msapplication-navbutton-color": "#35a0ca",
-    "apple-mobile-web-app-status-bar-style": "black-translucent",
-    "msapplication-starturl": "/",
-    "viewport": "width=device-width, initial-scale=1, shrink-to-fit=no",
+    'mobile-web-app-capable': 'yes',
+    'apple-mobile-web-app-capable': 'yes',
+    'application-name': 'Sheika Diary',
+    'apple-mobile-web-app-title': 'Sheika Diary',
+    'theme-color': '#35a0ca',
+    'msapplication-navbutton-color': '#35a0ca',
+    'apple-mobile-web-app-status-bar-style': 'black-translucent',
+    'msapplication-starturl': '/',
+    viewport: 'width=device-width, initial-scale=1, shrink-to-fit=no',
   }
 }
-
 
 /**
  * The root module's default export is a component that renders the current
@@ -94,7 +104,7 @@ function Document({
         <Meta />
         <Links />
       </head>
-      <body className="min-h-screen w-screen text-base bg-base-800 overflow-hidden">
+      <body className="min-h-screen w-screen text-base bg-primary-800 overflow-hidden">
         {children}
         <RouteChangeAnnouncement />
         <ScrollRestoration />

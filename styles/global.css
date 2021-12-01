@@ -7,17 +7,7 @@ body {
 }
 
 :root {
-  --base-0: white;
-  --base-50: #f9fafb;
-  --base-100: #f3f4f6;
-  --base-200: #e5e7eb;
-  --base-300: #d1d5db;
-  --base-400: #9ca3af;
-  --base-500: #6b7280;
-  --base-600: #4b5563;
-  --base-700: #374151;
-  --base-800: #1f2937;
-  --base-900: #111827;
+  --base: #ffffe8;
 
   --primary-50: #bbeef9ff;
   --primary-100: #85e8fcff;

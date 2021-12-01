@@ -1,7 +1,7 @@
 import fs from 'fs/promises'
 import path from 'path'
 import sharp from 'sharp'
-import { db } from './db'
+import { db } from './db.server.'
 import { pictures, storage } from './storage'
 
 export const base64ImageValidTypeRegex = /^data:image\/(\w*);base64,/
