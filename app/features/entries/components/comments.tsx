@@ -1,10 +1,10 @@
 import { User } from '@prisma/client'
 import { displayDateTime } from '~/utils/date.utils'
-import { SimpleEntry } from '../types/entries'
+import { EntryInPage } from '../types/entries'
 import CommentTextArea from './comment-text-area'
 
 type CommentsProps = {
-  entry: Pick<SimpleEntry, 'comments' | 'slug'> & { id: string }
+  entry: Pick<EntryInPage, 'comments' | 'slug'> & { id: string }
 }
 
 export default function Comments({ entry }: CommentsProps) {

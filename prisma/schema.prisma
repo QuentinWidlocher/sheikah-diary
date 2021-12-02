@@ -19,6 +19,7 @@ model Entry {
   content   String
   pictures  Picture[]
   comments  Comment[]
+  likedBy   User[]    @relation(name: "likes")
   userId    String
   user      User      @relation(fields: [userId], references: [id])
 }
@@ -38,8 +39,9 @@ model User {
   updatedAt    DateTime  @updatedAt
   username     String    @unique
   passwordHash String
-  entries      Entry[]
+  entries      Entry[]   @relation(name: "likes")
   comments     Comment[]
+  likes        Entry[]
 }
 
 model Comment {

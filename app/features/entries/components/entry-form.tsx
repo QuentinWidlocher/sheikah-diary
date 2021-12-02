@@ -4,7 +4,7 @@ import ReactLoading from 'react-loading'
 import { Form } from 'remix'
 import FormField from '~/components/form-field'
 import { FormError } from '../api/update.server'
-import { SimpleEntry } from '../types/entries'
+import { EntryInPage } from '../types/entries'
 import ImageSelector from './image-selector'
 
 type EntryFormProps = {
@@ -12,7 +12,7 @@ type EntryFormProps = {
   transition: Transition
   submitLabel: { default: string; sending: string }
   action: string
-  defaultValues?: SimpleEntry
+  defaultValues?: EntryInPage
   ButtonsSlot?: () => JSX.Element
 }
 

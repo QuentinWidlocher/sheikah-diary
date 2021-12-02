@@ -1,3 +1,4 @@
+import { Prisma } from '.prisma/client'
 import bcrypt from 'bcrypt'
 import { createCookieSessionStorage, redirect } from 'remix'
 import { db } from './db.server.'
@@ -83,7 +84,7 @@ export async function requireUserId(
   return userId
 }
 
-export async function getUser(request: Request) {
+export async function getUser(request: Request, include?: Prisma.UserInclude) {
   let userId = await getUserId(request)
   if (typeof userId !== 'string') {
     console.log('Unable to get user')
@@ -93,6 +94,7 @@ export async function getUser(request: Request) {
   try {
     let user = await db.user.findUnique({
       where: { id: userId },
+      include
     })
     return user
   } catch {

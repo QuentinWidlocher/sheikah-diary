@@ -14,9 +14,10 @@ import { displayDateTime } from '~/utils/date.utils'
 import entryStylesheet from '~/styles/entry.css'
 import formsStylesheet from '~/styles/forms.css'
 import SheikahLogo from '~/components/sheika-logo'
+import HeartIcon from '~/components/heart-icon'
 import {
-  prismaSelectSimpleEntry,
-  SimpleEntry,
+  prismaSelectEntryInPage,
+  EntryInPage,
 } from '~/features/entries/types/entries'
 import { FiEdit3, FiTrash } from 'react-icons/fi'
 import EntryDeleteModal from '~/features/entries/components/entry-delete-modal'
@@ -24,7 +25,7 @@ import { useState } from 'react'
 import { deleteAction } from '~/features/entries/api/delete.server'
 import { pictures } from '~/utils/storage'
 import { getUser } from '~/utils/session.server'
-import { User } from '@prisma/client'
+import { Prisma, User } from '@prisma/client'
 import Comments from '~/features/entries/components/comments'
 import CommentTextArea from '~/features/entries/components/comment-text-area'
 
@@ -36,7 +37,7 @@ export let links: LinksFunction = () => [
 export let meta: MetaFunction = ({ data }) => {
   let {
     entry: { title = '' },
-  } = deserialize<{ entry: SimpleEntry }>(data)
+  } = deserialize<{ entry: EntryInPage }>(data)
   return {
     title: `${title} | Sheikah Diary`,
   }
@@ -46,7 +47,7 @@ export let loader: LoaderFunction = async ({ params, request }) => {
   let slug = z.string().parse(params?.slug)
 
   let entry = await db.entry.findFirst({
-    select: { ...prismaSelectSimpleEntry, id: true },
+    select: prismaSelectEntryInPage,
     where: {
       slug,
     },
@@ -56,7 +57,7 @@ export let loader: LoaderFunction = async ({ params, request }) => {
     return redirect('/entries')
   }
 
-  let result: SimpleEntry & { id: string } = {
+  let result: EntryInPage = {
     ...entry,
     pictures: await Promise.all(
       entry.pictures.map(async (p) => ({
@@ -67,17 +68,32 @@ export let loader: LoaderFunction = async ({ params, request }) => {
     ),
   }
 
-  return serialize({ entry: result, user: await getUser(request) })
+  let user = await getUser(request, Prisma.validator<Prisma.UserInclude>()({
+    likes: {
+      include: {
+        _count: {
+          select: {
+
+          }
+        }
+      },
+      where: {
+        slug: entry.slug
+      }
+    }
+  }))
+
+  return serialize({ entry: result, user })
 }
 
 export let action = deleteAction
 
 export default function EntriesByIdPage() {
   let {
-    entry: { id, userId, slug, title, content, createdAt, pictures, comments },
+    entry: { id, userId, slug, title, content, createdAt, pictures, comments, _count: { likedBy: likes } },
     user,
   }: {
-    entry: SimpleEntry & { id: string }
+    entry: EntryInPage,
     user: User | null
   } = deserialize(useLoaderData())
 
@@ -87,9 +103,11 @@ export default function EntriesByIdPage() {
 
   return (
     <article>
-      <section>
+      <div className="column">
         <section className="flex flex-col">
-          <h1 className="font-bold text-center">{title}</h1>
+          <div className="flex justify-center space-x-5">
+            <h1 className="font-bold text-center">{title}</h1>
+          </div>
           {pictures?.[0] ? (
             <a href={pictures[0].file} target="_blank">
               <img
@@ -134,14 +152,25 @@ export default function EntriesByIdPage() {
             </fieldset>
           )}
         </section>
-      </section>
-      <section>
-        <fieldset className="w-full">
-          <legend>Comments</legend>
-          {user ? <CommentTextArea slug={slug} /> : null}
-          <Comments entry={{ comments, slug, id }} />
-        </fieldset>
-      </section>
+      </div>
+      <div className="column">
+        <section>
+          <fieldset>
+            <legend>Hearts</legend>
+            <div className="flex flex-col items-center w-full p-5">
+              <HeartIcon className="text-danger-500 w-8 h-8" />
+              <span>{likes}</span>
+            </div>
+          </fieldset>
+        </section>
+        <section>
+          <fieldset className="w-full">
+            <legend>Comments ({comments.length})</legend>
+            {user ? <CommentTextArea slug={slug} /> : null}
+            <Comments entry={{ comments, slug, id }} />
+          </fieldset>
+        </section>
+      </div>
       <EntryDeleteModal
         entryId={id}
         transition={transition}

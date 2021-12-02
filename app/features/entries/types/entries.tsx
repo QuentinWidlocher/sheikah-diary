@@ -7,35 +7,44 @@ export type EntryInList = Pick<Entry, 'title' | 'createdAt'> & {
 
 export type NewEntry = Omit<Entry, 'id' | 'createdAt' | 'updatedAt'>
 
-export type SimpleEntry = Pick<
+export type EntryInPage = Pick<
   Entry,
-  'slug' | 'title' | 'content' | 'createdAt' | 'userId'
+  'id' | 'slug' | 'title' | 'content' | 'createdAt' | 'userId'
 > & {
   pictures: Pick<Picture, 'file' | 'preview'>[]
   comments: (Pick<Comment, 'id' | 'body' | 'createdAt'> & { user: User })[]
+  _count: { likedBy: number }
 }
 
-export const prismaSelectSimpleEntry = {
-  slug: true,
-  title: true,
-  content: true,
-  createdAt: true,
-  userId: true,
-  pictures: {
-    select: {
-      file: true,
-      preview: true,
+export const prismaSelectEntryInPage = Prisma.validator<Prisma.EntrySelect>()(
+  {
+    id: true,
+    slug: true,
+    title: true,
+    content: true,
+    createdAt: true,
+    userId: true,
+    pictures: {
+      select: {
+        file: true,
+        preview: true,
+      },
     },
-  },
-  comments: {
-    select: {
-      id: true,
-      body: true,
-      user: true,
-      createdAt: true,
+    comments: {
+      select: {
+        id: true,
+        body: true,
+        user: true,
+        createdAt: true,
+      },
+      orderBy: {
+        createdAt: 'desc' as Prisma.SortOrder,
+      },
     },
-    orderBy: {
-      createdAt: 'desc' as Prisma.SortOrder,
-    },
-  },
-}
+    _count: {
+      select: {
+        likedBy: true
+      }
+    }
+  }
+)

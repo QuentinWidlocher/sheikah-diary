@@ -7,7 +7,7 @@
 
   > header,
   > footer {
-    @apply bg-gradient-to-tr from-secondary-900 to-secondary-500 p-1 md:p-3 relative;
+    @apply bg-gradient-to-tr from-secondary-900 to-secondary-500 p-1 md:p-2 relative;
     z-index: 1;
 
     nav {
@@ -55,7 +55,7 @@
 
 a.button,
 button {
-  @apply text-primary-500 font-bold px-3 py-2 md:px-5 md:py-3 border border-transparent rounded-lg hover:border-primary-500;
+  @apply text-primary-500 font-bold px-3 py-2 md:px-4 md:py-3 border border-transparent rounded-lg hover:border-primary-500;
 
   text-shadow: var(--primary-shadow);
   &:hover {
