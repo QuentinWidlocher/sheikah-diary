@@ -36,7 +36,7 @@
       width: 100%;
       height: 100%;
       opacity: 0.3;
-      mix-blend-mode: hard-light
+      mix-blend-mode: hard-light;
     }
   .entries-layout > header {
     box-shadow: 0px 5px 20px var(--primary-500);
@@ -48,6 +48,7 @@
     position: relative;
     overflow-y: auto;
     overflow-x: hidden;
+    padding-bottom: 1.25rem;
   }
   .entries-layout > main .bg-picture {
       background-image: url(/assets/scanlines.png);

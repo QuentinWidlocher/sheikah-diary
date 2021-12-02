@@ -10,7 +10,7 @@ import {
 } from 'remix'
 import { FiArrowLeft, FiPlus } from 'react-icons/fi'
 import entriesStylesheet from '~/styles/entries.css'
-import { deleteAction } from '~/features/entries/api/delete'
+import { deleteAction } from '~/features/entries/api/delete.server'
 import { getUser } from '~/utils/session.server'
 import { User } from '@prisma/client'
 
@@ -31,10 +31,12 @@ export default function EntriesMainPage() {
       <header>
         <div className="bg-picture"></div>
         <nav className="flex">
-          {currentRoute != '/entries/' ? <Link to="/entries" className="button flex mr-auto">
-            <FiArrowLeft size="1.5rem" className="mr-3" />
-            Back to the entries
-          </Link> : null}
+          {currentRoute != '/entries/' ? (
+            <Link to="/entries" className="button flex mr-auto">
+              <FiArrowLeft size="1.5rem" className="mr-3" />
+              Back to the entries
+            </Link>
+          ) : null}
           {user ? (
             <Form className="ml-auto" action="/logout" method="post">
               <input
@@ -46,7 +48,10 @@ export default function EntriesMainPage() {
               <button type="submit">{user.username} (Logout)</button>
             </Form>
           ) : (
-            <Link className="button ml-auto" to={`/login?redirectTo=${currentRoute}`}>
+            <Link
+              className="button ml-auto"
+              to={`/login?redirectTo=${currentRoute}`}
+            >
               Login
             </Link>
           )}

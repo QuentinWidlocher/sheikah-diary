@@ -4,7 +4,7 @@ import {
   useActionData,
   useTransition,
 } from 'remix'
-import { createAction, FormError } from '~/features/entries/api/update'
+import { createAction, FormError } from '~/features/entries/api/update.server'
 import EntryForm from '~/features/entries/components/entry-form'
 import formStylesheet from '~/styles/forms.css'
 

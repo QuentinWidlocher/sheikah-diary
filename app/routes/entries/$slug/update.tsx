@@ -17,7 +17,7 @@ import {
 } from '~/features/entries/types/entries'
 import { db } from '~/utils/db.server.'
 import formStylesheet from '~/styles/forms.css'
-import { updateAction } from '~/features/entries/api/update'
+import { updateAction } from '~/features/entries/api/update.server'
 
 export let links: LinksFunction = () => [
   { rel: 'stylesheet', href: formStylesheet },
@@ -51,7 +51,7 @@ export default function EntryUpdateBySlug() {
       transition={transition}
       submitLabel={{ default: 'Update entry', sending: 'Updating entry' }}
       defaultValues={defaultValues}
-      action={'/entries/update/' + defaultValues.slug}
+      action={'/entries/' + defaultValues.slug + '/update'}
       ButtonsSlot={() => (
         <Link className="button mr-3" to={'/entries/' + defaultValues.slug}>
           Cancel

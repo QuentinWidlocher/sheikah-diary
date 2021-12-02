@@ -1,11 +1,11 @@
-body article {
+body article > section {
   display: flex;
   flex-wrap: wrap;
   margin-top: 2.5rem;
   width: 100%
 }
 
-body article > :not([hidden]) ~ :not([hidden]) {
+body article > section > :not([hidden]) ~ :not([hidden]) {
   --tw-space-x-reverse: 0;
   margin-right: calc(0px * var(--tw-space-x-reverse));
   margin-left: calc(0px * calc(1 - var(--tw-space-x-reverse)));
@@ -14,19 +14,19 @@ body article > :not([hidden]) ~ :not([hidden]) {
   margin-bottom: calc(1.25rem * var(--tw-space-y-reverse))
 }
 
-body article {
+body article > section {
   padding-left: 1.25rem;
   padding-right: 1.25rem
 }
 
 @media (min-width: 768px) {
-  body article {
+  body article > section {
     margin-left: auto;
     margin-right: auto;
     width: 75%
   }
 
-  body article > :not([hidden]) ~ :not([hidden]) {
+  body article > section > :not([hidden]) ~ :not([hidden]) {
     --tw-space-x-reverse: 0;
     margin-right: calc(1.25rem * var(--tw-space-x-reverse));
     margin-left: calc(1.25rem * calc(1 - var(--tw-space-x-reverse)));
@@ -36,35 +36,35 @@ body article {
   }
 }
 
-body article {
+body article > section {
   color: var(--primary-400);
   text-shadow: var(--primary-shadow);
 }
 
-body article section {
+body article > section section {
     width: 100%;
     flex-grow: 0;
   }
 
 @media (min-width: 768px) {
-    body article section {
+    body article > section section {
       flex: 1 1 0%
     }
   }
 
-body article fieldset {
+body article > section fieldset {
     display: flex;
     flex-direction: column;
   }
 
-body article fieldset legend {
+body article > section fieldset legend {
       display: flex;
       width: 100%;
       font-weight: 700;
     }
 
-body article fieldset legend:before,
-      body article fieldset legend:after {
+body article > section fieldset legend:before,
+      body article > section fieldset legend:after {
         flex: 1;
         background: linear-gradient(to right, currentColor, currentColor);
         background-size: 100% 1px;
@@ -74,10 +74,10 @@ body article fieldset legend:before,
         filter: drop-shadow(var(--primary-shadow));
       }
 
-body article fieldset legend:before {
+body article > section fieldset legend:before {
         margin-right: 0.5rem;
       }
 
-body article fieldset legend:after {
+body article > section fieldset legend:after {
         margin-left: 0.5rem;
       }

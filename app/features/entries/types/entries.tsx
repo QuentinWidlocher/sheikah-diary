@@ -1,4 +1,4 @@
-import { Entry, Picture } from '@prisma/client'
+import { Entry, Picture, Comment, User, Prisma } from '@prisma/client'
 
 export type EntryInList = Pick<Entry, 'title' | 'createdAt'> & {
   link: string
@@ -12,6 +12,7 @@ export type SimpleEntry = Pick<
   'slug' | 'title' | 'content' | 'createdAt' | 'userId'
 > & {
   pictures: Pick<Picture, 'file' | 'preview'>[]
+  comments: (Pick<Comment, 'id' | 'body' | 'createdAt'> & { user: User })[]
 }
 
 export const prismaSelectSimpleEntry = {
@@ -24,6 +25,17 @@ export const prismaSelectSimpleEntry = {
     select: {
       file: true,
       preview: true,
+    },
+  },
+  comments: {
+    select: {
+      id: true,
+      body: true,
+      user: true,
+      createdAt: true,
+    },
+    orderBy: {
+      createdAt: 'desc' as Prisma.SortOrder,
     },
   },
 }

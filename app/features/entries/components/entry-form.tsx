@@ -3,7 +3,7 @@ import { useRef, useState } from 'react'
 import ReactLoading from 'react-loading'
 import { Form } from 'remix'
 import FormField from '~/components/form-field'
-import { FormError } from '../api/update'
+import { FormError } from '../api/update.server'
 import { SimpleEntry } from '../types/entries'
 import ImageSelector from './image-selector'
 
@@ -24,7 +24,6 @@ export default function EntryForm({
   defaultValues,
   ButtonsSlot,
 }: EntryFormProps) {
-
   const [mainPicture, setMainPicture] = useState<
     { b64: string; name: string } | undefined
   >(undefined)
@@ -35,7 +34,12 @@ export default function EntryForm({
     <div className="mt-16 px-3 md:mx-auto w-full md:w-3/4 lg:w-1/2">
       <Form method="post" action={action}>
         <div className="-mx-3">
-          <input type="hidden" name="originalSlug" readOnly value={defaultValues?.slug} />
+          <input
+            type="hidden"
+            name="originalSlug"
+            readOnly
+            value={defaultValues?.slug}
+          />
           <FormField error={errors?.mainPicture}>
             <input
               type="hidden"
