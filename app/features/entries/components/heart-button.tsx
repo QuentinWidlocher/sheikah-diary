@@ -9,6 +9,7 @@ type HeartButtonProps = {
   originalLikes: number
 }
 
+// Optimistic like button, directly updates its value then update again if the server was not ok
 export default function HeartButton({
   slug,
   originalUserHasLiked,

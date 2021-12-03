@@ -1,5 +1,5 @@
 import { User } from '@prisma/client'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { FiEdit3, FiTrash } from 'react-icons/fi'
 import {
   Link,
@@ -13,7 +13,6 @@ import {
 } from 'remix'
 import { deserialize, serialize } from 'superjson'
 import { z } from 'zod'
-import HeartIcon from '~/components/heart-icon'
 import SheikahLogo from '~/components/sheika-logo'
 import { deleteAction } from '~/features/entries/api/delete.server'
 import CommentTextArea from '~/features/entries/components/comment-text-area'
