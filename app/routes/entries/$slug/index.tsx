@@ -134,9 +134,9 @@ export default function EntriesByIdPage() {
           </small>
         </section>
         {!content && currentUser?.id != user.id ? null : (
-          <section className="flex flex-col flex-1 pb-5">
+          <section className="flex flex-col mb-5">
             {content ? (
-              <fieldset className="mb-auto">
+              <fieldset className="mt-3 pb-10 mb-auto">
                 <legend>Description</legend>
                 <p>{content}</p>
               </fieldset>
