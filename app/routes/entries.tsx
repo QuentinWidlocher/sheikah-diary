@@ -1,18 +1,16 @@
+import { User } from '@prisma/client'
+import { FiArrowLeft, FiPlus } from 'react-icons/fi'
 import {
   Form,
   Link,
   LinksFunction,
   LoaderFunction,
-  NavLink,
   Outlet,
   useLoaderData,
   useMatches,
 } from 'remix'
-import { FiArrowLeft, FiPlus } from 'react-icons/fi'
 import entriesStylesheet from '~/styles/entries.css'
-import { deleteAction } from '~/features/entries/api/delete.server'
 import { getUser } from '~/utils/session.server'
-import { User } from '@prisma/client'
 
 export let links: LinksFunction = () => [
   { rel: 'stylesheet', href: entriesStylesheet },

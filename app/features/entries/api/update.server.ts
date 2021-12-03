@@ -1,3 +1,4 @@
+import { Prisma } from '@prisma/client'
 import { ActionFunction, redirect } from 'remix'
 import { z } from 'zod'
 import { db } from '~/utils/db.server.'
@@ -72,11 +73,21 @@ export let baseUpdateAction = async (
 export let createAction: ActionFunction = async ({ request }) => {
   console.log('Request to create entry')
   return baseUpdateAction(request, async (form) => {
-    let data: NewEntry = {
+    let data: Prisma.EntryCreateInput = {
       title: form.title,
       content: form.content,
       slug: await getUniqueSlug(form.title),
-      userId: form.userId,
+      user: {
+        connect: {
+          id: form.userId,
+        },
+      },
+      // We automatically like the post we made, like on Reddit
+      likedBy: {
+        connect: {
+          id: form.userId,
+        },
+      },
     }
 
     let createdEntry = await db.entry.create({ data })

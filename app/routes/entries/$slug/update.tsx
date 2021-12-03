@@ -1,6 +1,4 @@
-import { Entry } from '@prisma/client'
 import {
-  ActionFunction,
   Link,
   LinksFunction,
   LoaderFunction,
@@ -10,14 +8,14 @@ import {
 } from 'remix'
 import { deserialize, serialize } from 'superjson'
 import { z } from 'zod'
+import { updateAction } from '~/features/entries/api/update.server'
 import EntryForm from '~/features/entries/components/entry-form'
 import {
-  prismaSelectEntryInPage,
-  EntryInPage,
+  EntryInUpdate,
+  getPrismaSelectEntryInUpdate,
 } from '~/features/entries/types/entries'
-import { db } from '~/utils/db.server.'
 import formStylesheet from '~/styles/forms.css'
-import { updateAction } from '~/features/entries/api/update.server'
+import { db } from '~/utils/db.server.'
 
 export let links: LinksFunction = () => [
   { rel: 'stylesheet', href: formStylesheet },
@@ -26,8 +24,8 @@ export let links: LinksFunction = () => [
 export let loader: LoaderFunction = async ({ params }) => {
   let slug = z.string().parse(params?.slug)
 
-  let entry = await db.entry.findFirst({
-    select: { ...prismaSelectEntryInPage },
+  let entry: EntryInUpdate | null = await db.entry.findFirst({
+    select: getPrismaSelectEntryInUpdate(),
     where: {
       slug,
     },
@@ -43,7 +41,7 @@ export let loader: LoaderFunction = async ({ params }) => {
 export let action = updateAction
 
 export default function EntryUpdateBySlug() {
-  let defaultValues = deserialize<EntryInPage>(useLoaderData())
+  let defaultValues = deserialize<EntryInUpdate>(useLoaderData())
   let transition = useTransition()
 
   return (

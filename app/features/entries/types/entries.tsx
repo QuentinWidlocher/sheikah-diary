@@ -1,4 +1,4 @@
-import { Entry, Picture, Comment, User, Prisma } from '@prisma/client'
+import { Comment, Entry, Picture, Prisma, User } from '@prisma/client'
 
 export type EntryInList = Pick<Entry, 'title' | 'createdAt'> & {
   link: string
@@ -13,11 +13,22 @@ export type EntryInPage = Pick<
 > & {
   pictures: Pick<Picture, 'file' | 'preview'>[]
   comments: (Pick<Comment, 'id' | 'body' | 'createdAt'> & { user: User })[]
+  likedBy: { id: User['id'] }[]
   _count: { likedBy: number }
 }
 
-export const prismaSelectEntryInPage = Prisma.validator<Prisma.EntrySelect>()(
-  {
+export type EntryInUpdate = Pick<Entry, 'title' | 'content' | 'slug'>
+
+export function getPrismaSelectEntryInUpdate() {
+  return Prisma.validator<Prisma.EntrySelect>()({
+    slug: true,
+    title: true,
+    content: true,
+  })
+}
+
+export function getPrismaSelectEntryInPage() {
+  return Prisma.validator<Prisma.EntrySelect>()({
     id: true,
     slug: true,
     title: true,
@@ -41,10 +52,15 @@ export const prismaSelectEntryInPage = Prisma.validator<Prisma.EntrySelect>()(
         createdAt: 'desc' as Prisma.SortOrder,
       },
     },
+    likedBy: {
+      select: {
+        id: true,
+      },
+    },
     _count: {
       select: {
-        likedBy: true
-      }
-    }
-  }
-)
+        likedBy: true,
+      },
+    },
+  })
+}

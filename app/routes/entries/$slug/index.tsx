@@ -1,33 +1,35 @@
+import { User } from '@prisma/client'
+import { useEffect, useState } from 'react'
+import { FiEdit3, FiTrash } from 'react-icons/fi'
 import {
   Link,
   LinksFunction,
   LoaderFunction,
   MetaFunction,
   redirect,
+  ShouldReloadFunction,
   useLoaderData,
   useTransition,
 } from 'remix'
-import { z } from 'zod'
-import { db } from '~/utils/db.server.'
 import { deserialize, serialize } from 'superjson'
-import { displayDateTime } from '~/utils/date.utils'
+import { z } from 'zod'
+import HeartIcon from '~/components/heart-icon'
+import SheikahLogo from '~/components/sheika-logo'
+import { deleteAction } from '~/features/entries/api/delete.server'
+import CommentTextArea from '~/features/entries/components/comment-text-area'
+import Comments from '~/features/entries/components/comments'
+import EntryDeleteModal from '~/features/entries/components/entry-delete-modal'
+import HeartButton from '~/features/entries/components/heart-button'
+import {
+  EntryInPage,
+  getPrismaSelectEntryInPage,
+} from '~/features/entries/types/entries'
 import entryStylesheet from '~/styles/entry.css'
 import formsStylesheet from '~/styles/forms.css'
-import SheikahLogo from '~/components/sheika-logo'
-import HeartIcon from '~/components/heart-icon'
-import {
-  prismaSelectEntryInPage,
-  EntryInPage,
-} from '~/features/entries/types/entries'
-import { FiEdit3, FiTrash } from 'react-icons/fi'
-import EntryDeleteModal from '~/features/entries/components/entry-delete-modal'
-import { useState } from 'react'
-import { deleteAction } from '~/features/entries/api/delete.server'
-import { pictures } from '~/utils/storage'
+import { displayDateTime } from '~/utils/date.utils'
+import { db } from '~/utils/db.server.'
 import { getUser } from '~/utils/session.server'
-import { Prisma, User } from '@prisma/client'
-import Comments from '~/features/entries/components/comments'
-import CommentTextArea from '~/features/entries/components/comment-text-area'
+import { pictures } from '~/utils/storage'
 
 export let links: LinksFunction = () => [
   { rel: 'stylesheet', href: entryStylesheet },
@@ -43,11 +45,14 @@ export let meta: MetaFunction = ({ data }) => {
   }
 }
 
+export let unstable_shouldReload: ShouldReloadFunction = ({ submission }) =>
+  submission?.method != 'PUT'
+
 export let loader: LoaderFunction = async ({ params, request }) => {
   let slug = z.string().parse(params?.slug)
 
   let entry = await db.entry.findFirst({
-    select: prismaSelectEntryInPage,
+    select: getPrismaSelectEntryInPage(),
     where: {
       slug,
     },
@@ -68,36 +73,38 @@ export let loader: LoaderFunction = async ({ params, request }) => {
     ),
   }
 
-  let user = await getUser(request, Prisma.validator<Prisma.UserInclude>()({
-    likes: {
-      include: {
-        _count: {
-          select: {
-
-          }
-        }
-      },
-      where: {
-        slug: entry.slug
-      }
-    }
-  }))
-
-  return serialize({ entry: result, user })
+  return serialize({ entry: result, user: await getUser(request) })
 }
 
 export let action = deleteAction
 
 export default function EntriesByIdPage() {
   let {
-    entry: { id, userId, slug, title, content, createdAt, pictures, comments, _count: { likedBy: likes } },
+    entry: {
+      id,
+      userId,
+      slug,
+      title,
+      content,
+      createdAt,
+      pictures,
+      comments,
+      likedBy,
+      _count: { likedBy: likedByCount },
+    },
     user,
   }: {
-    entry: EntryInPage,
+    entry: EntryInPage
     user: User | null
   } = deserialize(useLoaderData())
 
   const [showDeleteModal, setShowDeleteModal] = useState(false)
+
+  // Original value of the like the user gave. Useful to compute numbers of like later
+  const userHasLiked = user ? likedBy.some((l) => l.id == user?.id) : false
+
+  // number of likes from the db, minus the user like
+  const likes = userHasLiked ? likedByCount - 1 || 0 : likedByCount
 
   let transition = useTransition()
 
@@ -157,9 +164,12 @@ export default function EntriesByIdPage() {
         <section>
           <fieldset>
             <legend>Hearts</legend>
-            <div className="flex flex-col items-center w-full p-5">
-              <HeartIcon className="text-danger-500 w-8 h-8" />
-              <span>{likes}</span>
+            <div className="flex justify-center w-full p-5">
+              <HeartButton
+                slug={slug}
+                originalLikes={likes}
+                originalUserHasLiked={userHasLiked}
+              />
             </div>
           </fieldset>
         </section>

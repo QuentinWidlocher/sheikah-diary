@@ -1,10 +1,10 @@
 import { Transition } from '@remix-run/react/transition'
-import { useRef, useState } from 'react'
+import { useState } from 'react'
 import ReactLoading from 'react-loading'
 import { Form } from 'remix'
 import FormField from '~/components/form-field'
 import { FormError } from '../api/update.server'
-import { EntryInPage } from '../types/entries'
+import { EntryInUpdate } from '../types/entries'
 import ImageSelector from './image-selector'
 
 type EntryFormProps = {
@@ -12,7 +12,7 @@ type EntryFormProps = {
   transition: Transition
   submitLabel: { default: string; sending: string }
   action: string
-  defaultValues?: EntryInPage
+  defaultValues?: EntryInUpdate
   ButtonsSlot?: () => JSX.Element
 }
 

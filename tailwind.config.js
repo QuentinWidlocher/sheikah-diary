@@ -38,10 +38,14 @@ module.exports = {
       },
       dropShadow: {
         primary: 'var(--primary-shadow)',
+        danger: 'var(--danger-shadow)',
         'base': '0px 0px 10px var(--base)'
       },
       borderWidth: {
         '6': '6px'
+      },
+      stroke: {
+        primary: 'var(--primary-500)',
       }
     },
   },
