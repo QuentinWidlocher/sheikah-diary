@@ -9,8 +9,9 @@ export type NewEntry = Omit<Entry, 'id' | 'createdAt' | 'updatedAt'>
 
 export type EntryInPage = Pick<
   Entry,
-  'id' | 'slug' | 'title' | 'content' | 'createdAt' | 'userId'
+  'id' | 'slug' | 'title' | 'content' | 'createdAt'
 > & {
+  user: Pick<User, 'id' | 'username'>
   pictures: Pick<Picture, 'file' | 'preview'>[]
   comments: (Pick<Comment, 'id' | 'body' | 'createdAt'> & { user: User })[]
   likedBy: { id: User['id'] }[]
@@ -34,7 +35,12 @@ export function getPrismaSelectEntryInPage() {
     title: true,
     content: true,
     createdAt: true,
-    userId: true,
+    user: {
+      select: {
+        id: true,
+        username: true,
+      },
+    },
     pictures: {
       select: {
         file: true,

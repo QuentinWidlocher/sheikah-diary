@@ -44,6 +44,7 @@ export let meta: MetaFunction = ({ data }) => {
   }
 }
 
+// The like action does a put and handle the ui itself, no need to reload
 export let unstable_shouldReload: ShouldReloadFunction = ({ submission }) =>
   submission?.method != 'PUT'
 
@@ -81,17 +82,17 @@ export default function EntriesByIdPage() {
   let {
     entry: {
       id,
-      userId,
       slug,
       title,
       content,
       createdAt,
+      user,
       pictures,
       comments,
       likedBy,
       _count: { likedBy: likedByCount },
     },
-    user,
+    user: currentUser,
   }: {
     entry: EntryInPage
     user: User | null
@@ -100,7 +101,9 @@ export default function EntriesByIdPage() {
   const [showDeleteModal, setShowDeleteModal] = useState(false)
 
   // Original value of the like the user gave. Useful to compute numbers of like later
-  const userHasLiked = user ? likedBy.some((l) => l.id == user?.id) : false
+  const userHasLiked = currentUser
+    ? likedBy.some((l) => l.id == currentUser?.id)
+    : false
 
   // number of likes from the db, minus the user like
   const likes = userHasLiked ? likedByCount - 1 || 0 : likedByCount
@@ -111,15 +114,16 @@ export default function EntriesByIdPage() {
     <article>
       <div className="column">
         <section className="flex flex-col">
-          <div className="flex justify-center space-x-5">
-            <h1 className="font-bold text-center">{title}</h1>
+          <div className="flex justify-center space-x-1">
+            <h1 className="font-bold">{title}</h1>
+            <h2>by {user.username}</h2>
           </div>
           {pictures?.[0] ? (
             <a href={pictures[0].file} target="_blank">
               <img
                 src={pictures[0].preview}
                 alt=""
-                className="mx-auto w-full h-full border border-primary-500 text-primary-500"
+                className="mx-auto w-full max-w-2xl h-full border border-primary-500 text-primary-500"
               />
             </a>
           ) : (
@@ -129,35 +133,37 @@ export default function EntriesByIdPage() {
             {displayDateTime(createdAt)}
           </small>
         </section>
-        <section className="flex flex-col flex-1 pb-5">
-          {content ? (
-            <fieldset className="mb-auto">
-              <legend>Description</legend>
-              <p>{content}</p>
-            </fieldset>
-          ) : null}
-          {!user || user?.id != userId ? null : (
-            <fieldset className="mt-3">
-              <legend>Actions</legend>
-              <nav className="mt-3 flex justify-center space-x-5">
-                <Link
-                  className="button flex"
-                  to={'/entries/' + slug + '/update'}
-                >
-                  <FiEdit3 size="1.5rem" className="mr-3" />
-                  Update
-                </Link>
-                <button
-                  className="danger flex"
-                  onClick={() => setShowDeleteModal(true)}
-                >
-                  <FiTrash size="1.5rem" className="mr-3" />
-                  Delete
-                </button>
-              </nav>
-            </fieldset>
-          )}
-        </section>
+        {!content && currentUser?.id != user.id ? null : (
+          <section className="flex flex-col flex-1 pb-5">
+            {content ? (
+              <fieldset className="mb-auto">
+                <legend>Description</legend>
+                <p>{content}</p>
+              </fieldset>
+            ) : null}
+            {!currentUser || currentUser?.id != user.id ? null : (
+              <fieldset className="mt-3">
+                <legend>Actions</legend>
+                <nav className="mt-3 flex justify-center space-x-5">
+                  <Link
+                    className="button flex"
+                    to={'/entries/' + slug + '/update'}
+                  >
+                    <FiEdit3 size="1.5rem" className="mr-3" />
+                    Update
+                  </Link>
+                  <button
+                    className="danger flex"
+                    onClick={() => setShowDeleteModal(true)}
+                  >
+                    <FiTrash size="1.5rem" className="mr-3" />
+                    Delete
+                  </button>
+                </nav>
+              </fieldset>
+            )}
+          </section>
+        )}
       </div>
       <div className="column">
         <section>
@@ -175,7 +181,7 @@ export default function EntriesByIdPage() {
         <section>
           <fieldset className="w-full">
             <legend>Comments ({comments.length})</legend>
-            {user ? <CommentTextArea slug={slug} /> : null}
+            {currentUser ? <CommentTextArea slug={slug} /> : null}
             <Comments entry={{ comments, slug, id }} />
           </fieldset>
         </section>
