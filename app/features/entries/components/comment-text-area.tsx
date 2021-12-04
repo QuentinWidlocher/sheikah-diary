@@ -19,6 +19,9 @@ export default function CommentTextArea({ slug }: { slug: Entry['slug'] }) {
       <FormField label="Add a comment">
         <textarea ref={textAreaRef} name="body" rows={5}></textarea>
       </FormField>
+      <span className="text-danger-500 ml-5">
+        {fetcher.data?.body ? fetcher.data.body?._errors : null}
+      </span>
       <button type="submit" className="float-right flex mr-3 space-x-3">
         {fetcher.submission ? (
           <>
