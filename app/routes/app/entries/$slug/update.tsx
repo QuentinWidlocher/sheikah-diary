@@ -13,7 +13,7 @@ import EntryForm from '~/features/entries/components/entry-form'
 import {
   EntryInUpdate,
   getPrismaSelectEntryInUpdate,
-} from '~/features/entries/types/entries'
+} from '~/features/entries/types/entry-in-update'
 import formStylesheet from '~/styles/forms.css'
 import { db } from '~/utils/db.server.'
 
@@ -32,7 +32,7 @@ export let loader: LoaderFunction = async ({ params }) => {
   })
 
   if (!entry) {
-    return redirect('/entries')
+    return redirect('/app/entries')
   }
 
   return serialize(entry)
@@ -49,9 +49,9 @@ export default function EntryUpdateBySlug() {
       transition={transition}
       submitLabel={{ default: 'Update entry', sending: 'Updating entry' }}
       defaultValues={defaultValues}
-      action={'/entries/' + defaultValues.slug + '/update'}
+      action={'/app/entries/' + defaultValues.slug + '/update'}
       ButtonsSlot={() => (
-        <Link className="button mr-3" to={'/entries/' + defaultValues.slug}>
+        <Link className="button mr-3" to={'/app/entries/' + defaultValues.slug}>
           Cancel
         </Link>
       )}

@@ -45,7 +45,7 @@ export default function HeartButton({
   }, [fetcher.state])
 
   return (
-    <fetcher.Form method="put" action={`/entries/${slug}/like`}>
+    <fetcher.Form method="put" action={`/app/entries/${slug}/like`}>
       <input
         type="hidden"
         name="alreadyLiked"

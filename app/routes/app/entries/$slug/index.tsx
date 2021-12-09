@@ -22,7 +22,7 @@ import HeartButton from '~/features/entries/components/heart-button'
 import {
   EntryInPage,
   getPrismaSelectEntryInPage,
-} from '~/features/entries/types/entries'
+} from '~/features/entries/types/entry-in-page'
 import entryStylesheet from '~/styles/entry.css'
 import formsStylesheet from '~/styles/forms.css'
 import { displayDateTime } from '~/utils/date.utils'
@@ -59,7 +59,7 @@ export let loader: LoaderFunction = async ({ params, request }) => {
   })
 
   if (entry == null) {
-    return redirect('/entries')
+    return redirect('/app/entries')
   }
 
   let result: EntryInPage = {
@@ -116,7 +116,9 @@ export default function EntriesByIdPage() {
         <section className="flex flex-col">
           <div className="flex justify-center space-x-1">
             <h1 className="font-bold">{title}</h1>
-            <h2>by {user.username}</h2>
+            <h2>
+              by <Link to={`/app/users/${user.username}`}>{user.username}</Link>
+            </h2>
           </div>
           {pictures?.[0] ? (
             <a href={pictures[0].file} target="_blank">
@@ -147,7 +149,7 @@ export default function EntriesByIdPage() {
                 <nav className="mt-3 flex justify-center space-x-5">
                   <Link
                     className="button flex"
-                    to={'/entries/' + slug + '/update'}
+                    to={'/app/entries/' + slug + '/update'}
                   >
                     <FiEdit3 size="1.5rem" className="mr-3" />
                     Update

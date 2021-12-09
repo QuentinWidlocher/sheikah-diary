@@ -1,5 +1,5 @@
 import { LoaderFunction, redirect } from 'remix'
 
 export let loader: LoaderFunction = () => {
-  return redirect('/entries')
+  return redirect('/app/entries')
 }

@@ -32,7 +32,7 @@ export let loginAction: ActionFunction = async ({
     loginType,
     password,
     username,
-    redirectTo = '/entries',
+    redirectTo = '/app/entries',
   } = parsedFormData.data
 
   switch (loginType) {

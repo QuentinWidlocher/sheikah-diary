@@ -64,7 +64,7 @@ export let baseUpdateAction = async (
 
   try {
     let slug = await action({ ...parsedForm.data, userId })
-    return redirect(`/entries/${slug}`)
+    return redirect(`/app/entries/${slug}`)
   } catch {
     return null
   }

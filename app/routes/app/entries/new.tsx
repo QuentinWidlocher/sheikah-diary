@@ -29,7 +29,7 @@ export default function NewEntryPage() {
       errors={errors}
       transition={transition}
       submitLabel={{ default: 'Create entry', sending: 'Creating entry' }}
-      action="/entries/new"
+      action="/app/entries/new"
     />
   )
 }

@@ -29,7 +29,7 @@ export let createCommentAction: ActionFunction = async ({
   })
 
   if (!foundEntry) {
-    return redirect('/entries')
+    return redirect('/app/entries')
   }
 
   let formData = await request.formData()

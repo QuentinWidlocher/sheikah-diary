@@ -15,7 +15,7 @@ export default function CommentTextArea({ slug }: { slug: Entry['slug'] }) {
   }, [fetcher.state])
 
   return (
-    <fetcher.Form method="post" action={`/entries/${slug}/create-comment`}>
+    <fetcher.Form method="post" action={`/app/entries/${slug}/create-comment`}>
       <FormField label="Add a comment">
         <textarea ref={textAreaRef} name="body" rows={5}></textarea>
       </FormField>

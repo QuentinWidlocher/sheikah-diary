@@ -42,5 +42,5 @@ export let deleteAction: ActionFunction = async ({ request }) => {
     },
   })
 
-  return redirect('/entries')
+  return redirect('/app/entries')
 }

@@ -1,7 +1,5 @@
-import { User } from '@prisma/client'
 import { displayDateTime } from '~/utils/date.utils'
-import { EntryInPage } from '../types/entries'
-import CommentTextArea from './comment-text-area'
+import { EntryInPage } from '../types/entry-in-page'
 
 type CommentsProps = {
   entry: Pick<EntryInPage, 'comments' | 'slug'> & { id: string }
