@@ -18,7 +18,7 @@ const shadesFromVariable = (varName) => ({
 module.exports = {
   purge: {
     mode: 'layers',
-    enabled: process.env.NODE_ENV === 'production',
+    enabled: process.env.PROFILE === 'PROD',
     content: [fromRoot('./app/**/*.+(js|ts|tsx|mdx|md)')],
   },
   darkMode: 'media', // or 'media' or 'class'
