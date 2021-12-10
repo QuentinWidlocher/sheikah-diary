@@ -71,7 +71,10 @@ export let loader: LoaderFunction = async ({ params, request }) => {
     skip: itemsPerPage * pageNumber,
     where: {
       userId: foundUserFromDb.id
-    }
+    },
+    orderBy: {
+      createdAt: 'desc',
+    },
   })
 
   let total = await db.entry.count({
