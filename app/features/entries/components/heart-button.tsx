@@ -53,7 +53,7 @@ export default function HeartButton({
         value={userHasLiked ? 'true' : 'false'}
       />
       <div className="flex flex-col items-center">
-        <button type="submit">
+        <button type='submit'>
           <HeartIcon
             className={`w-10 h-10 filter ${
               userHasLiked

@@ -10,7 +10,7 @@ import { deserialize, serialize } from 'superjson'
 import { stylesheet as entryCardStylesheet } from '~/features/entries/components/entry-card'
 import EntryList from '~/features/entries/components/entry-list'
 import {
-  computePictureLink,
+  computeEntryInListFields,
   EntryInList,
   EntryInListFromDb,
   prismaEntryInListSelect,
@@ -47,36 +47,46 @@ export let loader: LoaderFunction = async ({ params, request }) => {
   let page = url.searchParams.get('p')
   let pageNumber = page && Number(page) > 0 ? Number(page) - 1 : 0
 
-  let foundUserFromDb: UserPageDataFromDb | null = await db.user.findFirst({
+  let foundUserFromDb = await db.user.findFirst({
     select: {
+      id: true,
       username: true,
-      entries: {
-        select: prismaEntryInListSelect,
-        take: itemsPerPage,
-        skip: itemsPerPage * pageNumber,
-      },
-      _count: {
-        select: {
-          entries: true,
-        },
-      },
     },
     where: {
       username: params.username,
     },
   })
 
+  console.log('🚀 ~ file: index.tsx ~ line 68 ~ letloader:LoaderFunction= ~ foundUserFromDb', foundUserFromDb)
+
   if (!foundUserFromDb) {
     return redirect('/app/entries')
   }
 
+  let entries = await db.entry.findMany({
+    select: {
+      ...prismaEntryInListSelect
+    },
+    take: itemsPerPage,
+    skip: itemsPerPage * pageNumber,
+    where: {
+      userId: foundUserFromDb.id
+    }
+  })
+
+  let total = await db.entry.count({
+    where: {
+      userId: foundUserFromDb.id
+    }
+  })
+
   let foundUser: UserPageData = {
     ...foundUserFromDb,
     entries: await Promise.all(
-      foundUserFromDb.entries.map(await computePictureLink),
+      entries.map(await computeEntryInListFields),
     ),
     page: pageNumber + 1,
-    total: foundUserFromDb._count.entries,
+    total,
     currentUser: await getUser(request),
   }
 

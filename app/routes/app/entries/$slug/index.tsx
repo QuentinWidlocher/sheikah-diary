@@ -114,10 +114,10 @@ export default function EntriesByIdPage() {
     <article>
       <div className="column">
         <section className="flex flex-col">
-          <div className="flex justify-center space-x-1">
+          <div className="flex justify-center space-x-1 mb-3">
             <h1 className="font-bold">{title}</h1>
             <h2>
-              by <Link to={`/app/users/${user.username}`}>{user.username}</Link>
+              by <Link className='underline' to={`/app/users/${user.username}`}>{user.username}</Link>
             </h2>
           </div>
           {pictures?.[0] ? (

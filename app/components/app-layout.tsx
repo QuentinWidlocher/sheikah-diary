@@ -1,26 +1,28 @@
+import { Children, ReactNode } from "react"
+
 type AppLayoutProps = {
-  Header: () => JSX.Element | null
-  Main: () => JSX.Element | null
-  Footer: () => JSX.Element | null
+  header: ReactNode
+  main: ReactNode
+  footer: ReactNode
 }
 
-export default function AppLayout({ Header, Main, Footer }: AppLayoutProps) {
+export default function AppLayout({ header, footer, main }: AppLayoutProps) {
   return (
     <div className="entries-layout">
       <header>
         <div className="bg-picture"></div>
         <nav className="flex">
-          <Header />
+          {header}
         </nav>
       </header>
       <main>
-        <Main />
+        {main}
         <div className="bg-picture"></div>
       </main>
       <footer>
         <div className="bg-picture"></div>
         <nav className="flex">
-          <Footer />
+          {footer}
         </nav>
       </footer>
     </div>

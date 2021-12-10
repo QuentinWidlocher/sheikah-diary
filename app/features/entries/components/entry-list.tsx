@@ -21,7 +21,7 @@ export default function EntryList({
         {entries.map((entry) => (
           <li
             className="w-full md:w-1/3 lg:w-1/4 xl:w-1/5 p-5"
-            key={entry.link}
+            key={entry.slug}
           >
             <EntryCard entry={entry} />
           </li>

@@ -27,7 +27,7 @@ export default function AppPage() {
 
   return (
     <AppLayout
-      Header={() => (
+      header={
         <>
           {currentRoute != '/app/entries/' ? (
             <Link to="/app/entries" className="button flex mr-auto">
@@ -48,10 +48,9 @@ export default function AppPage() {
             </Link>
           )}
         </>
-      )}
-      Main={() => <Outlet />}
-      Footer={() =>
-        !user ? null : (
+      }
+      main={<Outlet/>}
+      footer={!user ? null : (
           <Link to="/app/entries/new" className="button flex ml-auto">
             <FiPlus size="1.5rem" className="mr-3" />
             Add an entry

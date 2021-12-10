@@ -1,11 +1,10 @@
 import React from 'react'
+import { Link } from 'remix'
 import SheikahLogo from '~/components/sheika-logo'
-import { displayDateTime } from '~/utils/date.utils'
+import entryCardStylesheet from '~/styles/entry-card.css'
+import { EntryInList } from '../types/entry-in-list'
 import EntryFrame from './entry-frame'
 import EntrySelector from './entry-selector'
-import entryCardStylesheet from '~/styles/entry-card.css'
-import { Link } from 'remix'
-import { EntryInList } from '../types/entry-in-list'
 
 export let stylesheet = { rel: 'stylesheet', href: entryCardStylesheet }
 
@@ -39,7 +38,7 @@ const EntryCard = ({ entry }: EntryCardProps) => {
         </section>
         <section className="title">
           <h1 className="font-bold text-xl">{entry.title}</h1>
-          <small className="text-sm">{displayDateTime(entry.createdAt)}</small>
+          <h2>by {entry.createdBy}</h2>
         </section>
       </div>
     </Link>

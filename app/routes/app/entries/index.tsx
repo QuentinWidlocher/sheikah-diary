@@ -5,18 +5,19 @@ import {
   LinksFunction,
   LoaderFunction,
   MetaFunction,
-  useLoaderData,
+  useLoaderData
 } from 'remix'
 import { deserialize, serialize } from 'superjson'
 import SheikahLogo from '~/components/sheika-logo'
-import EntryCard, {
-  stylesheet as entryCardStylesheet,
+import {
+  stylesheet as entryCardStylesheet
 } from '~/features/entries/components/entry-card'
 import EntryList from '~/features/entries/components/entry-list'
 import {
-  computePictureLink,
+  computeEntryInListFields,
   EntryInList,
-  prismaEntryInListSelect,
+  EntryInListFromDb,
+  prismaEntryInListSelect
 } from '~/features/entries/types/entry-in-list'
 import { db } from '~/utils/db.server.'
 import { getUser } from '~/utils/session.server'
@@ -38,7 +39,7 @@ export let loader: LoaderFunction = async ({ request }) => {
 
   let total = await db.entry.count()
 
-  let data = await db.entry.findMany({
+  let data: EntryInListFromDb[] = await db.entry.findMany({
     select: prismaEntryInListSelect,
     take: itemsPerPage,
     skip: itemsPerPage * pageNumber,
@@ -48,7 +49,7 @@ export let loader: LoaderFunction = async ({ request }) => {
   })
 
   let entries: EntryInList[] = await Promise.all(
-    data.map(await computePictureLink),
+    data.map(await computeEntryInListFields),
   )
 
   return serialize({
