@@ -1,30 +1,53 @@
 label.form-field {
-  margin: 0.75rem;
-  display: flex;
-  flex-direction: column;
-  color: var(--primary-500);
+    margin: 0.75rem;
+    display: flex;
+    flex-direction: column;
+    color: var(--primary-500);
 }
+
   label.form-field span {
     margin-bottom: 0.25rem;
+}
+
+  label.form-field span {
     font-weight: 700;
-  }
+}
+
   label.form-field:focus-within span {
     text-shadow: var(--primary-shadow);
   }
+
   label.form-field input, label.form-field textarea {
     border-radius: 0.25rem;
+}
+
+  label.form-field input, label.form-field textarea {
     border-width: 1px;
+}
+
+  label.form-field input, label.form-field textarea {
     border-color: var(--primary-500);
+}
+
+  label.form-field input, label.form-field textarea {
     background-color: transparent;
+}
+
+  label.form-field input, label.form-field textarea {
     padding-left: 0.75rem;
     padding-right: 0.75rem;
+}
+
+  label.form-field input, label.form-field textarea {
     padding-top: 0.5rem;
     padding-bottom: 0.5rem;
-  }
+}
+
   label.form-field input, label.form-field textarea {
     outline: 2px solid transparent;
     outline-offset: 2px;
-  }
+}
+
   label.form-field input:focus, label.form-field textarea:focus {
       box-shadow: var(--primary-shadow-full);
     }

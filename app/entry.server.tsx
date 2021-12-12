@@ -1,21 +1,24 @@
-import { renderToString } from "react-dom/server";
-import { RemixServer } from "remix";
-import type { EntryContext } from "remix";
+import { renderToString } from 'react-dom/server'
+import { RemixServer } from 'remix'
+import type { EntryContext } from 'remix'
 
 export default function handleRequest(
-  request: Request,
-  responseStatusCode: number,
-  responseHeaders: Headers,
-  remixContext: EntryContext
+	request: Request,
+	responseStatusCode: number,
+	responseHeaders: Headers,
+	remixContext: EntryContext,
 ) {
-  let markup = renderToString(
-    <RemixServer context={remixContext} url={request.url} />
-  );
+	// TODO https://github.com/l-mbert/remix-postcss
+	//remixPostcss(remixContext)
 
-  responseHeaders.set("Content-Type", "text/html");
+	let markup = renderToString(
+		<RemixServer context={remixContext} url={request.url} />,
+	)
 
-  return new Response("<!DOCTYPE html>" + markup, {
-    status: responseStatusCode,
-    headers: responseHeaders
-  });
+	responseHeaders.set('Content-Type', 'text/html')
+
+	return new Response('<!DOCTYPE html>' + markup, {
+		status: responseStatusCode,
+		headers: responseHeaders,
+	})
 }

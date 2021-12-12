@@ -8,7 +8,7 @@
   },
   "scripts": {
     "build": "prisma migrate deploy && prisma generate && remix build",
-    "dev": "pm2-dev ./pm2.config.js",
+    "dev": "concurrently \"remix dev --host 0.0.0.0\" \"\"",
     "postinstall": "remix setup node",
     "start": "remix-serve build",
     "prisma": "npx prisma"

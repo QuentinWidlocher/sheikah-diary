@@ -16,8 +16,8 @@ const shadesFromVariable = (varName) => ({
 })
 
 module.exports = {
+  mode: 'jit',
   purge: {
-    mode: 'layers',
     enabled: process.env.PROFILE === 'PROD',
     content: [fromRoot('./app/**/*.+(js|ts|tsx|mdx|md)')],
   },

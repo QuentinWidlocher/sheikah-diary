@@ -8,5 +8,5 @@
 }
 
 * {
-  ,'--primary-600': 'white';
+  '--primary-500':'white','--primary-600': 'white';
 }
