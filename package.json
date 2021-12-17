@@ -7,7 +7,7 @@
     "seed": "node --require esbuild-register prisma/seed.ts"
   },
   "scripts": {
-    "build": "prisma migrate deploy && prisma generate && remix build",
+    "build": "postcss styles/**/*.css --base styles --dir app/styles && prisma migrate deploy && prisma generate && remix build",
     "dev": "pm2-dev ./pm2.config.js",
     "postinstall": "remix setup node",
     "start": "remix-serve build",

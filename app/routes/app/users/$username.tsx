@@ -71,7 +71,7 @@ export default function UserPage() {
 				) : null}
 			</div>
 
-			{currentUser ? (
+			{currentUser && currentUser.username == user.username ? (
 				<nav className="flex flex-col mx-auto my-10">
 					<ul className="flex space-x-5">
 						<li className="flex-1">
