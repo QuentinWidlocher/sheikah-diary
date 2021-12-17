@@ -1,7 +1,6 @@
-import { User } from '@prisma/client'
+import { Notification, User } from '@prisma/client'
 import { FiArrowLeft, FiPlus } from 'react-icons/fi'
 import {
-	Form,
 	Link,
 	LinksFunction,
 	LoaderFunction,
@@ -17,11 +16,28 @@ export let links: LinksFunction = () => [
 	{ rel: 'stylesheet', href: entriesStylesheet },
 ]
 
-export let loader: LoaderFunction = async ({ request }) => getUser(request)
+export let loader: LoaderFunction = async ({ request }) => {
+	let currentUser = await getUser(request, {
+		notifications: true,
+	})
+
+	if (!currentUser) {
+		return null
+	}
+
+	let newNotif = (currentUser.notifications as Notification[]).some(
+		n => !n.seenAt,
+	)
+
+	return {
+		currentUser,
+		newNotif,
+	}
+}
 
 // We just display the pages for now, we use this file to link the stylesheet
 export default function AppPage() {
-	let user = useLoaderData<User | null>()
+	let loader = useLoaderData<{ currentUser: User; newNotif: boolean } | null>()
 	let matches = useMatches()
 	let currentRoute = matches[matches.length - 1].pathname
 
@@ -35,11 +51,14 @@ export default function AppPage() {
 							<span>Back to the entries</span>
 						</Link>
 					) : null}
-					{user ? (
+					{loader?.currentUser ? (
 						<Link
-							className="button ml-auto"
-							to={`/app/users/${user.username}/notifications`}>
-							{user.username}
+							className="button ml-auto relative"
+							to={`/app/users/${loader.currentUser.username}/notifications`}>
+							{loader.currentUser.username}
+							{loader.newNotif ? (
+								<div className="absolute bottom-3 right-2 rounded-full bg-danger-500 w-2 h-2"></div>
+							) : null}
 						</Link>
 					) : (
 						<Link className="button ml-auto" to={`/login?redirectTo=${currentRoute}`}>
@@ -50,7 +69,7 @@ export default function AppPage() {
 			}
 			main={<Outlet />}
 			footer={
-				!user ? null : (
+				!loader?.currentUser ? null : (
 					<Link to="/app/entries/new" className="button ml-auto">
 						<FiPlus size="1.5rem" />
 						<span>Add an entry</span>

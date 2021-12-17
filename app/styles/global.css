@@ -606,6 +606,15 @@ video {
 .absolute {
 	position: absolute;
 }
+.relative {
+	position: relative;
+}
+.bottom-3 {
+	bottom: 0.75rem;
+}
+.right-2 {
+	right: 0.5rem;
+}
 .bottom-0 {
 	bottom: 0px;
 }
@@ -718,6 +727,9 @@ video {
 .h-full {
 	height: 100%;
 }
+.h-2 {
+	height: 0.5rem;
+}
 .h-36 {
 	height: 9rem;
 }
@@ -732,6 +744,9 @@ video {
 }
 .w-full {
 	width: 100%;
+}
+.w-2 {
+	width: 0.5rem;
 }
 .w-44 {
 	width: 11rem;
@@ -813,6 +828,9 @@ video {
 }
 .bg-primary-800 {
 	background-color: var(--primary-800);
+}
+.bg-danger-500 {
+	background-color: var(--danger-500);
 }
 .bg-black {
 	--tw-bg-opacity: 1;

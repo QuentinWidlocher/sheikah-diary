@@ -79,6 +79,11 @@ async function createNotifications(
 					id: entry.id,
 				},
 			},
+			username: {
+				not: {
+					equals: from.username
+				}
+			}
 		},
 	})
 
@@ -89,6 +94,7 @@ async function createNotifications(
 		usersWatchingThisEntry.map(e => e.id),
 	)
 
+	// We create as much notifications as they are users "subscribed" to this entry
 	await db.notification.createMany({
 		data: usersWatchingThisEntry.map(user => ({
 			userId: user.id,
@@ -97,5 +103,19 @@ async function createNotifications(
 			link: `/app/entries/${entry.slug}`,
 			type: NotificationType.COMMENT,
 		})),
+	})
+
+	// We "subscribe" the poster to the entry so he can receive replies
+	await db.user.update({
+		where: {
+			username: from.username
+		},
+		data: {
+			watches: {
+				connect: {
+					id:entry.id
+				}
+			}
+		}
 	})
 }
