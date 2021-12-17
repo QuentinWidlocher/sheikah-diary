@@ -35,3 +35,6 @@ ALTER TABLE "_watches" ADD FOREIGN KEY ("A") REFERENCES "Entry"("id") ON DELETE 
 
 -- AddForeignKey
 ALTER TABLE "_watches" ADD FOREIGN KEY ("B") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- Migrate data
+INSERT INTO "_watches" ("A", "B") SELECT "Comment"."entryId", "Comment"."userId" FROM "Comment" ON CONFLICT DO NOTHING;
