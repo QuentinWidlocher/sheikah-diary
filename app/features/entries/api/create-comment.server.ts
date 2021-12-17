@@ -1,4 +1,4 @@
-import { Entry, NotificationType } from '@prisma/client'
+import { Entry, NotificationType, User } from '@prisma/client'
 import { ActionFunction, redirect } from 'remix'
 import { z } from 'zod'
 import { db } from '~/utils/db.server.'
@@ -43,14 +43,16 @@ export let createCommentAction: ActionFunction = async ({
 		return parsedForm.error.format()
 	}
 
+	// no await here because this can be executed later
 	createNotifications(
+		user,
 		{
 			id: foundEntry.id,
 			title: foundEntry.title,
 			slug: params.slug,
 		},
 		parsedForm.data.body,
-	).then(() => console.log('createnotif'))
+	)
 
 	console.log('return')
 	return db.comment.create({
@@ -63,6 +65,7 @@ export let createCommentAction: ActionFunction = async ({
 }
 
 async function createNotifications(
+	from: Pick<User, 'username'>,
 	entry: Pick<Entry, 'id' | 'slug' | 'title'>,
 	comment: string,
 ) {
@@ -89,7 +92,7 @@ async function createNotifications(
 	await db.notification.createMany({
 		data: usersWatchingThisEntry.map(user => ({
 			userId: user.id,
-			title: `Someone commented on ${entry.title}`,
+			title: `${from.username} commented on ${entry.title}`,
 			content: comment,
 			link: `/app/entries/${entry.slug}`,
 			type: NotificationType.COMMENT,

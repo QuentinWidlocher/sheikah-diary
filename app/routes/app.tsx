@@ -36,7 +36,9 @@ export default function AppPage() {
 						</Link>
 					) : null}
 					{user ? (
-						<Link className="button ml-auto" to={`/app/users/${user.username}`}>
+						<Link
+							className="button ml-auto"
+							to={`/app/users/${user.username}/notifications`}>
 							{user.username}
 						</Link>
 					) : (

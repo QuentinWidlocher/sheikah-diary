@@ -1,16 +1,15 @@
 import { User } from '@prisma/client'
-import { FiBell, FiLogOut } from 'react-icons/fi'
+import { FiLogOut } from 'react-icons/fi'
 import { HiBell, HiCamera } from 'react-icons/hi'
 import {
 	Form,
-	Link,
 	LoaderFunction,
+	NavLink,
 	Outlet,
 	redirect,
 	useLoaderData,
 } from 'remix'
 import { deserialize, serialize } from 'superjson'
-import { SuperJSONResult } from 'superjson/dist/types'
 import { db } from '~/utils/db.server.'
 import { getUser } from '~/utils/session.server'
 
@@ -39,11 +38,22 @@ export let loader: LoaderFunction = async ({ request, params }) => {
 	})
 }
 
+function getNavLinkClassName({ isActive }: { isActive: boolean }) {
+	let result = `button flex-col !space-x-0 space-y-3`
+
+	if (!isActive) {
+		result += ' opacity-50'
+	}
+
+	return result
+}
+
 export default function UserPage() {
 	let { user, currentUser } = deserialize<{
 		user: Pick<User, 'id' | 'username'>
 		currentUser?: Pick<User, 'username'>
 	}>(useLoaderData())
+
 	return (
 		<article className="flex flex-col w-full">
 			<div className="mt-10 flex mx-auto items-center">
@@ -61,19 +71,19 @@ export default function UserPage() {
 				) : null}
 			</div>
 
-			<nav className="flex flex-col mx-auto mt-5">
+			<nav className="flex flex-col mx-auto my-10">
 				<ul className="flex space-x-5">
 					<li className="flex-1">
-						<Link className="button flex-col !space-x-0 space-y-3" to="entries">
+						<NavLink className={getNavLinkClassName} to="entries">
 							<span>Entries</span>
 							<HiCamera size="1.9rem" />
-						</Link>
+						</NavLink>
 					</li>
 					<li className="flex-1">
-						<Link className="button flex-col !space-x-0 space-y-3" to="notifications">
+						<NavLink className={getNavLinkClassName} to="notifications">
 							<span>Notifications</span>
 							<HiBell size="1.9rem" />
-						</Link>
+						</NavLink>
 					</li>
 				</ul>
 				<hr className="!mt-1" />

@@ -93,7 +93,7 @@
 			z-index: -1;
 		}
 
-a.button, button {
+a.button, button:not(.no-style) {
 	border-radius: 0.5rem;
 	border-width: 1px;
 	border-color: transparent;
@@ -105,66 +105,66 @@ a.button, button {
 	color: var(--primary-500);
 }
 
-a.button:hover, button:hover {
+a.button:hover, button:not(.no-style):hover {
 	border-color: var(--primary-500);
 }
 
 @media (min-width: 768px) {
 
-	a.button, button {
+	a.button, button:not(.no-style) {
 		padding-left: 1rem;
 		padding-right: 1rem;
 	}
 
-	a.button, button {
+	a.button, button:not(.no-style) {
 		padding-top: 0.75rem;
 		padding-bottom: 0.75rem;
 	}
 }
 
-a.button, button {
+a.button, button:not(.no-style) {
 	display: flex;
 	align-items: center;
 }
 
-a.button > :not([hidden]) ~ :not([hidden]), button > :not([hidden]) ~ :not([hidden]) {
+a.button > :not([hidden]) ~ :not([hidden]), button:not(.no-style) > :not([hidden]) ~ :not([hidden]) {
 	--tw-space-x-reverse: 0;
 	margin-right: calc(0.75rem * var(--tw-space-x-reverse));
 	margin-left: calc(0.75rem * calc(1 - var(--tw-space-x-reverse)));
 }
 
 a.button,
-button {
+button:not(.no-style) {
 
 	text-shadow: var(--primary-shadow);
 }
 
-a.button:hover, button:hover {
+a.button:hover, button:not(.no-style):hover {
 		box-shadow: var(--primary-shadow-full);
 	}
 
-a.button > svg, button > svg {
+a.button > svg, button:not(.no-style) > svg {
 		filter: drop-shadow(var(--primary-shadow));
 	}
 
-a.button.danger, button.danger {
+a.button.danger, button:not(.no-style).danger {
 	color: var(--danger-500);
 }
 
-a.button.danger:hover, button.danger:hover {
+a.button.danger:hover, button:not(.no-style).danger:hover {
 	border-color: var(--danger-500);
 }
 
-a.button.danger, button.danger {
+a.button.danger, button:not(.no-style).danger {
 
 		text-shadow: var(--danger-shadow);
 	}
 
-a.button.danger:hover, button.danger:hover {
+a.button.danger:hover, button:not(.no-style).danger:hover {
 			box-shadow: var(--danger-shadow-full);
 		}
 
-a.button.danger > svg, button.danger > svg {
+a.button.danger > svg, button:not(.no-style).danger > svg {
 			filter: drop-shadow(var(--danger-shadow));
 		}
 
