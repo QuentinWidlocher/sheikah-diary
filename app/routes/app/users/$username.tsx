@@ -71,23 +71,25 @@ export default function UserPage() {
 				) : null}
 			</div>
 
-			<nav className="flex flex-col mx-auto my-10">
-				<ul className="flex space-x-5">
-					<li className="flex-1">
-						<NavLink className={getNavLinkClassName} to="entries">
-							<span>Entries</span>
-							<HiCamera size="1.9rem" />
-						</NavLink>
-					</li>
-					<li className="flex-1">
-						<NavLink className={getNavLinkClassName} to="notifications">
-							<span>Notifications</span>
-							<HiBell size="1.9rem" />
-						</NavLink>
-					</li>
-				</ul>
-				<hr className="!mt-1" />
-			</nav>
+			{currentUser ? (
+				<nav className="flex flex-col mx-auto my-10">
+					<ul className="flex space-x-5">
+						<li className="flex-1">
+							<NavLink className={getNavLinkClassName} to="entries">
+								<span>Entries</span>
+								<HiCamera size="1.9rem" />
+							</NavLink>
+						</li>
+						<li className="flex-1">
+							<NavLink className={getNavLinkClassName} to="notifications">
+								<span>Notifications</span>
+								<HiBell size="1.9rem" />
+							</NavLink>
+						</li>
+					</ul>
+					<hr className="!my-1" />
+				</nav>
+			) : null}
 			<Outlet />
 		</article>
 	)

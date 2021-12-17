@@ -123,13 +123,21 @@ function displayNotif(notif: Notification) {
 export default function UserNotificationsPage() {
 	let notifs = deserialize<Notification[]>(useLoaderData())
 
-	return (
-		<ul className="mx-auto">
-			{notifs.map(notif => (
-				<li key={notif.id} className="p-5 text-primary-500 font-bold">
-					{displayNotif(notif)}
-				</li>
-			))}
-		</ul>
-	)
+	if (notifs?.length > 0) {
+		return (
+			<ul className="mx-auto">
+				{notifs.map(notif => (
+					<li key={notif.id} className="p-5 text-primary-500 font-bold">
+						{displayNotif(notif)}
+					</li>
+				))}
+			</ul>
+		)
+	} else {
+		return (
+			<div className="mx-auto">
+				<h1>No new notifications</h1>
+			</div>
+		)
+	}
 }
