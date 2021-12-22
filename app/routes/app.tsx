@@ -45,15 +45,15 @@ export default function AppPage() {
 		<AppLayout
 			header={
 				<>
-					{currentRoute != '/app/entries/' ? (
-						<Link to="/app/entries" className="button mr-auto">
+					{currentRoute != '/app/entries' ? (
+						<Link to="/app/entries" className="sheika button mr-auto">
 							<FiArrowLeft size="1.5rem" />
 							<span>Back to the entries</span>
 						</Link>
 					) : null}
 					{loader?.currentUser ? (
 						<Link
-							className="button ml-auto relative"
+							className="sheika button ml-auto relative"
 							to={`/app/users/${loader.currentUser.username}/notifications`}>
 							{loader.currentUser.username}
 							{loader.newNotif ? (
@@ -61,7 +61,9 @@ export default function AppPage() {
 							) : null}
 						</Link>
 					) : (
-						<Link className="button ml-auto" to={`/login?redirectTo=${currentRoute}`}>
+						<Link
+							className="sheika button ml-auto"
+							to={`/login?redirectTo=${currentRoute}`}>
 							Login
 						</Link>
 					)}
@@ -70,7 +72,7 @@ export default function AppPage() {
 			main={<Outlet />}
 			footer={
 				!loader?.currentUser ? null : (
-					<Link to="/app/entries/new" className="button ml-auto">
+					<Link to="/app/entries/new" className="sheika button ml-auto">
 						<FiPlus size="1.5rem" />
 						<span>Add an entry</span>
 					</Link>

@@ -2,6 +2,7 @@ import * as React from 'react'
 import {
 	Links,
 	LiveReload,
+	LoaderFunction,
 	Meta,
 	MetaFunction,
 	Outlet,
@@ -13,6 +14,8 @@ import {
 import type { LinksFunction } from 'remix'
 
 import globalStylesUrl from '~/styles/global.css'
+import basicStylesUrl from '~/styles/basic.css'
+import ErrorPage from './components/error-page'
 
 /**
  * The `links` export is a function that returns an array of objects that map to
@@ -25,6 +28,7 @@ import globalStylesUrl from '~/styles/global.css'
 export let links: LinksFunction = () => {
 	return [
 		{ rel: 'stylesheet', href: globalStylesUrl },
+		{ rel: 'stylesheet', href: basicStylesUrl },
 		{ rel: 'preconnect', href: 'https://fonts.googleapis.com' },
 		{
 			rel: 'preconnect',
@@ -34,7 +38,7 @@ export let links: LinksFunction = () => {
 		{
 			rel: 'stylesheet',
 			href:
-				'https://fonts.googleapis.com/css2?family=Manrope:wght@400;600&display=swap',
+				'https://fonts.googleapis.com/css2?family=Manrope:wght@400;600&family=Spectral:wght@800&display=swap',
 			crossOrigin: 'anonymous',
 		},
 		{ rel: 'icon', href: '/favicon.png' },
@@ -106,7 +110,6 @@ function Document({
 			<body style={{ backgroundColor: '#50463b' }}>
 				{children}
 				<RouteChangeAnnouncement />
-				<ScrollRestoration />
 				<Scripts />
 				{process.env.NODE_ENV === 'development' && <LiveReload />}
 			</body>
@@ -128,30 +131,19 @@ export function CatchBoundary() {
 	let message
 	switch (caught.status) {
 		case 401:
-			message = (
-				<p>
-					Oops! Looks like you tried to visit a page that you do not have access to.
-				</p>
-			)
+			message = "You don't have acces to this page"
 			break
 		case 404:
-			message = (
-				<p>Oops! Looks like you tried to visit a page that does not exist.</p>
-			)
+			message = 'This page does not exist'
 			break
 
 		default:
-			throw new Error(caught.data || caught.statusText)
+			throw caught
 	}
 
 	return (
-		<Document title={`${caught.status} ${caught.statusText}`}>
-			<Layout>
-				<h1>
-					{caught.status}: {caught.statusText}
-				</h1>
-				{message}
-			</Layout>
+		<Document title={caught.statusText}>
+			<ErrorPage message={message} />
 		</Document>
 	)
 }
@@ -160,17 +152,7 @@ export function ErrorBoundary({ error }: { error: Error }) {
 	console.error(error)
 	return (
 		<Document title="Error!">
-			<Layout>
-				<div>
-					<h1>There was an error</h1>
-					<p>{error.message}</p>
-					<hr />
-					<p>
-						Hey, developer, you should replace this with what you want your users to
-						see.
-					</p>
-				</div>
-			</Layout>
+			<ErrorPage />
 		</Document>
 	)
 }

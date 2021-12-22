@@ -4,7 +4,7 @@ import {
 	computeEntryInListFields,
 	prismaEntryInListSelect,
 } from '~/features/entries/types/entry-in-list'
-import { db } from '~/utils/db.server.'
+import { db } from '~/utils/db.server'
 import { getUser } from '~/utils/session.server'
 import { UserEntriesPageData } from '../types/page'
 

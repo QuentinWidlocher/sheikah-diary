@@ -26,7 +26,7 @@ import {
 import entryStylesheet from '~/styles/entry.css'
 import formsStylesheet from '~/styles/forms.css'
 import { displayDateTime } from '~/utils/date.utils'
-import { db } from '~/utils/db.server.'
+import { db } from '~/utils/db.server'
 import { getUser } from '~/utils/session.server'
 import { pictures } from '~/utils/storage'
 
@@ -149,12 +149,14 @@ export default function EntriesByIdPage() {
 							<fieldset className="mt-3">
 								<legend>Actions</legend>
 								<nav className="mt-3 flex justify-center space-x-5">
-									<Link className="button flex" to={'/app/entries/' + slug + '/update'}>
+									<Link
+										className="sheika button flex"
+										to={'/app/entries/' + slug + '/update'}>
 										<FiEdit3 size="1.5rem" className="mr-3" />
 										Update
 									</Link>
 									<button
-										className="danger flex"
+										className="sheika button danger flex"
 										onClick={() => setShowDeleteModal(true)}>
 										<FiTrash size="1.5rem" className="mr-3" />
 										Delete

@@ -1,7 +1,7 @@
 import { Entry, NotificationType, User } from '@prisma/client'
 import { ActionFunction, redirect } from 'remix'
 import { z } from 'zod'
-import { db } from '~/utils/db.server.'
+import { db } from '~/utils/db.server'
 import { getUser } from '~/utils/session.server'
 
 const formValidator = z.object({
@@ -81,9 +81,9 @@ async function createNotifications(
 			},
 			username: {
 				not: {
-					equals: from.username
-				}
-			}
+					equals: from.username,
+				},
+			},
 		},
 	})
 
@@ -108,14 +108,14 @@ async function createNotifications(
 	// We "subscribe" the poster to the entry so he can receive replies
 	await db.user.update({
 		where: {
-			username: from.username
+			username: from.username,
 		},
 		data: {
 			watches: {
 				connect: {
-					id:entry.id
-				}
-			}
-		}
+					id: entry.id,
+				},
+			},
+		},
 	})
 }

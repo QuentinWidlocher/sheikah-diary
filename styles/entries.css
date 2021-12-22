@@ -53,8 +53,8 @@
 	}
 }
 
-a.button,
-button:not(.no-style) {
+a.button.sheika,
+button.button.sheika {
 	@apply text-primary-500 font-bold px-3 py-2 md:px-4 md:py-3 border border-transparent rounded-lg hover:border-primary-500;
 	@apply flex space-x-3 items-center;
 

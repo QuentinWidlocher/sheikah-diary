@@ -10,7 +10,7 @@ import {
 	useLoaderData,
 } from 'remix'
 import { deserialize, serialize } from 'superjson'
-import { db } from '~/utils/db.server.'
+import { db } from '~/utils/db.server'
 import { getUser } from '~/utils/session.server'
 
 export let loader: LoaderFunction = async ({ request, params }) => {
@@ -39,7 +39,7 @@ export let loader: LoaderFunction = async ({ request, params }) => {
 }
 
 function getNavLinkClassName({ isActive }: { isActive: boolean }) {
-	let result = `button flex-col !space-x-0 space-y-3`
+	let result = `sheika button flex-col !space-x-0 space-y-3`
 
 	if (!isActive) {
 		result += ' opacity-50'
@@ -63,7 +63,7 @@ export default function UserPage() {
 				{currentUser?.username == user.username ? (
 					<Form className="ml-10" action="/logout" method="post">
 						<input type="hidden" name="redirectTo" readOnly value="/app/entries" />
-						<button className="danger" type="submit">
+						<button className="sheika button danger" type="submit">
 							<FiLogOut />
 							<span>Logout</span>
 						</button>

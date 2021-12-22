@@ -633,6 +633,10 @@ video {
 .m-auto {
 	margin: auto;
 }
+.mx-auto {
+	margin-left: auto;
+	margin-right: auto;
+}
 .mx-5 {
 	margin-left: 1.25rem;
 	margin-right: 1.25rem;
@@ -640,10 +644,6 @@ video {
 .-mx-3 {
 	margin-left: -0.75rem;
 	margin-right: -0.75rem;
-}
-.mx-auto {
-	margin-left: auto;
-	margin-right: auto;
 }
 .my-10 {
 	margin-top: 2.5rem;
@@ -665,6 +665,12 @@ video {
 	margin-top: 0px;
 	margin-bottom: 0px;
 }
+.mt-2 {
+	margin-top: 0.5rem;
+}
+.mb-5 {
+	margin-bottom: 1.25rem;
+}
 .ml-2 {
 	margin-left: 0.5rem;
 }
@@ -682,12 +688,6 @@ video {
 }
 .mr-3 {
 	margin-right: 0.75rem;
-}
-.mb-5 {
-	margin-bottom: 1.25rem;
-}
-.mt-2 {
-	margin-top: 0.5rem;
 }
 .mt-auto {
 	margin-top: auto;
@@ -728,6 +728,9 @@ video {
 .h-full {
 	height: 100%;
 }
+.h-screen {
+	height: 100vh;
+}
 .h-2 {
 	height: 0.5rem;
 }
@@ -746,6 +749,9 @@ video {
 .w-full {
 	width: 100%;
 }
+.w-screen {
+	width: 100vw;
+}
 .w-2 {
 	width: 0.5rem;
 }
@@ -763,6 +769,10 @@ video {
 }
 .flex-1 {
 	flex: 1 1 0%;
+}
+.scale-x-90 {
+	--tw-scale-x: .9;
+	transform: var(--tw-transform);
 }
 .transform {
 	transform: var(--tw-transform);
@@ -830,12 +840,12 @@ video {
 .bg-primary-800 {
 	background-color: var(--primary-800);
 }
-.bg-danger-500 {
-	background-color: var(--danger-500);
-}
 .bg-black {
 	--tw-bg-opacity: 1;
 	background-color: rgba(0, 0, 0, var(--tw-bg-opacity));
+}
+.bg-danger-500 {
+	background-color: var(--danger-500);
 }
 .bg-opacity-30 {
 	--tw-bg-opacity: 0.3;
@@ -868,6 +878,14 @@ video {
 	font-size: 0.875rem;
 	line-height: 1.25rem;
 }
+.text-6xl {
+	font-size: 3.75rem;
+	line-height: 1;
+}
+.text-8xl {
+	font-size: 6rem;
+	line-height: 1;
+}
 .text-xl {
 	font-size: 1.25rem;
 	line-height: 1.75rem;
@@ -893,12 +911,12 @@ video {
 .text-danger-500 {
 	color: var(--danger-500);
 }
-.text-primary-700 {
-	color: var(--primary-700);
-}
 .text-white {
 	--tw-text-opacity: 1;
 	color: rgba(255, 255, 255, var(--tw-text-opacity));
+}
+.text-primary-700 {
+	color: var(--primary-700);
 }
 .text-primary-500 {
 	color: var(--primary-500);
@@ -1001,6 +1019,14 @@ body {
 
 .text-shadow-primary {
   text-shadow: var(--primary-shadow);
+}
+
+.hover\:text-danger-300:hover {
+	color: var(--danger-300);
+}
+
+.hover\:text-danger-900:hover {
+	color: var(--danger-900);
 }
 
 .hover\:drop-shadow-base:hover {

@@ -7,12 +7,12 @@ import {
 	Link,
 } from 'remix'
 import { deserialize, serialize } from 'superjson'
-import { db } from '~/utils/db.server.'
+import { db } from '~/utils/db.server'
 import { requireUserId } from '~/utils/session.server'
 import { Notification } from '@prisma/client'
 import { displayDateTime } from '~/utils/date.utils'
 import { FiAlertCircle, FiCheckCircle } from 'react-icons/fi'
-import { parseFormData } from '~/utils/formdata.utils.server'
+import { parseFormData } from '../../../../../prisma/formdata.utils.server'
 import { z } from 'zod'
 
 export let loader: LoaderFunction = async ({ request }) => {

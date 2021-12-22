@@ -1,7 +1,7 @@
 import { Prisma } from '@prisma/client'
 import { ActionFunction, redirect } from 'remix'
 import { z } from 'zod'
-import { db } from '~/utils/db.server.'
+import { db } from '~/utils/db.server'
 import { base64ImageValidTypeRegex, saveImage } from '~/utils/file.utils.server'
 import { requireUserId } from '~/utils/session.server'
 import { slugify } from '~/utils/string.utils'

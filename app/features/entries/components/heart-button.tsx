@@ -67,8 +67,8 @@ export default function HeartButton({
 						<HeartIcon
 							className={`w-10 h-10 filter ${
 								userHasLiked
-									? 'text-danger-500 drop-shadow-danger'
-									: 'text-black drop-shadow-primary'
+									? 'text-danger-500 drop-shadow-danger hover:text-danger-300'
+									: 'text-black drop-shadow-primary hover:text-danger-900'
 							}`}
 						/>
 					</button>

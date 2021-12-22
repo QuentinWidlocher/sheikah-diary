@@ -93,7 +93,7 @@
 			z-index: -1;
 		}
 
-a.button, button:not(.no-style) {
+a.button.sheika, button.button.sheika {
 	border-radius: 0.5rem;
 	border-width: 1px;
 	border-color: transparent;
@@ -105,66 +105,66 @@ a.button, button:not(.no-style) {
 	color: var(--primary-500);
 }
 
-a.button:hover, button:not(.no-style):hover {
+a.button.sheika:hover, button.button.sheika:hover {
 	border-color: var(--primary-500);
 }
 
 @media (min-width: 768px) {
 
-	a.button, button:not(.no-style) {
+	a.button.sheika, button.button.sheika {
 		padding-left: 1rem;
 		padding-right: 1rem;
 	}
 
-	a.button, button:not(.no-style) {
+	a.button.sheika, button.button.sheika {
 		padding-top: 0.75rem;
 		padding-bottom: 0.75rem;
 	}
 }
 
-a.button, button:not(.no-style) {
+a.button.sheika, button.button.sheika {
 	display: flex;
 	align-items: center;
 }
 
-a.button > :not([hidden]) ~ :not([hidden]), button:not(.no-style) > :not([hidden]) ~ :not([hidden]) {
+a.button.sheika > :not([hidden]) ~ :not([hidden]), button.button.sheika > :not([hidden]) ~ :not([hidden]) {
 	--tw-space-x-reverse: 0;
 	margin-right: calc(0.75rem * var(--tw-space-x-reverse));
 	margin-left: calc(0.75rem * calc(1 - var(--tw-space-x-reverse)));
 }
 
-a.button,
-button:not(.no-style) {
+a.button.sheika,
+button.button.sheika {
 
 	text-shadow: var(--primary-shadow);
 }
 
-a.button:hover, button:not(.no-style):hover {
+a.button.sheika:hover, button.button.sheika:hover {
 		box-shadow: var(--primary-shadow-full);
 	}
 
-a.button > svg, button:not(.no-style) > svg {
+a.button.sheika > svg, button.button.sheika > svg {
 		filter: drop-shadow(var(--primary-shadow));
 	}
 
-a.button.danger, button:not(.no-style).danger {
+a.button.sheika.danger, button.button.sheika.danger {
 	color: var(--danger-500);
 }
 
-a.button.danger:hover, button:not(.no-style).danger:hover {
+a.button.sheika.danger:hover, button.button.sheika.danger:hover {
 	border-color: var(--danger-500);
 }
 
-a.button.danger, button:not(.no-style).danger {
+a.button.sheika.danger, button.button.sheika.danger {
 
 		text-shadow: var(--danger-shadow);
 	}
 
-a.button.danger:hover, button:not(.no-style).danger:hover {
+a.button.sheika.danger:hover, button.button.sheika.danger:hover {
 			box-shadow: var(--danger-shadow-full);
 		}
 
-a.button.danger > svg, button:not(.no-style).danger > svg {
+a.button.sheika.danger > svg, button.button.sheika.danger > svg {
 			filter: drop-shadow(var(--danger-shadow));
 		}
 
