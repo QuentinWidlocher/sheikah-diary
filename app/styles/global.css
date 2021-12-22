@@ -627,6 +627,9 @@ video {
 .left-0 {
 	left: 0px;
 }
+.z-20 {
+	z-index: 20;
+}
 .float-right {
 	float: right;
 }
@@ -853,8 +856,18 @@ video {
 .bg-opacity-60 {
 	--tw-bg-opacity: 0.6;
 }
+.bg-opacity-50 {
+	--tw-bg-opacity: 0.5;
+}
+.object-contain {
+	-o-object-fit: contain;
+	   object-fit: contain;
+}
 .p-5 {
 	padding: 1.25rem;
+}
+.p-12 {
+	padding: 3rem;
 }
 .px-12 {
 	padding-left: 3rem;

@@ -19,6 +19,7 @@ import CommentTextArea from '~/features/entries/components/comment-text-area'
 import Comments from '~/features/entries/components/comments'
 import EntryDeleteModal from '~/features/entries/components/entry-delete-modal'
 import HeartButton from '~/features/entries/components/heart-button'
+import ImageDisplay from '~/features/entries/components/image-display'
 import {
 	EntryInPage,
 	getPrismaSelectEntryInPage,
@@ -122,17 +123,7 @@ export default function EntriesByIdPage() {
 							</Link>
 						</h2>
 					</div>
-					{pictures?.[0] ? (
-						<a href={pictures[0].file} target="_blank">
-							<img
-								src={pictures[0].preview}
-								alt=""
-								className="mx-auto w-full max-w-2xl h-full border border-primary-500 text-primary-500"
-							/>
-						</a>
-					) : (
-						<SheikahLogo className="mx-auto w-full h-full border border-primary-500 text-primary-500" />
-					)}
+					<ImageDisplay pictures={pictures} />
 					<small className="text-center opacity-70">
 						{displayDateTime(createdAt)}
 					</small>
