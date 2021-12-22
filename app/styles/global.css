@@ -773,8 +773,8 @@ video {
 .flex-1 {
 	flex: 1 1 0%;
 }
-.scale-x-90 {
-	--tw-scale-x: .9;
+.scale-x-75 {
+	--tw-scale-x: .75;
 	transform: var(--tw-transform);
 }
 .transform {

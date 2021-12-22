@@ -10,7 +10,7 @@ export default function ErrorPage({
 			<div className="flex flex-col">
 				<h1
 					style={{ fontFamily: 'Spectral' }}
-					className="text-6xl text-center transform scale-x-90">
+					className="text-6xl text-center transform scale-x-75">
 					<span className="text-8xl">G</span>AME <span className="text-8xl">O</span>
 					VER
 				</h1>
