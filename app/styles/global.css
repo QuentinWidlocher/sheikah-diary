@@ -859,15 +859,21 @@ video {
 .bg-opacity-50 {
 	--tw-bg-opacity: 0.5;
 }
+.bg-contain {
+	background-size: contain;
+}
+.bg-center {
+	background-position: center;
+}
+.bg-no-repeat {
+	background-repeat: no-repeat;
+}
 .object-contain {
 	-o-object-fit: contain;
 	   object-fit: contain;
 }
 .p-5 {
 	padding: 1.25rem;
-}
-.p-12 {
-	padding: 3rem;
 }
 .px-12 {
 	padding-left: 3rem;
@@ -876,6 +882,10 @@ video {
 .px-3 {
 	padding-left: 0.75rem;
 	padding-right: 0.75rem;
+}
+.px-1 {
+	padding-left: 0.25rem;
+	padding-right: 0.25rem;
 }
 .pb-10 {
 	padding-bottom: 2.5rem;
@@ -1088,6 +1098,11 @@ body {
 		padding-left: 2.5rem;
 		padding-right: 2.5rem;
 	}
+
+	.md\:px-5 {
+		padding-left: 1.25rem;
+		padding-right: 1.25rem;
+	}
 }
 
 @media (min-width: 1024px) {
@@ -1108,11 +1123,21 @@ body {
 		padding-left: 5rem;
 		padding-right: 5rem;
 	}
+
+	.lg\:px-10 {
+		padding-left: 2.5rem;
+		padding-right: 2.5rem;
+	}
 }
 
 @media (min-width: 1280px) {
 
 	.xl\:w-1\/5 {
 		width: 20%;
+	}
+
+	.xl\:px-20 {
+		padding-left: 5rem;
+		padding-right: 5rem;
 	}
 }

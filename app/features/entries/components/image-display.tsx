@@ -27,8 +27,12 @@ export default function ImageDisplay({ pictures }: ImageDisplayProps) {
 			{fullscreen ? (
 				<div
 					onClick={() => setFullscreen(false)}
-					className="fixed z-20 top-0 left-0 w-screen h-screen bg-black bg-opacity-50 p-12 object-contain">
-					<img src={pictures[0].file} alt="" className="mx-auto h-full" />
+					className="fixed z-20 top-0 left-0 w-screen h-screen bg-black bg-opacity-50 object-contain px-1 md:px-5 lg:px-10 xl:px-20">
+					<div
+						className="w-full h-full bg-contain bg-no-repeat bg-center"
+						style={{
+							backgroundImage: `url(${pictures[0].file})`,
+						}}></div>
 				</div>
 			) : null}
 		</>
