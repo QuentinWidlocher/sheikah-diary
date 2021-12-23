@@ -18,7 +18,7 @@ const shadesFromVariable = (varName) => ({
 module.exports = {
   mode: 'jit',
   content: [
-    fromRoot('./app/**/*.+(js|ts|tsx|mdx|md)'),
+    fromRoot('./app/**/*.(js|ts|tsx|mdx|md)'),
   ],
   darkMode: 'media', // or 'media' or 'class'
   theme: {

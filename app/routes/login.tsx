@@ -1,3 +1,5 @@
+import { useState } from 'react'
+import { FiEye, FiEyeOff } from 'react-icons/fi'
 import {
 	Form,
 	Link,
@@ -7,6 +9,7 @@ import {
 } from 'remix'
 import ErrorMessage from '~/components/error-message'
 import { loginAction, LoginFormError } from '~/features/login/api'
+import { invert } from '~/utils/functional.utils'
 import stylesUrl from '../styles/login.css'
 
 export let links: LinksFunction = () => {
@@ -18,6 +21,8 @@ export let action = loginAction
 export default function Login() {
 	let errors = useActionData<LoginFormError | undefined>()
 	let [searchParams] = useSearchParams()
+	const [showPassword, setShowPassword] = useState(false)
+
 	return (
 		<div className="wrapper">
 			<div className="content">
@@ -56,11 +61,16 @@ export default function Login() {
 						<ErrorMessage className="ml-auto mr-2" error={errors?.username} />
 					</div>
 					<div className="form-group">
-						<label htmlFor="password-input">Password</label>
+						<label className="flex justify-between" htmlFor="password-input">
+							<span>Password</span>
+							<button type="button" onClick={() => setShowPassword(invert)}>
+								{showPassword ? <FiEyeOff /> : <FiEye />}
+							</button>
+						</label>
 						<input
 							id="password-input"
 							name="password"
-							type="password"
+							type={showPassword ? 'text' : 'password'}
 							aria-invalid={Boolean(errors?.password) || undefined}
 							aria-describedby={errors?.password ? 'password-error' : undefined}
 						/>
