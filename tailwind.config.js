@@ -17,10 +17,9 @@ const shadesFromVariable = (varName) => ({
 
 module.exports = {
   mode: 'jit',
-  purge: {
-    enabled: process.env.PROFILE === 'PROD',
-    content: [fromRoot('./app/**/*.+(js|ts|tsx|mdx|md)')],
-  },
+  content: [
+    fromRoot('./app/**/*.+(js|ts|tsx|mdx|md)'),
+  ],
   darkMode: 'media', // or 'media' or 'class'
   theme: {
     extend: {
