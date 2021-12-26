@@ -1,7 +1,8 @@
 import { ActionFunction, redirect } from 'remix'
 import { z } from 'zod'
 import { db } from '~/utils/db.server'
-import { pictures } from '~/utils/storage'
+import { pictures } from '~/utils/storage.server'
+import { parseFormData } from '../../../utils/formdata.utils.server'
 
 let formValidator = z.object({
 	id: z.string().uuid().nonempty(),
@@ -12,8 +13,7 @@ export let deleteAction: ActionFunction = async ({ request }) => {
 		return null
 	}
 
-	let formData = await request.formData()
-	let form = formValidator.parse(Object.fromEntries(formData.entries()))
+	let form = await parseFormData(request, formValidator)
 
 	console.log('Request to delete entry', form.id)
 

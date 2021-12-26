@@ -3,6 +3,7 @@ import { ActionFunction, redirect } from 'remix'
 import { z } from 'zod'
 import { db } from '~/utils/db.server'
 import { getUser } from '~/utils/session.server'
+import { safeParseFormData } from '../../../utils/formdata.utils.server'
 
 const formValidator = z.object({
 	body: z.string().nonempty({ message: 'You cannot send an empty comment' }),
@@ -34,10 +35,7 @@ export let createCommentAction: ActionFunction = async ({
 		return redirect('/app/entries')
 	}
 
-	let formData = await request.formData()
-	let parsedForm = formValidator.safeParse(
-		Object.fromEntries(formData.entries()),
-	)
+	let parsedForm = await safeParseFormData(request, formValidator)
 
 	if (!parsedForm.success) {
 		return parsedForm.error.format()
@@ -54,7 +52,6 @@ export let createCommentAction: ActionFunction = async ({
 		parsedForm.data.body,
 	)
 
-	console.log('return')
 	return db.comment.create({
 		data: {
 			body: parsedForm.data.body,

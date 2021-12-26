@@ -29,7 +29,7 @@ import formsStylesheet from '~/styles/forms.css'
 import { displayDateTime } from '~/utils/date.utils'
 import { db } from '~/utils/db.server'
 import { getUser } from '~/utils/session.server'
-import { pictures } from '~/utils/storage'
+import { pictures } from '~/utils/storage.server'
 
 export let links: LinksFunction = () => [
 	{ rel: 'stylesheet', href: entryStylesheet },

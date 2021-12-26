@@ -2,7 +2,7 @@ import { Prisma } from '@prisma/client'
 import { ActionFunction, redirect } from 'remix'
 import { z } from 'zod'
 import { db } from '~/utils/db.server'
-import { parseFormData } from '../../../../prisma/formdata.utils.server'
+import { parseFormData } from '../../../utils/formdata.utils.server'
 import { getUser } from '~/utils/session.server'
 
 let formValidator = z.object({

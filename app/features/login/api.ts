@@ -2,6 +2,7 @@ import { ActionFunction } from 'remix'
 import { z } from 'zod'
 import { db } from '~/utils/db.server'
 import { login, createUserSession, register } from '~/utils/session.server'
+import { safeParseFormData } from '../../utils/formdata.utils.server'
 
 let formValidator = z.object({
 	username: z.string().min(1, { message: 'The username is required' }),
@@ -18,11 +19,7 @@ export type LoginFormError = z.ZodFormattedError<LoginFormType>
 export let loginAction: ActionFunction = async ({
 	request,
 }): Promise<Response | LoginFormError> => {
-	let formData = await request.formData()
-
-	let parsedFormData = formValidator.safeParse(
-		Object.fromEntries(formData.entries()),
-	)
+	let parsedFormData = await safeParseFormData(request, formValidator)
 
 	if (!parsedFormData.success) {
 		return parsedFormData.error.format()
