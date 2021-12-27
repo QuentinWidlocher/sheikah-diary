@@ -21,6 +21,7 @@ export let action = loginAction
 export default function Login() {
 	let errors = useActionData<LoginFormError | undefined>()
 	let [searchParams] = useSearchParams()
+
 	const [showPassword, setShowPassword] = useState(false)
 
 	return (
@@ -52,6 +53,7 @@ export default function Login() {
 						<label htmlFor="username-input">Username</label>
 						<input
 							type="text"
+							tabIndex={1}
 							id="username-input"
 							name="username"
 							aria-invalid={Boolean(errors?.username)}
@@ -70,6 +72,7 @@ export default function Login() {
 						<input
 							id="password-input"
 							name="password"
+							tabIndex={1}
 							type={showPassword ? 'text' : 'password'}
 							aria-invalid={Boolean(errors?.password) || undefined}
 							aria-describedby={errors?.password ? 'password-error' : undefined}

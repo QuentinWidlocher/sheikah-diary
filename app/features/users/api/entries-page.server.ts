@@ -2,12 +2,12 @@ import { LoaderFunction, redirect } from 'remix'
 import { serialize } from 'superjson'
 import {
 	computeEntryInListFields,
+	EntryInList,
+	EntryInListFromDb,
 	prismaEntryInListSelect,
 } from '~/features/entries/types/entry-in-list'
 import { db } from '~/utils/db.server'
-import { UserEntriesPageData } from '../types/page'
-
-const itemsPerPage = 20
+import { paginateLoader } from '~/utils/pagination.server'
 
 export let userEntriesPageLoader: LoaderFunction = async ({
 	params,
@@ -16,10 +16,6 @@ export let userEntriesPageLoader: LoaderFunction = async ({
 	if (!params.username) {
 		return redirect('/app/entries')
 	}
-
-	let url = new URL(request.url)
-	let page = url.searchParams.get('p')
-	let pageNumber = page && Number(page) > 0 ? Number(page) - 1 : 0
 
 	let foundUserFromDb = await db.user.findFirst({
 		select: {
@@ -34,32 +30,34 @@ export let userEntriesPageLoader: LoaderFunction = async ({
 		return redirect('/app/entries')
 	}
 
-	let entries = await db.entry.findMany({
-		select: {
-			...prismaEntryInListSelect,
-		},
-		take: itemsPerPage,
-		skip: itemsPerPage * pageNumber,
-		where: {
-			userId: foundUserFromDb.id,
-		},
-		orderBy: {
-			createdAt: 'desc',
-		},
-	})
+	let getItems = async (pageNumber: number, itemsPerPage: number) => {
+		let items: EntryInListFromDb[] = await db.entry.findMany({
+			select: {
+				...prismaEntryInListSelect,
+			},
+			take: itemsPerPage,
+			skip: itemsPerPage * pageNumber,
+			where: {
+				userId: foundUserFromDb!.id,
+			},
+			orderBy: {
+				createdAt: 'desc',
+			},
+		})
 
-	let total = await db.entry.count({
-		where: {
-			userId: foundUserFromDb.id,
-		},
-	})
-
-	let foundUser: UserEntriesPageData = {
-		entries: await Promise.all(entries.map(await computeEntryInListFields)),
-		page: pageNumber + 1,
-		total,
-		itemsPerPage,
+		return await Promise.all(items.map(await computeEntryInListFields))
 	}
 
-	return serialize(foundUser)
+	let paginated = await paginateLoader<EntryInList>({
+		request,
+		getItems,
+		getTotal: () =>
+			db.entry.count({
+				where: {
+					userId: foundUserFromDb!.id,
+				},
+			}),
+	})
+
+	return serialize(paginated)
 }

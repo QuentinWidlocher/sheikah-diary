@@ -1,6 +1,6 @@
 import { User } from '@prisma/client'
 import { FiLogOut } from 'react-icons/fi'
-import { HiBell, HiCamera } from 'react-icons/hi'
+import { HiBell, HiCamera, HiHeart } from 'react-icons/hi'
 import {
 	Form,
 	LoaderFunction,
@@ -84,6 +84,12 @@ export default function UserPage() {
 							<NavLink className={getNavLinkClassName} to="notifications">
 								<span>Notifications</span>
 								<HiBell size="1.9rem" />
+							</NavLink>
+						</li>
+						<li className="flex-1">
+							<NavLink className={getNavLinkClassName} to="likes">
+								<span>Likes</span>
+								<HiHeart size="1.9rem" />
 							</NavLink>
 						</li>
 					</ul>
