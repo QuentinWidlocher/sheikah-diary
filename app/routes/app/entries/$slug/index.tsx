@@ -24,6 +24,7 @@ import {
 	EntryInPage,
 	getPrismaSelectEntryInPage,
 } from '~/features/entries/types/entry-in-page'
+import useCurrentUser from '~/hooks/useCurrentUser'
 import entryStylesheet from '~/styles/entry.css'
 import formsStylesheet from '~/styles/forms.css'
 import { displayDateTime } from '~/utils/date.utils'
@@ -37,11 +38,10 @@ export let links: LinksFunction = () => [
 ]
 
 export let meta: MetaFunction = ({ data }) => {
-	let {
-		entry: { title = '' },
-	} = deserialize<{ entry: EntryInPage }>(data)
+	let entry = deserialize<EntryInPage>(data)
+
 	return {
-		title: `${title} | Sheikah Diary`,
+		title: `${entry.title} | Sheikah Diary`,
 	}
 }
 
@@ -73,30 +73,26 @@ export let loader: LoaderFunction = async ({ params, request }) => {
 		),
 	}
 
-	return serialize({ entry: result, user: await getUser(request) })
+	return serialize(result)
 }
 
 export let action = deleteAction
 
 export default function EntriesByIdPage() {
 	let {
-		entry: {
-			id,
-			slug,
-			title,
-			content,
-			createdAt,
-			user,
-			pictures,
-			comments,
-			likedBy,
-			_count: { likedBy: likedByCount },
-		},
-		user: currentUser,
-	}: {
-		entry: EntryInPage
-		user: User | null
-	} = deserialize(useLoaderData())
+		id,
+		slug,
+		title,
+		content,
+		createdAt,
+		user,
+		pictures,
+		comments,
+		likedBy,
+		_count: { likedBy: likedByCount },
+	}: EntryInPage = deserialize(useLoaderData())
+
+	let currentUser = useCurrentUser()
 
 	const [showDeleteModal, setShowDeleteModal] = useState(false)
 

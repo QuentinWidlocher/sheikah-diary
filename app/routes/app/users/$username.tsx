@@ -10,6 +10,7 @@ import {
 	useLoaderData,
 } from 'remix'
 import { deserialize, serialize } from 'superjson'
+import useCurrentUser from '~/hooks/useCurrentUser'
 import { db } from '~/utils/db.server'
 import { getUser } from '~/utils/session.server'
 
@@ -32,10 +33,7 @@ export let loader: LoaderFunction = async ({ request, params }) => {
 		return redirect('/app/entries')
 	}
 
-	return serialize({
-		user: foundUserFromDb,
-		currentUser: await getUser(request),
-	})
+	return serialize(foundUserFromDb)
 }
 
 function getNavLinkClassName({ isActive }: { isActive: boolean }) {
@@ -49,10 +47,8 @@ function getNavLinkClassName({ isActive }: { isActive: boolean }) {
 }
 
 export default function UserPage() {
-	let { user, currentUser } = deserialize<{
-		user: Pick<User, 'id' | 'username'>
-		currentUser?: Pick<User, 'username'>
-	}>(useLoaderData())
+	let user = deserialize<Pick<User, 'id' | 'username'>>(useLoaderData())
+	let currentUser = useCurrentUser()
 
 	return (
 		<article className="flex flex-col w-full">

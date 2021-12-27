@@ -9,6 +9,7 @@ import {
 	useMatches,
 } from 'remix'
 import AppLayout from '~/components/app-layout'
+import useCurrentRoute from '~/hooks/useCurrentRoute'
 import entriesStylesheet from '~/styles/entries.css'
 import { getUser } from '~/utils/session.server'
 
@@ -38,8 +39,7 @@ export let loader: LoaderFunction = async ({ request }) => {
 // We just display the pages for now, we use this file to link the stylesheet
 export default function AppPage() {
 	let loader = useLoaderData<{ currentUser: User; newNotif: boolean } | null>()
-	let matches = useMatches()
-	let currentRoute = matches[matches.length - 1].pathname
+	let currentRoute = useCurrentRoute()
 
 	return (
 		<AppLayout

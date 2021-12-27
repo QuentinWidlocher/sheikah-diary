@@ -17,6 +17,7 @@ import {
 	EntryInListFromDb,
 	prismaEntryInListSelect,
 } from '~/features/entries/types/entry-in-list'
+import useCurrentUser from '~/hooks/useCurrentUser'
 import { db } from '~/utils/db.server'
 import { getUser } from '~/utils/session.server'
 
@@ -54,17 +55,17 @@ export let loader: LoaderFunction = async ({ request }) => {
 		page: pageNumber + 1,
 		total,
 		entries,
-		user: await getUser(request),
 	})
 }
 
 export default function EntriesIndexPage() {
-	let { page, total, entries, user } = deserialize<{
+	let { page, total, entries } = deserialize<{
 		page: number
 		total: number
 		entries: EntryInList[]
-		user: User | null
 	}>(useLoaderData())
+
+	let currentUser = useCurrentUser()
 
 	if (total > 0) {
 		return (
@@ -83,7 +84,7 @@ export default function EntriesIndexPage() {
 					<span className="font-bold text-2xl mx-auto text-shadow-primary">
 						No entries yet
 					</span>
-					{!user ? null : (
+					{!currentUser ? null : (
 						<Link to="/app/entries/new" className="sheika button flex mx-auto mt-5">
 							<FiPlus size="1.5rem" className="mr-3" />
 							Add an entry
