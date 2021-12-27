@@ -2,7 +2,6 @@ import * as React from 'react'
 import {
 	Links,
 	LiveReload,
-	LoaderFunction,
 	Meta,
 	MetaFunction,
 	Outlet,
