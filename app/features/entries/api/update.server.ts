@@ -3,6 +3,7 @@ import { ActionFunction, redirect } from 'remix'
 import { z } from 'zod'
 import { db } from '~/utils/db.server'
 import { base64ImageValidTypeRegex, saveImage } from '~/utils/file.utils.server'
+import { safeParseFormData } from '~/utils/formdata.utils.server'
 import { requireUserId } from '~/utils/session.server'
 import { slugify } from '~/utils/string.utils'
 import { NewEntry } from '../types/entries'
@@ -51,8 +52,10 @@ export let baseUpdateAction = async (
 ) => {
 	let userId = await requireUserId(request)
 
+	console.debug('Parsing form data')
 	// Idk why but await request.formData() justs freezes
 	let formData = new URLSearchParams(await request.text())
+	console.debug('Parsed form data : ', formData.keys())
 
 	let parsedForm = formValidator.safeParse(
 		Object.fromEntries(formData.entries()),

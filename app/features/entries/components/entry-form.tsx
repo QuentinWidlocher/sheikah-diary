@@ -4,7 +4,7 @@ import ReactLoading from 'react-loading'
 import { Form } from 'remix'
 import FormField from '~/components/form-field'
 import { FormError } from '../api/update.server'
-import { EntryInUpdate } from '../types/entries'
+import { EntryInUpdate } from '../types/entry-in-update'
 import ImageSelector from './image-selector'
 
 type EntryFormProps = {

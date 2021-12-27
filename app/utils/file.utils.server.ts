@@ -32,6 +32,8 @@ export function getFileInfos(
 }
 
 export async function saveImage(base64: string, entryId: string) {
+	console.log('Saving image for entry', entryId)
+
 	let [base64Data, fileName, previewFileName, thumbnailFileName, ext] =
 		getFileInfos(base64, entryId)
 
