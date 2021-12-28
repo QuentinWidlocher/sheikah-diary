@@ -9,12 +9,11 @@
   "scripts": {
     "build:css": "postcss ./styles/* --dir ./app/styles",
     "build:remix": "remix build",
-    "build": "build:css && prisma migrate deploy && prisma generate && remix build",
+    "build": "yarn build:css && prisma migrate deploy && prisma generate && remix build",
     "dev:css": "postcss ./styles/* --dir ./app/styles --watch",
     "dev:remix": "remix dev --host 0.0.0.0",
     "dev": "concurrently \"npm:dev:*\"",
     "postinstall": "remix setup node",
-    "start": "remix-serve build",
     "prisma": "npx prisma"
   },
   "dependencies": {
