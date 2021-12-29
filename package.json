@@ -6,7 +6,7 @@
     "email": "quentin@widlocher.com",
     "url": "https://quentin.widlocher.com"
   },
-  "license": "GNU GPLv3",
+  "license": "GPL-3.0-or-later",
   "version": "1.0.1",
   "repository": {
     "url": "https://github.com/QuentinWidlocher/sheikah-diary"
@@ -26,23 +26,23 @@
   },
   "dependencies": {
     "@prisma/client": "^3.6.0",
-    "@remix-run/node": "1.1.1",
-    "@remix-run/react": "1.1.1",
-    "@remix-run/serve": "1.1.1",
-    "@remix-run/vercel": "1.1.1",
+    "@remix-run/node": "1.0.6",
+    "@remix-run/react": "1.0.6",
+    "@remix-run/serve": "1.0.6",
+    "@remix-run/vercel": "1.0.6",
     "@supabase/supabase-js": "^1.28.2",
     "bcrypt": "^5.0.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-icons": "^4.3.1",
     "react-loading": "^2.0.3",
-    "remix": "1.1.1",
+    "remix": "1.0.6",
     "sharp": "^0.29.3",
     "superjson": "^1.8.0",
     "zod": "^3.11.6"
   },
   "devDependencies": {
-    "@remix-run/dev": "1.1.1",
+    "@remix-run/dev": "1.0.6",
     "@types/bcrypt": "^5.0.0",
     "@types/react": "^17.0.24",
     "@types/react-dom": "^17.0.9",
