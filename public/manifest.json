@@ -3,7 +3,7 @@
   "short_name": "Sheika Diary",
   "description": "Share your favorite pictures of Breath of the Wild !",
   "lang": "en-US",
-  "start_url": "/",
+  "start_url": "/app",
   "display": "standalone",
   "theme_color": "#35a0ca",
   "icons": [
