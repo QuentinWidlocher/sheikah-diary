@@ -102,7 +102,9 @@ export let createAction: ActionFunction = async ({ request }) => {
 		let createdEntry = await db.entry.create({ data })
 
 		if (form.mainPicture) {
-			saveImage(form.mainPicture, createdEntry.id).then()
+			saveImage(form.mainPicture, createdEntry.id).then(() =>
+				console.log('File has been saved'),
+			)
 		}
 
 		return createdEntry.slug

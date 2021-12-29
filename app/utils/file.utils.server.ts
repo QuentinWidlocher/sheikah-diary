@@ -46,10 +46,14 @@ export async function saveImage(base64: string, entryId: string) {
 			encoding: 'base64',
 		})
 
+		console.debug('Temporary file has been created here ', fullPath)
+
 		await Promise.all([
 			sharp(fullPath).resize(1280).toFile(fullPreviewPath),
 			sharp(fullPath).resize(500).toFile(fullThumbailPath),
 		])
+
+		console.debug('The two versions of the files has been created')
 
 		await Promise.all([
 			pictures.upload(fileName, await fs.readFile(fullPath), {
@@ -62,6 +66,8 @@ export async function saveImage(base64: string, entryId: string) {
 				contentType: `image/${ext}`,
 			}),
 		])
+
+		console.debug('All 3 versions of the file has been uploaded')
 
 		return db.picture.create({
 			data: {
