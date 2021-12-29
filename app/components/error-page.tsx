@@ -8,9 +8,7 @@ export default function ErrorPage({
 	return (
 		<div className="bg-black text-white w-screen h-screen flex justify-center items-center">
 			<div className="flex flex-col">
-				<h1
-					style={{ fontFamily: 'Spectral' }}
-					className="text-6xl text-center transform scale-x-75">
+				<h1 className="font-title text-6xl text-center transform scale-x-75">
 					<span className="text-8xl">G</span>AME <span className="text-8xl">O</span>
 					VER
 				</h1>

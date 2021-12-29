@@ -1,8 +1,16 @@
 {
-  "private": true,
   "name": "sheikah-diary",
   "description": "Open Source app for picture sharing, based on Breath of the Wild UI",
+  "author": {
+    "name": "Quentin Widlocher",
+    "email": "quentin@widlocher.com",
+    "url": "https://quentin.widlocher.com"
+  },
   "license": "GNU GPLv3",
+  "version": "1.0.0",
+  "repository": {
+    "url": "https://github.com/QuentinWidlocher/sheikah-diary"
+  },
   "prisma": {
     "seed": "node --require esbuild-register prisma/seed.ts"
   },

@@ -114,7 +114,9 @@ export default function EntriesByIdPage() {
 						<h1 className="font-bold">{title}</h1>
 						<h2>
 							by{' '}
-							<Link className="underline" to={`/app/users/${user.username}`}>
+							<Link
+								className="underline underline-offset-2 hover:underline-offset-4"
+								to={`/app/users/${user.username}`}>
 								{user.username}
 							</Link>
 						</h2>

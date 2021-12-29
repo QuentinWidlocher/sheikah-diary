@@ -1,10 +1,11 @@
 import { Notification, User } from '@prisma/client'
-import { FiArrowLeft, FiPlus } from 'react-icons/fi'
+import { FiArrowLeft, FiHome, FiMenu, FiPlus } from 'react-icons/fi'
 import {
 	Link,
 	LinksFunction,
 	LoaderFunction,
 	Outlet,
+	redirect,
 	useLoaderData,
 	useMatches,
 } from 'remix'
@@ -17,7 +18,12 @@ export let links: LinksFunction = () => [
 	{ rel: 'stylesheet', href: entriesStylesheet },
 ]
 
-export let loader: LoaderFunction = async ({ request }) => {
+export let loader: LoaderFunction = async ({ request, context }) => {
+	// /app is not a proper endpoint, redirecting to /app/entries
+	if (request.url.endsWith('/app') || request.url.endsWith('/app/')) {
+		return redirect('/app/entries')
+	}
+
 	let currentUser = await getUser(request, {
 		notifications: true,
 	})
@@ -50,7 +56,12 @@ export default function AppPage() {
 							<FiArrowLeft size="1.5rem" />
 							<span>Back to the entries</span>
 						</Link>
-					) : null}
+					) : (
+						<Link to="/" className="sheika button mr-auto">
+							<FiMenu size="1.5rem" />
+							<span>Main menu</span>
+						</Link>
+					)}
 					{loader?.currentUser ? (
 						<Link
 							className="sheika button ml-auto relative"

@@ -45,6 +45,9 @@ module.exports = {
       },
       stroke: {
         primary: 'var(--primary-500)',
+      },
+      fontFamily: {
+        'title': ['Spectral']
       }
     },
   },
