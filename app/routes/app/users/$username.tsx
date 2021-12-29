@@ -4,6 +4,7 @@ import { HiBell, HiCamera, HiHeart } from 'react-icons/hi'
 import {
 	Form,
 	LoaderFunction,
+	MetaFunction,
 	NavLink,
 	Outlet,
 	redirect,
@@ -12,7 +13,13 @@ import {
 import { deserialize, serialize } from 'superjson'
 import useCurrentUser from '~/hooks/useCurrentUser'
 import { db } from '~/utils/db.server'
-import { getUser } from '~/utils/session.server'
+
+export let meta: MetaFunction = ({ data }) => {
+	let user = deserialize<Pick<User, 'id' | 'username'>>(data)
+	return {
+		title: `${user.username}'s Page | Sheikah Diary`,
+	}
+}
 
 export let loader: LoaderFunction = async ({ request, params }) => {
 	if (!params.username) {

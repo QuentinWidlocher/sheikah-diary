@@ -1,5 +1,11 @@
-import { Link } from 'remix'
+import { Link, MetaFunction } from 'remix'
 import packageJson from '../../package.json'
+
+export let meta: MetaFunction = () => {
+	return {
+		title: 'Sheikah Diary',
+	}
+}
 
 export default function IndexPage() {
 	return (

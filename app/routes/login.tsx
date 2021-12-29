@@ -4,6 +4,7 @@ import {
 	Form,
 	Link,
 	LinksFunction,
+	MetaFunction,
 	useActionData,
 	useSearchParams,
 } from 'remix'
@@ -14,6 +15,12 @@ import stylesUrl from '../styles/login.css'
 
 export let links: LinksFunction = () => {
 	return [{ rel: 'stylesheet', href: stylesUrl }]
+}
+
+export let meta: MetaFunction = () => {
+	return {
+		title: 'Login | Sheikah Diary',
+	}
 }
 
 export let action = loginAction
