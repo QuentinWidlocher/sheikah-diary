@@ -7,6 +7,7 @@ node_modules
 /public/build
 /api/build
 /public/pictures/*
+/netlify/functions/server/build
 
 /prisma/dev.db
 .env
