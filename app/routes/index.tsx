@@ -1,5 +1,5 @@
 import { Link, MetaFunction } from 'remix'
-import packageJson from '../../package.json'
+import { version, repository, author } from '../../package.json'
 
 export let meta: MetaFunction = () => {
 	return {
@@ -42,20 +42,16 @@ export default function IndexPage() {
 					</nav>
 					<div className="text-right">
 						<ul>
-							<li className="opacity-60">Ver. {packageJson.version}</li>
+							<li className="opacity-60">Ver. {version}</li>
 							<li>
-								<a
-									className="opacity-60 hover:opacity-100"
-									href={packageJson.repository.url}>
+								<a className="opacity-60 hover:opacity-100" href={repository.url}>
 									See on GitHub
 								</a>
 							</li>
 							<li>
 								<span className="opacity-60">{new Date().getFullYear()} - </span>
-								<a
-									className="opacity-60 hover:opacity-100"
-									href={packageJson.author.url}>
-									{packageJson.author.name}
+								<a className="opacity-60 hover:opacity-100" href={author.url}>
+									{author.name}
 								</a>
 							</li>
 						</ul>
