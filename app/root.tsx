@@ -109,6 +109,7 @@ function Document({
 			<body style={{ backgroundColor: '#50463b' }}>
 				{children}
 				<RouteChangeAnnouncement />
+				<ScrollRestoration />
 				<Scripts />
 				{process.env.NODE_ENV === 'development' && <LiveReload />}
 			</body>

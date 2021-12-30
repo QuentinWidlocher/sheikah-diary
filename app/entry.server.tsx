@@ -8,9 +8,6 @@ export default function handleRequest(
 	responseHeaders: Headers,
 	remixContext: EntryContext,
 ) {
-	// TODO https://github.com/l-mbert/remix-postcss
-	//remixPostcss(remixContext)
-
 	let markup = renderToString(
 		<RemixServer context={remixContext} url={request.url} />,
 	)
