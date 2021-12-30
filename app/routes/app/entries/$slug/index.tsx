@@ -109,7 +109,7 @@ export default function EntriesByIdPage() {
 	return (
 		<article>
 			{pictures.map(pic => (
-				<link rel="preload" as="image" href={pic.file} />
+				<link rel="preload" as="image" href={pic.file} key={pic.file} />
 			))}
 			<div className="column">
 				<section className="flex flex-col">
