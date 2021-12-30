@@ -1,0 +1,311 @@
+.wrapper {
+
+  display: flex;
+
+  height: 100vh;
+
+  width: 100vw;
+
+  font-size: 1rem;
+
+  line-height: 1.5rem;
+
+  --tw-text-opacity: 1;
+
+  color: rgb(255 255 232 / var(--tw-text-opacity));
+
+  background-color: rgba(0, 0, 0, 0.3);
+  background-image: url(/assets/blury-bg.png);
+  background-blend-mode: darken;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position-x: center;
+}
+
+  .wrapper .content {
+
+  margin: auto;
+
+  width: 100%;
+
+  padding-left: 1.25rem;
+
+  padding-right: 1.25rem;
+}
+
+  @media (min-width: 768px) {
+
+  .wrapper .content {
+
+    width: 50%;
+  }
+}
+
+  @media (min-width: 1024px) {
+
+  .wrapper .content {
+
+    width: 40%;
+  }
+}
+
+  .wrapper .content h1 {
+
+  width: 100%;
+
+  text-align: center;
+
+  font-size: 1.5rem;
+
+  line-height: 2rem;
+
+  font-weight: 700;
+}
+
+  .wrapper .content form {
+
+  display: flex;
+
+  flex-direction: column;
+}
+
+  .wrapper .content form .form-group {
+
+  margin-top: 0.75rem;
+
+  margin-bottom: 0.75rem;
+
+  display: flex;
+
+  width: 100%;
+
+  flex-wrap: wrap;
+}
+
+  .wrapper .content form .form-group label:not(.radio) {
+
+  display: flex;
+
+  width: 50%;
+
+  align-items: center;
+
+  border-top-left-radius: 0.125rem;
+
+  border-bottom-left-radius: 0.125rem;
+
+  background-color: rgb(255 255 232 / var(--tw-bg-opacity));
+
+  --tw-bg-opacity: 0.1;
+
+  padding-left: 0.75rem;
+
+  padding-right: 0.75rem;
+
+  padding-top: 0.5rem;
+
+  padding-bottom: 0.5rem;
+
+  font-weight: 700;
+
+  transition-property: all;
+
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+
+  transition-duration: 150ms;
+}
+
+  .wrapper .content form .form-group input {
+
+  width: 50%;
+
+  border-top-right-radius: 0.125rem;
+
+  border-bottom-right-radius: 0.125rem;
+
+  border-width: 6px;
+
+  border-style: double;
+
+  border-color: rgb(255 255 232 / var(--tw-border-opacity));
+
+  --tw-border-opacity: 0.2;
+
+  background-color: rgb(0 0 0 / var(--tw-bg-opacity));
+
+  --tw-bg-opacity: 0.3;
+
+  padding-left: 0.75rem;
+
+  padding-right: 0.75rem;
+
+  padding-top: 0.5rem;
+
+  padding-bottom: 0.5rem;
+
+  font-weight: 700;
+
+  outline: 2px solid transparent;
+
+  outline-offset: 2px;
+
+  transition-property: all;
+
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+
+  transition-duration: 150ms;
+}
+
+  .wrapper .content form .form-group:focus-within label:not(.radio) {
+
+  --tw-bg-opacity: 0.3;
+}
+
+  .wrapper .content form .form-group:focus-within input {
+
+  --tw-border-opacity: 1;
+            box-shadow: 0px 0px 10px var(--base);
+}
+
+  .wrapper .content form fieldset .form-group {
+
+  width: 100%;
+
+  flex-wrap: nowrap;
+
+  border-top-right-radius: 0.125rem;
+
+  border-bottom-right-radius: 0.125rem;
+
+  border-width: 6px;
+
+  border-style: double;
+
+  border-color: rgb(255 255 232 / var(--tw-border-opacity));
+
+  --tw-border-opacity: 0.2;
+
+  background-color: rgb(0 0 0 / var(--tw-bg-opacity));
+
+  --tw-bg-opacity: 0.3;
+
+  font-weight: 700;
+
+  outline: 2px solid transparent;
+
+  outline-offset: 2px;
+}
+
+  .wrapper .content form fieldset .form-group label.radio {
+
+  position: relative;
+
+  height: 100%;
+
+  width: 100%;
+
+  border-radius: 0.125rem;
+
+  border-width: 2px;
+
+  border-color: rgb(255 255 232 / var(--tw-border-opacity));
+
+  --tw-border-opacity: 0;
+}
+
+  .wrapper .content form fieldset .form-group label.radio input {
+
+  position: absolute;
+
+  height: 100%;
+
+  width: 100%;
+
+  opacity: 0;
+}
+
+  .wrapper .content form fieldset .form-group label.radio input:checked + div {
+
+  background-color: rgb(255 255 232 / var(--tw-bg-opacity));
+
+  --tw-bg-opacity: 0.3;
+}
+
+  .wrapper .content form fieldset .form-group label.radio div {
+
+  padding-left: 0.75rem;
+
+  padding-right: 0.75rem;
+
+  padding-top: 0.5rem;
+
+  padding-bottom: 0.5rem;
+
+  text-align: center;
+
+  transition-property: all;
+
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+
+  transition-duration: 150ms;
+}
+
+  .wrapper .content form fieldset .form-group label.radio:focus-within {
+
+  --tw-border-opacity: 1;
+            box-shadow: 0px 0px 10px var(--base);
+}
+
+  .wrapper .content form button.button {
+
+  margin-left: auto;
+
+  margin-right: auto;
+
+  margin-top: 1.25rem;
+
+  border-width: 2px;
+
+  border-color: rgb(255 255 232 / var(--tw-border-opacity));
+
+  --tw-border-opacity: 0.2;
+
+  background-color: rgb(0 0 0 / var(--tw-bg-opacity));
+
+  --tw-bg-opacity: 0.3;
+
+  padding-left: 2.5rem;
+
+  padding-right: 2.5rem;
+
+  padding-top: 0.75rem;
+
+  padding-bottom: 0.75rem;
+
+  text-align: center;
+
+  font-weight: 700;
+
+  outline: 2px solid transparent;
+
+  outline-offset: 2px;
+
+  transition-property: all;
+
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+
+  transition-duration: 150ms;
+}
+
+  .wrapper .content form button.button:hover, .wrapper .content form button.button:focus, .wrapper .content form button.button:active {
+
+  --tw-border-opacity: 1;
+
+  background-color: rgb(255 255 232 / var(--tw-bg-opacity));
+
+  --tw-bg-opacity: 0.2;
+}
+
+  .wrapper .content form button.button:active {
+          box-shadow: 0px 0px 10px var(--base);
+        }
