@@ -1,4 +1,5 @@
 import { Notification, User } from '@prisma/client'
+import React, { useEffect } from 'react'
 import { FiArrowLeft, FiHome, FiMenu, FiPlus } from 'react-icons/fi'
 import {
 	Link,
@@ -6,6 +7,7 @@ import {
 	LoaderFunction,
 	Outlet,
 	redirect,
+	useBeforeUnload,
 	useLoaderData,
 	useMatches,
 } from 'remix'

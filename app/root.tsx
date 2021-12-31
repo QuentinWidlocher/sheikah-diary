@@ -6,7 +6,6 @@ import {
 	MetaFunction,
 	Outlet,
 	Scripts,
-	ScrollRestoration,
 	useCatch,
 	useLocation,
 } from 'remix'
@@ -15,6 +14,7 @@ import type { LinksFunction } from 'remix'
 import globalStylesUrl from '~/styles/global.css'
 import basicStylesUrl from '~/styles/basic.css'
 import ErrorPage from './components/error-page'
+import { ScrollRestoration } from './components/scroll-restoration'
 
 /**
  * The `links` export is a function that returns an array of objects that map to
@@ -131,7 +131,7 @@ export function CatchBoundary() {
 	let message
 	switch (caught.status) {
 		case 401:
-			message = "You don't have acces to this page"
+			message = "You don't have access to this page"
 			break
 		case 404:
 			message = 'This page does not exist'
