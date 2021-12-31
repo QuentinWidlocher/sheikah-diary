@@ -19,7 +19,9 @@ import EntryDeleteModal from '~/features/entries/components/entry-delete-modal'
 import HeartButton from '~/features/entries/components/heart-button'
 import ImageDisplay from '~/features/entries/components/image-display'
 import {
+	computeEntryInPageFields,
 	EntryInPage,
+	EntryInPageFromDb,
 	getPrismaSelectEntryInPage,
 } from '~/features/entries/types/entry-in-page'
 import useCurrentUser from '~/hooks/useCurrentUser'
@@ -27,7 +29,6 @@ import entryStylesheet from '~/styles/entry.css'
 import formsStylesheet from '~/styles/forms.css'
 import { displayDateTime } from '~/utils/date.utils'
 import { db } from '~/utils/db.server'
-import { cloudinary } from '~/utils/storage.server'
 
 export let links: LinksFunction = () => [
 	{ rel: 'stylesheet', href: entryStylesheet },
@@ -46,10 +47,10 @@ export let meta: MetaFunction = ({ data }) => {
 export let unstable_shouldReload: ShouldReloadFunction = ({ submission }) =>
 	submission?.method != 'PUT'
 
-export let loader: LoaderFunction = async ({ params, request }) => {
+export let loader: LoaderFunction = async ({ params }) => {
 	let slug = z.string().parse(params?.slug)
 
-	let entry = await db.entry.findFirst({
+	let entry: EntryInPageFromDb | null = await db.entry.findFirst({
 		select: getPrismaSelectEntryInPage(),
 		where: {
 			slug,
@@ -60,14 +61,7 @@ export let loader: LoaderFunction = async ({ params, request }) => {
 		return redirect('/app/entries')
 	}
 
-	let result: EntryInPage = {
-		...entry,
-		pictures: entry.pictures.map(p => ({
-			file: cloudinary.url(p.file) ?? '',
-			preview:
-				cloudinary.url(p.file, { width: 1000, height: 1000, crop: 'limit' }) ?? '',
-		})),
-	}
+	let result: EntryInPage = await computeEntryInPageFields(entry)
 
 	return serialize(result)
 }

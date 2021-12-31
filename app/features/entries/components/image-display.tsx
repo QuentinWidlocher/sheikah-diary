@@ -21,7 +21,12 @@ export default function ImageDisplay({ pictures }: ImageDisplayProps) {
 				<img
 					src={pictures[0].preview}
 					alt=""
-					className="mx-auto w-full max-w-2xl h-full border border-primary-500 text-primary-500"
+					style={{
+						backgroundImage: pictures[0].placeholder
+							? `url('${pictures[0].placeholder}')`
+							: undefined,
+					}}
+					className="bg-cover mx-auto w-full max-w-2xl h-full min-h-[20rem] border border-primary-500 text-primary-500"
 				/>
 			</button>
 			{fullscreen ? (

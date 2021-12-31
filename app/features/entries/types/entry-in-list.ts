@@ -1,8 +1,10 @@
 import { Entry, Picture, Prisma, User } from '@prisma/client'
+import { getBase64FromUrl } from '~/utils/file.utils.server'
 import { cloudinary } from '~/utils/storage.server'
 
 export type EntryInList = Pick<Entry, 'title' | 'slug'> & {
 	thumbnailUrl?: string
+	placeholderUrl?: string
 	createdBy: string
 }
 
@@ -29,6 +31,18 @@ export const prismaEntryInListSelect = Prisma.validator<Prisma.EntrySelect>()({
 export async function computeEntryInListFields(
 	entry: EntryInListFromDb,
 ): Promise<EntryInList> {
+	let placeholderB64: string | undefined
+
+	if (entry.pictures?.[0]?.file) {
+		let placeholderUrl = cloudinary.url(entry.pictures?.[0].file, {
+			width: 50,
+			height: 50,
+			effect: 'blur:800',
+		})
+
+		placeholderB64 = await getBase64FromUrl(placeholderUrl)
+	}
+
 	return {
 		...entry,
 		createdBy: entry.user?.username,
@@ -39,5 +53,6 @@ export async function computeEntryInListFields(
 					crop: 'limit',
 			  })
 			: undefined,
+		placeholderUrl: placeholderB64,
 	}
 }
