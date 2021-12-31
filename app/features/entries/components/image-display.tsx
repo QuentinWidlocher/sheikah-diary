@@ -26,7 +26,7 @@ export default function ImageDisplay({ pictures }: ImageDisplayProps) {
 							? `url('${pictures[0].placeholder}')`
 							: undefined,
 					}}
-					className="bg-cover mx-auto w-full max-w-2xl h-full min-h-[20rem] border border-primary-500 text-primary-500"
+					className="bg-cover bg-center object-cover mx-auto w-full max-w-2xl h-full min-h-[20rem] border border-primary-500 text-primary-500 shadow-primary-full"
 				/>
 			</button>
 			{fullscreen ? (
