@@ -68,7 +68,8 @@ export let baseUpdateAction = async (
 	try {
 		let slug = await action({ ...parsedForm.data, userId })
 		return redirect(`/app/entries/${slug}`)
-	} catch {
+	} catch (e) {
+		console.error('Unable to save entry', e)
 		return null
 	}
 }
@@ -102,9 +103,8 @@ export let createAction: ActionFunction = async ({ request }) => {
 		let createdEntry = await db.entry.create({ data })
 
 		if (form.mainPicture) {
-			saveImage(form.mainPicture, createdEntry.id).then(() =>
-				console.log('File has been saved'),
-			)
+			await saveImage(form.mainPicture, createdEntry.id)
+			console.log('File has been saved')
 		}
 
 		return createdEntry.slug
@@ -134,6 +134,7 @@ export let updateAction: ActionFunction = async ({ request }) => {
 
 		if (form.mainPicture) {
 			await saveImage(form.mainPicture, updatedEntry.id)
+			console.log('File has been saved')
 		}
 
 		return updatedEntry.slug

@@ -1,7 +1,7 @@
 import { ActionFunction, redirect } from 'remix'
 import { z } from 'zod'
 import { db } from '~/utils/db.server'
-import { pictures } from '~/utils/storage.server'
+import { cloudinary } from '~/utils/storage.server'
 import { parseFormData } from '../../../utils/formdata.utils.server'
 
 let formValidator = z.object({
@@ -24,9 +24,9 @@ export let deleteAction: ActionFunction = async ({ request }) => {
 	})
 
 	// This can be done in the bg
-	pictures.remove(
-		linkedPictures.flatMap(pic => [pic.file, pic.preview, pic.thumbnail]),
-	)
+	cloudinary.api
+		.delete_resources(linkedPictures.map(pic => pic.file))
+		.then(() => console.info('All files have been deleted'))
 
 	// We first delete all the pictures
 	await db.picture.deleteMany({

@@ -26,12 +26,10 @@ model Entry {
 }
 
 model Picture {
-  id        String @id @default(uuid())
-  file      String @unique
-  preview   String @unique
-  thumbnail String @unique
-  entryId   String
-  entry     Entry  @relation(fields: [entryId], references: [id])
+  id      String @id @default(uuid())
+  file    String @unique
+  entryId String
+  entry   Entry  @relation(fields: [entryId], references: [id])
 }
 
 model User {

@@ -5,7 +5,7 @@ export type EntryInPage = Pick<
   'id' | 'slug' | 'title' | 'content' | 'createdAt'
 > & {
   user: Pick<User, 'id' | 'username'>
-  pictures: Pick<Picture, 'file' | 'preview'>[]
+  pictures: Pick<Picture, 'file'>[]
   comments: (Pick<Comment, 'id' | 'body' | 'createdAt'> & { user: User })[]
   likedBy: { id: User['id'] }[]
   _count: { likedBy: number }
@@ -27,7 +27,6 @@ export function getPrismaSelectEntryInPage() {
     pictures: {
       select: {
         file: true,
-        preview: true,
       },
     },
     comments: {

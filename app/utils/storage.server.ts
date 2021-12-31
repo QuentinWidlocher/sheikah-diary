@@ -1,8 +1,9 @@
-import { createClient } from '@supabase/supabase-js'
+import { v2 as c } from 'cloudinary'
 
-const supabaseUrl = process.env.SUPABASE_URL
-const supabaseKey = process.env.SUPABASE_ANON_KEY
-const supabase = createClient(supabaseUrl!, supabaseKey!)
+c.config({
+	cloud_name: 'dslgqiqtk',
+	api_key: '541476277984537',
+	api_secret: process.env.CLOUDINARY_API_SECRET,
+})
 
-export const storage = supabase.storage
-export const pictures = storage.from('pictures')
+export const cloudinary = c

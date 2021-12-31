@@ -1,5 +1,5 @@
 import { Entry, Picture, Prisma, User } from '@prisma/client'
-import { pictures } from '~/utils/storage.server'
+import { cloudinary } from '~/utils/storage.server'
 
 export type EntryInList = Pick<Entry, 'title' | 'slug'> & {
 	thumbnailUrl?: string
@@ -7,7 +7,7 @@ export type EntryInList = Pick<Entry, 'title' | 'slug'> & {
 }
 
 export type EntryInListFromDb = Pick<Entry, 'slug' | 'title' | 'slug'> & {
-	pictures: Pick<Picture, 'thumbnail'>[]
+	pictures: Pick<Picture, 'file'>[]
 	user: Pick<User, 'username'>
 }
 
@@ -16,7 +16,7 @@ export const prismaEntryInListSelect = Prisma.validator<Prisma.EntrySelect>()({
 	slug: true,
 	pictures: {
 		select: {
-			thumbnail: true,
+			file: true,
 		},
 	},
 	user: {
@@ -32,9 +32,12 @@ export async function computeEntryInListFields(
 	return {
 		...entry,
 		createdBy: entry.user?.username,
-		thumbnailUrl: entry.pictures?.[0]?.thumbnail
-			? (await pictures.getPublicUrl(entry.pictures?.[0]?.thumbnail).publicURL) ??
-			  undefined
+		thumbnailUrl: entry.pictures?.[0]?.file
+			? cloudinary.url(entry.pictures?.[0].file, {
+					width: 500,
+					height: 500,
+					crop: 'limit',
+			  })
 			: undefined,
 	}
 }

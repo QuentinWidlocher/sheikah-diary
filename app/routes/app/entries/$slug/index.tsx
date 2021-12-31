@@ -1,4 +1,3 @@
-import { User } from '@prisma/client'
 import { useState } from 'react'
 import { FiEdit3, FiTrash } from 'react-icons/fi'
 import {
@@ -13,7 +12,6 @@ import {
 } from 'remix'
 import { deserialize, serialize } from 'superjson'
 import { z } from 'zod'
-import SheikahLogo from '~/components/sheika-logo'
 import { deleteAction } from '~/features/entries/api/delete.server'
 import CommentTextArea from '~/features/entries/components/comment-text-area'
 import Comments from '~/features/entries/components/comments'
@@ -29,8 +27,7 @@ import entryStylesheet from '~/styles/entry.css'
 import formsStylesheet from '~/styles/forms.css'
 import { displayDateTime } from '~/utils/date.utils'
 import { db } from '~/utils/db.server'
-import { getUser } from '~/utils/session.server'
-import { pictures } from '~/utils/storage.server'
+import { cloudinary } from '~/utils/storage.server'
 
 export let links: LinksFunction = () => [
 	{ rel: 'stylesheet', href: entryStylesheet },
@@ -65,12 +62,11 @@ export let loader: LoaderFunction = async ({ params, request }) => {
 
 	let result: EntryInPage = {
 		...entry,
-		pictures: await Promise.all(
-			entry.pictures.map(async p => ({
-				file: (await pictures.getPublicUrl(p.file).publicURL) ?? '',
-				preview: (await pictures.getPublicUrl(p.preview).publicURL) ?? 'undefined',
-			})),
-		),
+		pictures: entry.pictures.map(p => ({
+			file: cloudinary.url(p.file) ?? '',
+			preview:
+				cloudinary.url(p.file, { width: 1000, height: 1000, crop: 'limit' }) ?? '',
+		})),
 	}
 
 	return serialize(result)

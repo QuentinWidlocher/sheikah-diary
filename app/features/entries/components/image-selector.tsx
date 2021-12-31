@@ -10,14 +10,6 @@ type ImageSelectorProps = {
 	onImageLoaded: (image?: ImageToSend) => void
 }
 
-async function getCanvasImageSizeInBytes(
-	canvas: HTMLCanvasElement,
-): Promise<number> {
-	return new Promise(r => {
-		canvas.toBlob(b => r(b?.size ?? 0))
-	})
-}
-
 function loadImageToCanvas(
 	canvas: HTMLCanvasElement,
 	image: HTMLImageElement,
@@ -32,22 +24,6 @@ function loadImageToCanvas(
 	canvas.getContext('2d')?.drawImage(image, 0, 0, width, height)
 }
 
-function getCappedDimensions(capSize: number, width: number, height: number) {
-	let newWidth = width
-	let newHeight = height
-
-	if (width > capSize || (capSize && height)) {
-		if (width > height) {
-			newHeight = height * (capSize / width)
-			newWidth = capSize
-		} else {
-			newWidth = width * (capSize / height)
-			newHeight = capSize
-		}
-	}
-	return [newWidth, newHeight]
-}
-
 async function getBase64FromFile(
 	file: File,
 	canvas: HTMLCanvasElement,
@@ -56,37 +32,8 @@ async function getBase64FromFile(
 		let image = new Image()
 		image.src = URL.createObjectURL(file)
 		image.onload = async () => {
-			// We first load the original image into the canvas
+			// We load the image into the canvas
 			loadImageToCanvas(canvas, image)
-
-			// Then we calculate the size in bytes
-			let imageSizeInBytes = await getCanvasImageSizeInBytes(canvas)
-
-			let [width, height] = [image.width, image.height]
-
-			// While the file size is > 3Mb...
-			while (imageSizeInBytes >= 3000000) {
-				// We try with a smaller version of the picture
-				;[width, height] = getCappedDimensions(
-					width * 0.8,
-					image.width,
-					image.height,
-				)
-
-				console.log(
-					'Image too big (',
-					imageSizeInBytes,
-					'B), trying with a smaller version (',
-					width,
-					'x',
-					height,
-					')',
-				)
-
-				loadImageToCanvas(canvas, image, width, height)
-				imageSizeInBytes = await getCanvasImageSizeInBytes(canvas)
-			}
-
 			resolve(canvas.toDataURL(file.type))
 		}
 
