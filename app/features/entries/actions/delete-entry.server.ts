@@ -23,10 +23,15 @@ export let deleteAction: ActionFunction = async ({ request }) => {
 		},
 	})
 
+	let picturesToDelete = linkedPictures.map(pic => pic.file)
+
+	console.debug('picturesToDelete', picturesToDelete)
+
 	// This can be done in the bg
 	cloudinary.api
-		.delete_resources(linkedPictures.map(pic => pic.file))
+		.delete_resources(picturesToDelete)
 		.then(() => console.info('All files have been deleted'))
+		.catch(console.error)
 
 	// We first delete all the pictures
 	await db.picture.deleteMany({
