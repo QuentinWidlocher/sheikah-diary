@@ -7,7 +7,9 @@ import {
 	prismaEntryInListSelect,
 } from '~/features/entries/types/entry-in-list'
 import { db } from '~/utils/db.server'
-import { paginateLoader } from '~/utils/pagination.server'
+import { Paginated, paginateLoader } from '~/utils/pagination.server'
+
+export type UserEntriesLoaderPayload = Paginated<EntryInList>
 
 export let userEntriesPageLoader: LoaderFunction = async ({
 	params,
@@ -59,5 +61,7 @@ export let userEntriesPageLoader: LoaderFunction = async ({
 			}),
 	})
 
-	return serialize(paginated)
+	let payload: UserEntriesLoaderPayload = paginated
+
+	return serialize(payload)
 }

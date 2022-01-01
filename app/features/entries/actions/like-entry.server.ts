@@ -27,7 +27,7 @@ export let likeAction: ActionFunction = async ({ params, request }) => {
 	let updateAction: {
 		[k in
 			| 'connect'
-			| 'disconnect']?: Prisma.UserUpdateManyWithoutEntriesInput['connect']
+			| 'disconnect']?: Prisma.UserUpdateManyWithoutLikesInput['connect']
 	}
 
 	if (formData.alreadyLiked) {

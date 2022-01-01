@@ -1,4 +1,3 @@
-import { ActionFunction } from 'remix'
-import { createCommentAction } from '~/features/entries/api/create-comment.server'
+import { createCommentAction } from '~/features/entries/actions/create-comment.server'
 
-export let action: ActionFunction = (args) => createCommentAction(args)
+export let action = createCommentAction

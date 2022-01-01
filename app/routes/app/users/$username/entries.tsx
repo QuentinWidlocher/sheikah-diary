@@ -3,7 +3,10 @@ import { deserialize } from 'superjson'
 import { stylesheet as entryCardStylesheet } from '~/features/entries/components/entry-card'
 import EntryList from '~/features/entries/components/entry-list'
 import { EntryInList } from '~/features/entries/types/entry-in-list'
-import { userEntriesPageLoader } from '~/features/users/api/entries-page.server'
+import {
+	UserEntriesLoaderPayload,
+	userEntriesPageLoader,
+} from '~/features/users/loaders/user-entries-page-loader.server'
 import { UserEntriesPageData } from '~/features/users/types/page'
 import entriesStylesheet from '~/styles/entries.css'
 import { Paginated } from '~/utils/pagination.server'
@@ -15,10 +18,9 @@ export let links: LinksFunction = () => [
 
 export let loader = userEntriesPageLoader
 
-export default function UserPage() {
-	let { items, page, totalItems, itemsPerPage } = deserialize<
-		Paginated<EntryInList>
-	>(useLoaderData())
+export default function UserEntriesRoute() {
+	let { items, page, totalItems, itemsPerPage } =
+		deserialize<UserEntriesLoaderPayload>(useLoaderData())
 
 	return (
 		<EntryList

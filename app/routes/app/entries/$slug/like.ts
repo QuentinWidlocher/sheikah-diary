@@ -1,4 +1,3 @@
-import { ActionFunction } from 'remix'
-import { likeAction } from '~/features/entries/api/like.server'
+import { likeAction } from '~/features/entries/actions/like-entry.server'
 
-export let action: ActionFunction = (args) =>  likeAction(args)
+export let action = likeAction
