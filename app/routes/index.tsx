@@ -32,6 +32,13 @@ export default function IndexPage() {
 								</Link>
 							</li>
 							<li>
+								<Link
+									to="/login"
+									className="opacity-60 hover:before:content-['>'] hover:opacity-100">
+									Sign in
+								</Link>
+							</li>
+							<li>
 								<a
 									className="opacity-60 hover:before:content-['>'] hover:opacity-100"
 									href="https://github.com/QuentinWidlocher/sheikah-diary">

@@ -1,4 +1,4 @@
-import {Notification} from '@prisma/client'
+import { Notification } from '@prisma/client'
 import { FiCheckCircle, FiAlertCircle } from 'react-icons/fi'
 import { Link, Form } from 'remix'
 import { displayDateTime } from '~/utils/date.utils'
@@ -33,7 +33,11 @@ function displayNotifTitle(notif: Notification) {
 	return title
 }
 
-export default function NotificationComponent({notif}: {notif: Notification}) {
+export default function NotificationComponent({
+	notif,
+}: {
+	notif: Notification
+}) {
 	return (
 		<>
 			<div className="flex items-center text-2xl space-x-3">
@@ -42,7 +46,7 @@ export default function NotificationComponent({notif}: {notif: Notification}) {
 				) : (
 					<Form method="post">
 						<button>
-							<FiAlertCircle></FiAlertCircle>
+							<FiAlertCircle className="mx-4"></FiAlertCircle>
 							<input type="hidden" name="id" readOnly value={notif.id} />
 						</button>
 					</Form>
