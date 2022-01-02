@@ -2,7 +2,7 @@
 
 > Open Source app for picture sharing, based on Breath of the Wild UI
 
-[Try it here !](https://sheikah-diary.netlify.app/entries)
+[Try it here !](https://sheikah-diary.netlify.app/)
 
 ---
 
@@ -13,3 +13,4 @@ Made with With :
 - [Prisma](https://github.com/prisma/prisma)
 - [Zod](https://github.com/colinhacks/zod)
 - [Supabase](https://github.com/supabase/supabase)
+- [Cloudinary](https://github.com/cloudinary/cloudinary_npm)
