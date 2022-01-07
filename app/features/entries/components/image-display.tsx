@@ -19,7 +19,7 @@ export default function ImageDisplay({ pictures }: ImageDisplayProps) {
 		<>
 			<button onClick={() => setFullscreen(true)}>
 				<img
-					src={pictures[0].preview}
+					{...pictures[0].previewImgProps}
 					alt=""
 					style={{
 						backgroundImage: pictures[0].placeholder

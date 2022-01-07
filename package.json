@@ -20,8 +20,8 @@
     "build:remix": "remix build",
     "build": "yarn build:css && prisma migrate deploy && prisma generate && remix build",
     "dev:css": "postcss ./styles/* --dir ./app/styles --watch",
-    "dev:remix": "remix watch",
-    "dev": "cross-env NODE_ENV=development netlify dev",
+    "dev:remix": "remix dev",
+    "dev": "cross-env NODE_ENV=development concurrently \"npm:dev:*\"",
     "postinstall": "remix setup node",
     "prisma": "npx prisma"
   },

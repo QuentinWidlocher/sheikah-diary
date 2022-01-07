@@ -1,9 +1,10 @@
 import { Entry, Picture, Prisma, User } from '@prisma/client'
 import { getBase64FromUrl } from '~/utils/file.utils.server'
+import { getImgProps } from '~/utils/image.utils'
 import { cloudinary } from '~/utils/storage.server'
 
 export type EntryInList = Pick<Entry, 'title' | 'slug'> & {
-	thumbnailUrl?: string
+	thumbnailImgProps: ReturnType<typeof getImgProps> | undefined
 	placeholderUrl?: string
 	createdBy: string
 }
@@ -46,11 +47,19 @@ export async function computeEntryInListFields(
 	return {
 		...entry,
 		createdBy: entry.user?.username,
-		thumbnailUrl: entry.pictures?.[0]?.file
-			? cloudinary.url(entry.pictures?.[0].file, {
-					width: 500,
-					height: 500,
-					crop: 'limit',
+		thumbnailImgProps: entry.pictures?.[0]?.file
+			? getImgProps(entry.pictures?.[0].file, {
+					widths: [280, 560, 840, 1100, 1650, 2500, 2100, 3100],
+					sizes: [
+						'(max-width:1023px) 80vw',
+						'(min-width:1024px) and (max-width:1620px) 67vw',
+						'1100px',
+					],
+					transformations: [
+						{
+							crop: 'thumb',
+						},
+					],
 			  })
 			: undefined,
 		placeholderUrl: placeholderB64,

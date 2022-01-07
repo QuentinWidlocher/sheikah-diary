@@ -1,5 +1,6 @@
 import { Entry, Picture, Prisma, User, Comment } from '@prisma/client'
 import { getBase64FromUrl } from '~/utils/file.utils.server'
+import { getImgProps } from '~/utils/image.utils'
 import { cloudinary } from '~/utils/storage.server'
 
 export type EntryInPageFromDb = Pick<
@@ -18,7 +19,11 @@ export type EntryInPage = Pick<
 	'id' | 'slug' | 'title' | 'content' | 'createdAt'
 > & {
 	user: Pick<User, 'id' | 'username'>
-	pictures: { file: string; preview: string; placeholder: string }[]
+	pictures: {
+		file: string
+		previewImgProps: ReturnType<typeof getImgProps>
+		placeholder: string
+	}[]
 	comments: (Pick<Comment, 'id' | 'body' | 'createdAt'> & { user: User })[]
 	likedBy: { id: User['id'] }[]
 	_count: { likedBy: number }
@@ -84,10 +89,18 @@ export async function computeEntryInPageFields(
 
 				return {
 					file: cloudinary.url(p.file) ?? '',
-					preview: cloudinary.url(p.file, {
-						width: 1000,
-						height: 1000,
-						crop: 'limit',
+					previewImgProps: getImgProps(p.file, {
+						widths: [280, 560, 840, 1100, 1650, 2500, 2100, 3100],
+						sizes: [
+							'(max-width:1023px) 80vw',
+							'(min-width:1024px) and (max-width:1620px) 67vw',
+							'1100px',
+						],
+						transformations: [
+							{
+								crop: 'limit',
+							},
+						],
 					}),
 					placeholder: placeholderB64,
 				}

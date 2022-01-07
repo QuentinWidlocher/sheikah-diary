@@ -21,7 +21,7 @@ const EntryCard = ({ entry }: EntryCardProps) => {
 			<div className="entry-card">
 				<section className="picture">
 					<div className="pic-wrapper">
-						{entry.thumbnailUrl ? (
+						{entry.thumbnailImgProps ? (
 							<img
 								loading="lazy"
 								className="picture bg-cover"
@@ -30,7 +30,7 @@ const EntryCard = ({ entry }: EntryCardProps) => {
 										? `url('${entry.placeholderUrl}')`
 										: undefined,
 								}}
-								src={entry.thumbnailUrl}
+								{...entry.thumbnailImgProps}
 								alt=""
 							/>
 						) : (
