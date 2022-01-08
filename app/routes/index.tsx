@@ -9,7 +9,7 @@ export let meta: MetaFunction = () => {
 
 export default function IndexPage() {
 	return (
-		<div className="w-full h-full bg-[url('/assets/main-bg.jpg')] bg-top">
+		<div className="w-full h-full bg-[url('/assets/main-bg.jpg')] bg-top bg-cover">
 			<div className="w-full h-full flex bg-gradient-to-l from-black/60">
 				<div className="flex flex-col ml-auto py-10 px-5 md:px-10 lg:px-20 w-full md:w-2/3 lg:w-1/2 xl:w-1/3">
 					<h1 className="font-title text-6xl whitespace-nowrap">
