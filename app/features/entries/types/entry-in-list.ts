@@ -32,7 +32,7 @@ export const prismaEntryInListSelect = Prisma.validator<Prisma.EntrySelect>()({
 export async function computeEntryInListFields(
 	entry: EntryInListFromDb,
 ): Promise<EntryInList> {
-	let placeholderB64: string | undefined
+	let placeholderB64: string | null = null
 
 	if (entry.pictures?.[0]?.file) {
 		let placeholderUrl = cloudinary.url(entry.pictures?.[0].file, {
@@ -63,6 +63,6 @@ export async function computeEntryInListFields(
 					},
 			  })
 			: undefined,
-		placeholderUrl: placeholderB64,
+		placeholderUrl: placeholderB64 ?? undefined,
 	}
 }
