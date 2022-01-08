@@ -93,7 +93,7 @@ export async function computeEntryInPageFields(
 						widths: [280, 560, 672, 710, 1100],
 						sizes: ['(max-width:710px) 100vw', '1100px'],
 					}),
-					placeholder: placeholderB64,
+					placeholder: placeholderB64 ?? '',
 				}
 			}),
 		),
