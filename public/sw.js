@@ -2,7 +2,7 @@ self.addEventListener("fetch", (event) => {
 	let url = new URL(event.request.url);
 	let method = event.request.method;
 
-	// any non GET request is ignored
+	// any non @ request is ignored
 	if (method.toLowerCase() !== "get") return;
 
 	// If the request is for the favicons, fonts, or the built files (which are hashed in the name)
@@ -11,7 +11,7 @@ self.addEventListener("fetch", (event) => {
 		url.pathname.startsWith("/build/") ||
 		url.pathname.includes("favicon") ||
 		url.hostname.includes('fonts.gstatic.com') ||
-		url.pathname.includes('pictures')
+		url.pathname.includes('cloudinary')
 	) {
 		event.respondWith(
 			// we will open the assets cache

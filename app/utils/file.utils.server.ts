@@ -1,6 +1,16 @@
 import { db } from './db.server'
 import { cloudinary } from './storage.server'
+import https from 'https'
 import http from 'http'
+import { URL } from 'url'
+
+let httpClient: typeof http | typeof https
+
+if (process.env.NODE_ENV == 'development') {
+	httpClient = http
+} else {
+	httpClient = https
+}
 
 export const base64ImageValidTypeRegex = /^data:image\/(\w*);base64,/
 export const base64GetExtRegex = /^data:image\/(.*);base64,/
@@ -30,7 +40,7 @@ export async function getBase64FromUrl(url: string): Promise<string> {
 		return Promise.resolve(b64Cache[url])
 	} else {
 		return new Promise((resolve, reject) => {
-			http
+			httpClient
 				.get(url, resp => {
 					resp.setEncoding('base64')
 					let body = 'data:' + resp.headers['content-type'] + ';base64,'
