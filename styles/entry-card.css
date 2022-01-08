@@ -1,67 +1,67 @@
 .entry-card {
-  section.picture {
-    position: relative;
+	section.picture {
+		position: relative;
 
-    .pic-wrapper {
-      @apply w-full h-full relative p-4 bg-primary-900 md:opacity-70;
+		.pic-wrapper {
+			@apply w-full h-full relative p-4 bg-primary-900 md:opacity-70;
 
-      .picture {
-        @apply h-full w-full border-4 md:border-2 border-primary-100;
-        aspect-ratio: 1 / 1;
-        object-fit: cover;
-        box-shadow: inset 0px 0px 15px var(--primary-500);
-      }
-    }
+			.picture {
+				@apply h-full w-full border-4 md:border-2 border-primary-100;
+				aspect-ratio: 1 / 1;
+				object-fit: cover;
+				box-shadow: inset 0px 0px 15px var(--primary-500);
+			}
+		}
 
-    svg.selector {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
+		svg.selector {
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
 
-      transform: scale(110%);
+			transform: scale(110%);
 
-      max-width: unset;
+			max-width: unset;
 
-      color: var(--primary-200);
+			color: var(--primary-200);
 
-      filter: drop-shadow(0px 0px 7px var(--primary-500));
+			filter: drop-shadow(0px 0px 7px var(--primary-500));
 
-      opacity: 0;
-    }
+			opacity: 0;
+		}
 
-    svg.frame {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
+		svg.frame {
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
 
-      max-width: unset;
+			max-width: unset;
 
-      color: var(--primary-200);
+			color: var(--primary-200);
 
-      filter: drop-shadow(0px 0px 7px var(--primary-500));
-    }
-  }
+			filter: drop-shadow(0px 0px 7px var(--primary-500));
+		}
+	}
 
-  section.title {
-    @apply p-1 text-center text-primary-600;
-  }
+	section.title {
+		@apply p-1 text-center text-primary-600;
+	}
 }
 
 a:focus .entry-card section.picture .pic-wrapper,
 .entry-card:hover section.picture .pic-wrapper {
-  @apply opacity-100;
+	@apply opacity-100;
 }
 
 a:focus .entry-card section.picture svg.selector {
-  opacity: 1;
+	opacity: 1;
 }
 
 a:focus .entry-card section.title,
 .entry-card:hover section.title {
-  @apply text-primary-200;
-  text-shadow: 0px 0px 7px var(--primary-500);
+	@apply text-primary-200;
+	text-shadow: 0px 0px 7px var(--primary-500);
 }

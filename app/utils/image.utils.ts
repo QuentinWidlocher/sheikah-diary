@@ -6,39 +6,39 @@ export function getImgProps(
 	{
 		widths,
 		sizes,
-		transformations = [],
+		transformations = {},
 	}: {
 		widths: number[]
 		sizes: string[]
-		transformations?: ImageTransformationOptions[]
+		transformations?: ImageTransformationOptions
 	},
 ) {
 	const averageSize = Math.ceil(widths.reduce((a, s) => a + s) / widths.length)
 
 	let props = {
 		src: cloudinary.url(publicId, {
-			secure: true,
 			quality: 'auto',
 			format: 'webp',
-			transformations: [...transformations, { width: averageSize }],
+			width: averageSize,
+			crop: 'scale',
+			...transformations,
 		}),
 		srcSet: widths
-			.map(width =>
-				[
+			.map(width => {
+				return [
 					cloudinary.url(publicId, {
-						secure: true,
 						quality: 'auto',
 						format: 'webp',
-						transformations: [...transformations, { width }],
+						width,
+						crop: 'scale',
+						...transformations,
 					}),
 					`${width}w`,
-				].join(' '),
-			)
+				].join(' ')
+			})
 			.join(', '),
 		sizes: sizes.join(', '),
 	}
-
-	console.log(props)
 
 	return props
 }

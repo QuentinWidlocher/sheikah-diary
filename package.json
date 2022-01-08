@@ -21,7 +21,7 @@
     "build": "yarn build:css && prisma migrate deploy && prisma generate && remix build",
     "dev:css": "postcss ./styles/* --dir ./app/styles --watch",
     "dev:remix": "remix dev",
-    "dev": "cross-env NODE_ENV=development concurrently \"npm:dev:*\"",
+    "dev": "concurrently \"npm:dev:*\"",
     "postinstall": "remix setup node",
     "prisma": "npx prisma"
   },
@@ -35,6 +35,7 @@
     "bcrypt": "^5.0.1",
     "cloudinary": "^1.27.1",
     "cross-env": "^7.0.3",
+    "dotenv": "^10.0.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-icons": "^4.3.1",

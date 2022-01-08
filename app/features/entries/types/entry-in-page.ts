@@ -90,17 +90,8 @@ export async function computeEntryInPageFields(
 				return {
 					file: cloudinary.url(p.file) ?? '',
 					previewImgProps: getImgProps(p.file, {
-						widths: [280, 560, 840, 1100, 1650, 2500, 2100, 3100],
-						sizes: [
-							'(max-width:1023px) 80vw',
-							'(min-width:1024px) and (max-width:1620px) 67vw',
-							'1100px',
-						],
-						transformations: [
-							{
-								crop: 'limit',
-							},
-						],
+						widths: [280, 560, 672, 710, 1100],
+						sizes: ['(max-width:710px) 100vw', '1100px'],
 					}),
 					placeholder: placeholderB64,
 				}

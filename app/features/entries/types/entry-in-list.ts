@@ -37,8 +37,9 @@ export async function computeEntryInListFields(
 	if (entry.pictures?.[0]?.file) {
 		let placeholderUrl = cloudinary.url(entry.pictures?.[0].file, {
 			width: 50,
-			height: 50,
-			effect: 'blur:800',
+			crop: 'fill',
+			aspect_ratio: 1,
+			effect: 'blur:500',
 		})
 
 		placeholderB64 = await getBase64FromUrl(placeholderUrl)
@@ -51,15 +52,15 @@ export async function computeEntryInListFields(
 			? getImgProps(entry.pictures?.[0].file, {
 					widths: [280, 560, 840, 1100, 1650, 2500, 2100, 3100],
 					sizes: [
-						'(max-width:1023px) 80vw',
-						'(min-width:1024px) and (max-width:1620px) 67vw',
+						'(max-width:767px) 100vw',
+						'(min-width:768px) and (max-width:1023px) 30vw',
+						'(min-width:1024px) and (max-width:1620px) 40vw',
 						'1100px',
 					],
-					transformations: [
-						{
-							crop: 'thumb',
-						},
-					],
+					transformations: {
+						crop: 'fill',
+						aspect_ratio: 1,
+					},
 			  })
 			: undefined,
 		placeholderUrl: placeholderB64,
