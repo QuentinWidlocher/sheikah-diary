@@ -4,6 +4,7 @@ import { z } from 'zod'
 import { db } from '~/utils/db.server'
 import { parseFormData } from '../../../utils/formdata.utils.server'
 import { getUser } from '~/utils/session.server'
+import { resetCache, resetEntrySlug } from '~/utils/cache.server'
 
 let formValidator = z.object({
 	alreadyLiked: z.boolean().default(false),
@@ -54,6 +55,8 @@ export let likeAction: ActionFunction = async ({ params, request }) => {
 			slug: params.slug,
 		},
 	})
+
+	resetEntrySlug(params.slug)
 
 	return !formData.alreadyLiked
 }

@@ -1,6 +1,7 @@
 import { Prisma } from '@prisma/client'
 import { ActionFunction, redirect } from 'remix'
 import { z } from 'zod'
+import { resetCache, resetEntrySlug } from '~/utils/cache.server'
 import { db } from '~/utils/db.server'
 import { base64ImageValidTypeRegex, saveImage } from '~/utils/file.utils.server'
 import { safeParseFormData } from '~/utils/formdata.utils.server'
@@ -67,6 +68,7 @@ export let baseUpdateAction = async (
 
 	try {
 		let slug = await action({ ...parsedForm.data, userId })
+		resetEntrySlug(slug)
 		return redirect(`/app/entries/${slug}`)
 	} catch (e) {
 		console.error('Unable to save entry', e)

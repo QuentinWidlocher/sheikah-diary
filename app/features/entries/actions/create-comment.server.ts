@@ -1,6 +1,7 @@
 import { Entry, NotificationType, User } from '@prisma/client'
 import { ActionFunction, redirect } from 'remix'
 import { z } from 'zod'
+import { resetCache, resetEntrySlug } from '~/utils/cache.server'
 import { db } from '~/utils/db.server'
 import { getUser } from '~/utils/session.server'
 import { safeParseFormData } from '../../../utils/formdata.utils.server'
@@ -51,6 +52,8 @@ export let createCommentAction: ActionFunction = async ({
 		},
 		parsedForm.data.body,
 	)
+
+	resetEntrySlug(params.slug)
 
 	return db.comment.create({
 		data: {

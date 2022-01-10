@@ -1,5 +1,6 @@
 import { ActionFunction, redirect } from 'remix'
 import { z } from 'zod'
+import { resetCache, resetEntrySlug } from '~/utils/cache.server'
 import { db } from '~/utils/db.server'
 import { cloudinary } from '~/utils/storage.server'
 import { parseFormData } from '../../../utils/formdata.utils.server'
@@ -8,7 +9,7 @@ let formValidator = z.object({
 	id: z.string().uuid().nonempty(),
 })
 
-export let deleteAction: ActionFunction = async ({ request }) => {
+export let deleteAction: ActionFunction = async ({ request, params }) => {
 	if (request.method != 'DELETE') {
 		return null
 	}
@@ -46,6 +47,8 @@ export let deleteAction: ActionFunction = async ({ request }) => {
 			id: form.id,
 		},
 	})
+
+	resetEntrySlug('/app/entries')
 
 	return redirect('/app/entries')
 }
