@@ -12,7 +12,7 @@ export default async function handleRequest(
 	responseHeaders: Headers,
 	remixContext: EntryContext,
 ) {
-	let cached = getFromCache(request.url)
+	let cached = await getFromCache(request.url, true, request)
 
 	let markup: string | null = null
 
@@ -25,7 +25,7 @@ export default async function handleRequest(
 			<RemixServer context={remixContext} url={request.url} />,
 		)
 
-		setToCache(request.url, markup)
+		setToCache(request.url, markup, true, request)
 	}
 
 	responseHeaders.set('Content-Type', 'text/html')

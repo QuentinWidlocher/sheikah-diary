@@ -69,6 +69,7 @@ export let baseUpdateAction = async (
 	try {
 		let slug = await action({ ...parsedForm.data, userId })
 		resetEntrySlug(slug)
+		resetCache('/app/entries', false)
 		return redirect(`/app/entries/${slug}`)
 	} catch (e) {
 		console.error('Unable to save entry', e)

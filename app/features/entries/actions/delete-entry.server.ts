@@ -1,6 +1,6 @@
 import { ActionFunction, redirect } from 'remix'
 import { z } from 'zod'
-import { resetCache, resetEntrySlug } from '~/utils/cache.server'
+import { resetCache } from '~/utils/cache.server'
 import { db } from '~/utils/db.server'
 import { cloudinary } from '~/utils/storage.server'
 import { parseFormData } from '../../../utils/formdata.utils.server'
@@ -26,8 +26,6 @@ export let deleteAction: ActionFunction = async ({ request, params }) => {
 
 	let picturesToDelete = linkedPictures.map(pic => pic.file)
 
-	console.debug('picturesToDelete', picturesToDelete)
-
 	// This can be done in the bg
 	cloudinary.api
 		.delete_resources(picturesToDelete)
@@ -41,6 +39,15 @@ export let deleteAction: ActionFunction = async ({ request, params }) => {
 		},
 	})
 
+	// We then delete all the comments
+	await db.comment.deleteMany({
+		where: {
+			entry: {
+				id: form.id,
+			},
+		},
+	})
+
 	// Then we delete the entry
 	await db.entry.delete({
 		where: {
@@ -48,7 +55,7 @@ export let deleteAction: ActionFunction = async ({ request, params }) => {
 		},
 	})
 
-	resetEntrySlug('/app/entries')
+	resetCache('/app/entries', false)
 
 	return redirect('/app/entries')
 }
