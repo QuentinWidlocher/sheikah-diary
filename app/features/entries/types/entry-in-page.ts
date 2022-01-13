@@ -1,6 +1,10 @@
 import { Entry, Picture, Prisma, User, Comment } from '@prisma/client'
 import { getBase64FromUrl } from '~/utils/file.utils.server'
-import { getImgProps } from '~/utils/image.utils'
+import {
+	getImgProps,
+	getImgPropsFromTransformations,
+	getImgTransformations,
+} from '~/utils/image.utils'
 import { cloudinary } from '~/utils/storage.server'
 
 export type EntryInPageFromDb = Pick<
@@ -78,24 +82,37 @@ export async function computeEntryInPageFields(
 		...entry,
 		pictures: await Promise.all(
 			entry.pictures.map(async p => {
-				let placeholderUrl = cloudinary.url(p.file, {
-					width: 50,
-					height: 50,
-					crop: 'limit',
-					effect: 'blur:800',
-				})
+				let placeholderUrl = cloudinary.url(
+					p.file,
+					getEntryInPagePlaceholderTransformation(),
+				)
 
 				let placeholderB64 = await getBase64FromUrl(placeholderUrl)
 
 				return {
 					file: cloudinary.url(p.file) ?? '',
-					previewImgProps: getImgProps(p.file, {
-						widths: [280, 560, 672, 710, 1100],
+					previewImgProps: getImgPropsFromTransformations(p.file, {
 						sizes: ['(max-width:710px) 100vw', '1100px'],
+						...getEntryInPageTransformations(),
 					}),
 					placeholder: placeholderB64 ?? '',
 				}
 			}),
 		),
+	}
+}
+
+export function getEntryInPageTransformations() {
+	return getImgTransformations({
+		widths: [280, 560, 672, 710, 1100],
+	})
+}
+
+export function getEntryInPagePlaceholderTransformation() {
+	return {
+		width: 50,
+		height: 50,
+		crop: 'limit',
+		effect: 'blur:800',
 	}
 }

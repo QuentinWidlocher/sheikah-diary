@@ -27,7 +27,7 @@ model Entry {
 
 model Picture {
   id      String @id @default(uuid())
-  file    String @unique
+  file    String
   entryId String
   entry   Entry  @relation(fields: [entryId], references: [id])
 }

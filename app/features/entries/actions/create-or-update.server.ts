@@ -3,7 +3,6 @@ import { ActionFunction, redirect } from 'remix'
 import { z } from 'zod'
 import { db } from '~/utils/db.server'
 import { base64ImageValidTypeRegex, saveImage } from '~/utils/file.utils.server'
-import { safeParseFormData } from '~/utils/formdata.utils.server'
 import { requireUserId } from '~/utils/session.server'
 import { slugify } from '~/utils/string.utils'
 import { NewEntry } from '../types/entries'
@@ -52,9 +51,11 @@ export let baseUpdateAction = async (
 ) => {
 	let userId = await requireUserId(request)
 
-	console.debug('Parsing form data')
+	console.debug('Parsing form data (awaiting text value)')
+	let text = await request.text()
+	console.debug('Parsing form data (text value to search params)')
 	// Idk why but await request.formData() justs freezes
-	let formData = new URLSearchParams(await request.text())
+	let formData = new URLSearchParams(text)
 	console.debug('Parsed form data : ', formData.keys())
 
 	let parsedForm = formValidator.safeParse(
@@ -133,6 +134,19 @@ export let updateAction: ActionFunction = async ({ request }) => {
 		})
 
 		if (form.mainPicture) {
+			// Delete all pictures linked to entry
+			let { count: deleteCount } = await db.picture.deleteMany({
+				where: {
+					entryId: updatedEntry.id,
+				},
+			})
+
+			console.debug(
+				`Deleted ${deleteCount} picture${deleteCount > 1 && 's'} linked to entry ${
+					updatedEntry.id
+				}`,
+			)
+
 			await saveImage(form.mainPicture, updatedEntry.id)
 			console.log('File has been saved')
 		}
